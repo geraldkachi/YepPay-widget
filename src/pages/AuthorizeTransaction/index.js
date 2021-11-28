@@ -1,20 +1,49 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+<<<<<<< HEAD
 // images/icons
 import CardGroup from '../../assets/cardgroup.svg';
 import WidgetHeader from '../../components/WidgetHeader';
+=======
+import './AuthorizationStyle.css';
+
+// images/icons
+import CashenvoyLogo from '../../assets/cashenvoylogo.svg';
+import CancelIcon from '../../assets/cancel.svg';
+import CardGroup from '../../assets/cardgroup.svg';
+>>>>>>> 2e651d95abdb4d52ecd8745aa8027a0fd3b9879c
 
 const AuthorizeTransaction = () => {
   return (
     <div className="h-full flex justify-center items-center">
       <div className="mt-50 cashenvoypaymentwidget">
+<<<<<<< HEAD
         <WidgetHeader email="zahrawiz@gmail.com" amount="NGN 10,000.00" />
         <div className="p-20">
           <p className="text-center">Kindly enter thr OTP code sent to <br /> *******2345 or *********@email.com or enter the</p>
           <p className="text-center"> OTP generated from your Hardware Token device.</p>
         </div>
         <div className="px-20">
+=======
+        <div className="widget-header">
+          <div className="w-full flex items-center justify-between">
+            <img src={CashenvoyLogo} alt="Cashenvoy Logo" />
+            <button className="">
+              <img src={CancelIcon} alt="Cancel Icon" />
+            </button>
+          </div>
+          <div className="widget-header-pill">
+            <span>wiztemple7@cashenvoy.com</span>
+            <span>NGN 1,000.00</span>
+          </div>
+        </div>
+        <div className="authorize_transaction_body">
+          <p>Kindly enter thr OTP code sent to <br /> *******2345 or *********@email.com or enter the</p>
+          <p> OTP generated from your Hardware Token device.</p>
+        </div>
+        <div className="authorize_transaction_form">
+>>>>>>> 2e651d95abdb4d52ecd8745aa8027a0fd3b9879c
           <form>
             <div className="input-wrapper">
               <input
@@ -28,7 +57,11 @@ const AuthorizeTransaction = () => {
               />
               <label for="cardNumber" class="label label--floating">OTP CODE</label>
             </div>
+<<<<<<< HEAD
             <Link type="button" to="/success" className="submitbutton mt-20">
+=======
+            <Link type="button" to="/success" className="submitbutton">
+>>>>>>> 2e651d95abdb4d52ecd8745aa8027a0fd3b9879c
               <span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="3.33331" y="7.33333" width="9.33333" height="6.66667" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -45,7 +78,11 @@ const AuthorizeTransaction = () => {
           </form>
         </div>
         <div className="cardwidget-footer flex justify-between items-center">
+<<<<<<< HEAD
           <button className="flex items-center">
+=======
+          <button className="flex items-center ">
+>>>>>>> 2e651d95abdb4d52ecd8745aa8027a0fd3b9879c
             <span>
               <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.7713 13.8792L4.22879 4.98603" stroke="#162858" stroke-linecap="round" />
