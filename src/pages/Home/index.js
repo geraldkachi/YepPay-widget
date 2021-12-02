@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 
 // Components
 import CardPaymentWidget from '../../components/CardPaymentWidget';
-
-// images/icons
-import CardGroup from '../../assets/cardgroup.svg';
 import USSDWidget from '../../components/USSDWidget';
 import WidgetHeader from '../../components/WidgetHeader';
+import WidgetFooter from '../../components/WidgetFooter';
+
+// images/icons
+import CancelIcon from '../../assets/cancel.svg';
 
 
 const Home = () => {
@@ -26,6 +27,7 @@ const Home = () => {
           setActive={setActive}
           toggleTab={toggleTab}
           showTabs
+          element={<button><img src={CancelIcon} alt="Cancel Icon" /></button>}
         />
         <div className="widget-body">
           <div className="tab-content">
@@ -42,18 +44,7 @@ const Home = () => {
             )}
           </div>
         </div>
-        <div className="cardwidget-footer flex justify-between items-center">
-          <button className="flex items-center ">
-            <span>
-              <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.7713 13.8792L4.22879 4.98603" stroke="#162858" strokeLinecap="round" />
-                <path d="M11.7712 4.98603L4.22874 13.8792" stroke="#162858" strokeLinecap="round" />
-              </svg>
-            </span>
-            <span>Cancel Payment</span>
-          </button>
-          <img src={CardGroup} alt="Card Group" />
-        </div>
+        <WidgetFooter verb="Cancel Payment" />
       </div>
 
     </div>

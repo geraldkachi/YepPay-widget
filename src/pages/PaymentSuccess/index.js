@@ -1,6 +1,7 @@
 import React from 'react';
 // Components
 import AnimatedSuccessCheckmark from '../../components/AnimatedSuccessCheckmark';
+import WidgetFooter from '../../components/WidgetFooter';
 
 const PaymentSuccess = () => {
   return (
@@ -20,14 +21,9 @@ const PaymentSuccess = () => {
               <span>View Receipt</span>
             </button>
           </div>
-          <div className="centralize">
-            <button type="button" to="/authorize_transaction" className="btn w-200 default mt-5 mb-15">
-              <span>Dismiss</span>
-            </button>
-          </div>
         </div>
-        <div className="paymentstatus-footer">
-          <p>Powered by Cashenvoy</p>
+        <div className="pt-120">
+          <WidgetFooter verb="Dismiss" />
         </div>
       </div>
     </div>

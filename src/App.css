@@ -19,21 +19,40 @@
   border-radius: 10px 10px 0px 0px;
 }
 .widget-header-pill {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-top: 30px;
   padding: 15px;
   background: #382B3D;
   border-radius: 10px;
 }
-.widget-header-pill > span:nth-child(1) {
+.widget-header-user {
+  display: flex;
+  justify-content: space-between;
+}
+
+.widget-header-user > span:nth-child(1) {
   font-size: 12px;
   color: #fff;
 }
-.widget-header-pill > span:nth-child(2) {
+.widget-header-user > span:nth-child(2) {
   font-size: 16px;
   color: #fff;
+  font-weight: 500;
+}
+.widget-header-meta {
+  display: flex;
+  justify-content: flex-end;
+}
+.meta-child {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-top: 10px;
+}
+.meta-child > span {
+  font-size: 12px;
+  color: #FDE5E5;
+}.meta-child > button:focus {
+  outline: none;
 }
 .buttonGroup {
   display: flex;
@@ -241,18 +260,18 @@
 .submitbutton:hover {
   background: #d4163f;
 }
-.cardwidget-footer {
+.widget-footer {
   padding: 14px 20px;
   border-top: 1px solid #eef1f5;
 }
-.cardwidget-footer > button {
+.widget-footer > button {
   color: #162858;
   font-size: 12px;
 }
-.cardwidget-footer > button:hover {
+.widget-footer > button:hover {
   font-weight: 500;
 }
-.cardwidget-footer > button > span:nth-child(2) {
+.widget-footer > button > span:nth-child(2) {
   margin-left: 5px;
   font-weight: 500;
 }
@@ -296,6 +315,9 @@
   display: flex;
   align-items: center;
 }
+.bt-grey {
+  border-top: 1px solid #EDF3F8;
+}
 .mt-5 {
   margin-top: 5px;
 }
@@ -322,6 +344,12 @@
 }
 .pt-20 {
   padding-top: 20px;
+}
+.pt-100 {
+  padding-top: 100px;
+}
+.pt-120 {
+  padding-top: 120px;
 }
 .pb-10 {
   padding-bottom: 10px;
@@ -481,14 +509,6 @@
   text-align: center;
   font-weight: 600;
 }
-.paymentstatus-footer > p {
-  text-align: center;
-  font-weight: 500;
-  color: #5D627B;
-  font-size: 13px;
-  padding: 15px 0;
-  border-top: 1px solid #E5E5E5;
-}
 /*Animated Checkmark*/
 .animated-icon {
   width: 80px;
@@ -535,4 +555,232 @@
   100% {
     stroke-dashoffset: 900;
  }
+}
+
+/* Test Widget styles */
+.testwidget-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.testwidget {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 10px;
+  border: 1px solid #f2f4f7;
+}
+.testwidget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #EDF3F8;
+}
+.testwidget-body {
+  padding: 0 20px;
+}
+.testwidget-body > p:first-child {
+  font-size: 15px;
+  color: #5D627B;
+  padding: 30px 0;
+  line-height: 16.5px;
+}
+.testwidget-body > p:last-child {
+  font-size: 30px;
+  color: #382B3D;
+  font-weight: 600;
+  padding-bottom: 150px;
+  line-height: 40px;
+}
+.testwidget-body > p:last-child > span {
+  color: #F12F58;
+}
+.testwidget-body > p:first-child > span {
+  color: #382B3D;
+  font-weight: 600;
+}
+.test-mode{
+  display: block;
+  background-color: #F12F58;
+  color: #fff;
+  font-weight: 600;
+  padding: 7px 20px;
+  border-radius: 5px;
+}
+.testwidget-footer > span{
+  display: block;
+  background: #6F717E;
+  color: #fff;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 10px 20px;
+}
+.testwidget-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #EDF3F8;
+}
+.testwidget-link:hover {
+  background-color: #fbfdff;
+}
+.testwidget-link > span {
+  display: flex;
+  gap: 12px;
+  line-height: 24px;
+  color: #6F717E;
+  font-weight: 600;
+}
+.testwidget-cancel-btn {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.testwidget-cancel-btn > span {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #162858;
+  line-height: 13.2px;
+  font-size: 12px;
+  padding: 25px 20px;
+}
+.pay-with-card-test {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 12px;
+  border-bottom: 1px solid #EDF3F8;
+}
+.pay-with-card-test > span {
+  font-weight: 600;
+  color: #6F717E;
+}
+.pay-with-card-test > span > span {
+  color: #382B3D;
+  font-weight: 700;
+}
+.testcard-content {
+  width: 100%;
+}
+.testcard-content > span {
+  display: block;
+  text-align: center;
+}
+.testcard-content > span:nth-child(1) {
+  padding-top: 40px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 13px;
+  color: #5D627B;
+}
+.testcard-content > span:nth-child(2) {
+  font-size: 15px;
+  font-weight: 600;
+  padding-top: 10px;
+}
+.testcard-line {
+  width: 152px;
+  height: 1px;
+  margin: 20px auto;
+  background-color: #EDF3F8;
+}
+.testcard-content > p {
+  text-align: center;
+  color: #6F717E;
+  font-weight: 500;
+  padding: 20px 0 20PX 0;
+}
+.testcard-check {
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  position: relative;
+  margin-bottom: 15px;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #EDF3F8;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: #6F717E;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.testcard-check:focus {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.testcard-check.success:focus {
+  border: 1px solid #34A853;
+}
+.testcard-check input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.testcard-check .checkmark {
+  position: absolute;
+  top: 17px;
+  right: 20px;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #EDF3F8;
+}
+.testcard-check .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.testcard-check input:checked ~ .checkmark::after {
+  display: block;
+}
+.testcard-check  .checkmark::after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.testcard-check.success input:checked ~ .checkmark {
+  border: 1px solid #34A853;
+  background-color: #34A853;
+}
+.testcard-check.failure input:checked ~ .checkmark {
+  border: 1px solid #F12F58;
+  background-color: #F12F58;
+}
+.testcard-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #F12F58;
+  padding: 20px;
+  font-size: 15px;
+  line-height: 17px;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 5px;
+}
+.testcard-footer {
+  padding-top: 50px;
+}
+@media screen and (min-width: 601px) {
+  .testwidget {
+    width: 411px;
+    margin-top: 20px;
+  }
 }

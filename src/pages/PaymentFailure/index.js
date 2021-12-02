@@ -1,5 +1,6 @@
 import React from 'react';
 import AnimatedFailureCheckmark from '../../components/AnimatedFailureCheckmark';
+import WidgetFooter from '../../components/WidgetFooter';
 
 const PaymentFailure = () => {
   return (
@@ -19,12 +20,9 @@ const PaymentFailure = () => {
             </svg>
             Try Again
           </button>
-          <button type="button" to="/authorize_transaction" className="btn block-btn default mt-5 mb-15">
-            <span>Dismiss</span>
-          </button>
         </div>
-        <div className="paymentstatus-footer">
-          <p>Powered by Cashenvoy</p>
+        <div className="pt-120">
+          <WidgetFooter verb="Dismiss" />
         </div>
       </div>
     </div>

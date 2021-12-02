@@ -6,6 +6,8 @@ const AuthorizeTransaction = React.lazy(() => import('./pages/AuthorizeTransacti
 const PaymentSuccess = React.lazy(() => import('./pages/PaymentSuccess'));
 const PaymentFailure = React.lazy(() => import('./pages/PaymentFailure'));
 const Ussd = React.lazy(() => import('./pages/Ussd'));
+const TestWidget = React.lazy(() => import('./pages/TestWidget'));
+const CardTestWidget = React.lazy(() => import('./pages/CardTestWidget'));
 
 
 
@@ -19,6 +21,8 @@ const App = () => {
           <Route exact path="/payment_success" element={<PaymentSuccess/>} />
           <Route exact path="/payment_failure" element={<PaymentFailure/>} />
           <Route exact path="/ussd" element={<Ussd/>} />
+          <Route exact path="/test" element={<TestWidget/>} />
+          <Route exact path="/test/card" element={<CardTestWidget/>} />
         </Routes>
       </Suspense>
     </div>
