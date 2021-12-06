@@ -84,6 +84,12 @@ const CardPaymentWidget = () => {
             />
             <label htmlFor="cardNumber" className="label label--floating">CVV</label>
             <button className="infobtn" type="button">Info?</button>
+            <div className="hidden-cvv-info">
+              <span>
+                The 3 digits number behind
+                your atm card
+              </span>
+            </div>
           </div>
         </div>
         <div className="input-wrapper">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import WidgetFooter from '../../components/WidgetFooter';
 import WidgetHeader from '../../components/WidgetHeader';
 
 const Ussd = () => {
@@ -17,23 +18,18 @@ const Ussd = () => {
           <p className="text-center f-20 font-500 cashenvoy-blue pt-20">*966*123456789#</p>
           <div className="centralize pt-20">
           <button className="copy-usd-code">
-            Click here to copy USSD code
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M6.5 0.5H14C14.8642 0.5 15.5 1.13579 15.5 2V9.5C15.5 10.3642 14.8642 11 14 11H11V14C11 14.8642 10.3642 15.5 9.5 15.5H2C1.13579 15.5 0.5 14.8642 0.5 14V6.5C0.5 5.63579 1.13579 5 2 5H5V2C5 1.13579 5.63579 0.5 6.5 0.5ZM5 6.5H2V14H9.5V11H6.5C5.63579 11 5 10.3642 5 9.5V6.5ZM6.5 2V9.5H14V2H6.5Z" fill="#8797B1"/>
+</svg>
+Click here to copy USSD code
           </button>
           </div>
           <div className="centralize pt-20">
             <Link to="/" className="cashenvoyred font-500">Choose Another Bank</Link>
           </div>
         </div>
-        <div className="cardwidget-footer flex justify-between items-center">
-          <button className="flex items-center">
-            <span>
-              <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.7713 13.8792L4.22879 4.98603" stroke="#162858" stroke-linecap="round" />
-                <path d="M11.7712 4.98603L4.22874 13.8792" stroke="#162858" stroke-linecap="round" />
-              </svg>
-            </span>
-            <span>Cancel Payment</span>
-          </button>
+        <div className="pt-100">
+          <WidgetFooter verb="Cancel Payment" />
         </div>
       </div>
     </div>

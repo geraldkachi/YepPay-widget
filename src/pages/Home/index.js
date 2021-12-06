@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 // Components
 import CardPaymentWidget from '../../components/CardPaymentWidget';
 import USSDWidget from '../../components/USSDWidget';
+import BankWidget from '../../components/BankWidget';
 import WidgetHeader from '../../components/WidgetHeader';
 import WidgetFooter from '../../components/WidgetFooter';
 
@@ -38,9 +39,7 @@ const Home = () => {
               <USSDWidget />
             )}
             {setActive === 'BankPayment' && (
-              <div>
-                <h1>Bank Payment</h1>
-              </div>
+              <BankWidget />
             )}
           </div>
         </div>

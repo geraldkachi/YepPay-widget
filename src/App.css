@@ -23,6 +23,8 @@
   padding: 15px;
   background: #382B3D;
   border-radius: 10px;
+  position: relative;
+  z-index: 1;
 }
 .widget-header-user {
   display: flex;
@@ -53,6 +55,43 @@
   color: #FDE5E5;
 }.meta-child > button:focus {
   outline: none;
+}
+.hidden-charges {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: ease-in-out 0.5s;
+}
+.hidden-charges-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 15px;
+  background: #6C6170;
+  border-radius: 10px;
+}
+.display-hidden-charges {
+  z-index: 2;
+}
+.display-hidden-charges:hover + .hidden-charges {
+  display: block;
+  width: 100%;
+}
+.hidden-charges-child > span:nth-child(1){
+  font-size: 12px;
+  color: #fff;
+  line-height: 13.5px;
+}
+.hidden-charges-child > span:nth-child(2){
+  font-size: 14px;
+  color: #fff;
+  font-weight: 700;
+  line-height: 18px;
 }
 .buttonGroup {
   display: flex;
@@ -158,6 +197,24 @@
 .input-cvv {
   position: relative;
   flex-basis: 1;
+}
+.hidden-cvv-info {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: #F9F9F9;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+.hidden-cvv-info > span {
+  font-size: 10px;
+  line-height: 11px;
+  color: #2A4368;
+}
+.infobtn:hover + .hidden-cvv-info {
+  display: block;
 }
 .label {
   position: absolute;
@@ -276,6 +333,48 @@
   font-weight: 500;
 }
 
+/* Bank Widget */
+.bankwidget {
+  position: relative;
+}
+.bankwidget > h1 {
+  font-size: 14px;
+  color: #162858;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+  padding: 20px 0 16px 0;
+}
+.bankforrm > .select-label {
+  display: block;
+}
+.select-label {
+  width: 100%;
+  position: relative;
+}
+.select-label > select, .account-number {
+  width: 100%;
+  height: 50px;
+  background: #FFFFFF;
+  border: 1px solid rgb(241, 241, 241);
+  border-radius: 5px;
+  padding: 0 10px;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
+}
+/* .select-label > select {
+  position: relative;
+} */
+.custom-select-icon {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+}
+.account-number {
+  margin-top: 15px;
+}
+.select-label 
 /* utilities */
 .text-center {
   text-align: center;
@@ -393,13 +492,19 @@
 
 /* special classes */
 .copy-usd-code {
-  padding: 7px 15px;
+  display: flex;
+  gap: 7px;
+  padding: 10px 15px;
   font-size: 13px;
   background: #FFFFFF;
-  color: #939393;
+  color: #8797B1;
   border: 1px solid #f5f1f1;
+  line-height: 14.3px;
   box-sizing: border-box;
   border-radius: 5px;
+}
+.copy-usd-code:focus {
+  outline: none;
 }
 .hide-on-mobile {
   display: none;
@@ -558,7 +663,7 @@
 }
 
 /* Test Widget styles */
-.testwidget-wrapper {
+/* .testwidget-wrapper {
   width: 100%;
   display: flex;
   align-items: center;
@@ -599,7 +704,7 @@
 .testwidget-body > p:first-child > span {
   color: #382B3D;
   font-weight: 600;
-}
+} */
 .test-mode{
   display: block;
   background-color: #F12F58;
@@ -608,7 +713,7 @@
   padding: 7px 20px;
   border-radius: 5px;
 }
-.testwidget-footer > span{
+/* .testwidget-footer > span{
   display: block;
   background: #6F717E;
   color: #fff;
@@ -637,8 +742,8 @@
   display: flex;
   width: 100%;
   justify-content: center;
-}
-.testwidget-cancel-btn > span {
+} */
+/* .testwidget-cancel-btn > span {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -646,47 +751,7 @@
   line-height: 13.2px;
   font-size: 12px;
   padding: 25px 20px;
-}
-.pay-with-card-test {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  gap: 12px;
-  border-bottom: 1px solid #EDF3F8;
-}
-.pay-with-card-test > span {
-  font-weight: 600;
-  color: #6F717E;
-}
-.pay-with-card-test > span > span {
-  color: #382B3D;
-  font-weight: 700;
-}
-.testcard-content {
-  width: 100%;
-}
-.testcard-content > span {
-  display: block;
-  text-align: center;
-}
-.testcard-content > span:nth-child(1) {
-  padding-top: 40px;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 13px;
-  color: #5D627B;
-}
-.testcard-content > span:nth-child(2) {
-  font-size: 15px;
-  font-weight: 600;
-  padding-top: 10px;
-}
-.testcard-line {
-  width: 152px;
-  height: 1px;
-  margin: 20px auto;
-  background-color: #EDF3F8;
-}
+} */
 .testcard-content > p {
   text-align: center;
   color: #6F717E;
