@@ -133,6 +133,7 @@
 }
 .ussd-collections {
   margin-top: 20px;
+  padding-bottom: 100px;
 }
 .input-wrapper {
   position: relative;
@@ -345,10 +346,11 @@
   text-align: center;
   padding: 20px 0 16px 0;
 }
-.bankforrm > .select-label {
-  display: block;
+.bankform {
+  padding: 0 0 60px 0;
 }
 .select-label {
+  display: block;
   width: 100%;
   position: relative;
 }
@@ -358,17 +360,35 @@
   background: #FFFFFF;
   border: 1px solid rgb(241, 241, 241);
   border-radius: 5px;
-  padding: 0 10px;
+  padding: 0 20px;
   -moz-appearance:none; /* Firefox */
   -webkit-appearance:none; /* Safari and Chrome */
   appearance:none;
 }
-/* .select-label > select {
-  position: relative;
-} */
+
 .custom-select-icon {
   position: absolute;
-  top: 5px;
+  top: 22px;
+  right: 20px;
+}
+.auth-account-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #F12F58;
+  padding: 10px 15px;
+  margin: 15px 0 25px 0;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 500;
+  position: relative;
+}
+.auth-account-btn:hover {
+  background: #d4163f;
+}
+.auth-account-btn-icon {
+  position: absolute;
   right: 15px;
 }
 .account-number {
@@ -376,9 +396,6 @@
 }
 .select-label 
 /* utilities */
-.text-center {
-  text-align: center;
-}
 .relative {
   position: relative;
 }
@@ -488,6 +505,9 @@
 .block-btn {
  display: block;
  width: 100%;
+}
+.text-center {
+  text-align: center;
 }
 
 /* special classes */
@@ -662,96 +682,14 @@
  }
 }
 
-/* Test Widget styles */
-/* .testwidget-wrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.testwidget {
-  width: 100%;
-  background: #FFFFFF;
-  border-radius: 10px;
-  border: 1px solid #f2f4f7;
-}
-.testwidget-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  border-bottom: 1px solid #EDF3F8;
-}
-.testwidget-body {
-  padding: 0 20px;
-}
-.testwidget-body > p:first-child {
-  font-size: 15px;
-  color: #5D627B;
-  padding: 30px 0;
-  line-height: 16.5px;
-}
-.testwidget-body > p:last-child {
-  font-size: 30px;
-  color: #382B3D;
-  font-weight: 600;
-  padding-bottom: 150px;
-  line-height: 40px;
-}
-.testwidget-body > p:last-child > span {
-  color: #F12F58;
-}
-.testwidget-body > p:first-child > span {
-  color: #382B3D;
-  font-weight: 600;
-} */
 .test-mode{
   display: block;
-  background-color: #F12F58;
-  color: #fff;
+  background-color: #FDE5E5;
+  color: #F12F58;
   font-weight: 600;
   padding: 7px 20px;
   border-radius: 5px;
 }
-/* .testwidget-footer > span{
-  display: block;
-  background: #6F717E;
-  color: #fff;
-  font-weight: 600;
-  line-height: 24px;
-  padding: 10px 20px;
-}
-.testwidget-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid #EDF3F8;
-}
-.testwidget-link:hover {
-  background-color: #fbfdff;
-}
-.testwidget-link > span {
-  display: flex;
-  gap: 12px;
-  line-height: 24px;
-  color: #6F717E;
-  font-weight: 600;
-}
-.testwidget-cancel-btn {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-} */
-/* .testwidget-cancel-btn > span {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #162858;
-  line-height: 13.2px;
-  font-size: 12px;
-  padding: 25px 20px;
-} */
 .testcard-content > p {
   text-align: center;
   color: #6F717E;

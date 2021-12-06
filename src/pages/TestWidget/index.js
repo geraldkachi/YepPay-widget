@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 // images/icons
 import WidgetHeader from '../../components/WidgetHeader';
 import WidgetFooter from '../../components/WidgetFooter';
+import BankWidget from '../../components/BankWidget';
+import USSDWidget from '../../components/USSDWidget';
 
 
 const TestWidget = () => {
@@ -63,12 +65,10 @@ const TestWidget = () => {
               </div>
             )}
             {setActive === 'USSDPayment' && (
-              <p>USSD</p>
+              <USSDWidget />
             )}
             {setActive === 'BankPayment' && (
-              <div>
-                <h1>Bank Payment</h1>
-              </div>
+              <BankWidget />
             )}
           </div>
         </div>

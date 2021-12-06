@@ -18,6 +18,12 @@ const BankWidget = () => {
         <label>
           <input className="account-number" placeholder="Enter account number" />
         </label>
+        <button className="auth-account-btn">
+          Authenticate
+          <svg className="auth-account-btn-icon" width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.76438 6.51862L0 1.05876L1.11781 0L8 6.51862L1.11781 13.0372L0 11.9785L5.76438 6.51862Z" fill="white" />
+          </svg>
+        </button>
       </form>
     </div>
   );
