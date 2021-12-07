@@ -22,15 +22,15 @@ const CardTestWidget = () => {
           <p>
             Test your payment with the options <br /> listed below
           </p>
-          <label class="testcard-check success">
+          <label className="testcard-check success">
             <span>Test Successful Payment </span>
             <input type="checkbox" />
-            <span class="checkmark"></span>
+            <span className="checkmark"></span>
           </label>
-          <label class="testcard-check failure">
+          <label className="testcard-check failure">
             <span>Test Failed Payment</span>
             <input type="checkbox" />
-            <span class="checkmark"></span>
+            <span className="checkmark"></span>
           </label>
           <button className="testcard-btn">
             Pay NGN100
@@ -45,7 +45,7 @@ const CardTestWidget = () => {
               <span>USSD</span>
             </span>
             <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.58586 9L0.292969 1.70711L1.70718 0.292892L10.4143 9L1.70718 17.7071L0.292969 16.2929L7.58586 9Z" fill="#91979F" />
+              <path fillRule="evenodd" clipRule="evenodd" d="M7.58586 9L0.292969 1.70711L1.70718 0.292892L10.4143 9L1.70718 17.7071L0.292969 16.2929L7.58586 9Z" fill="#91979F" />
             </svg>
           </Link>
           <Link to="/" className="testwidget-link">
@@ -56,13 +56,13 @@ const CardTestWidget = () => {
               <span>Bank Transfer</span>
             </span>
             <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M7.58586 9L0.292969 1.70711L1.70718 0.292892L10.4143 9L1.70718 17.7071L0.292969 16.2929L7.58586 9Z" fill="#91979F" />
+              <path fillRule="evenodd" clipRule="evenodd" d="M7.58586 9L0.292969 1.70711L1.70718 0.292892L10.4143 9L1.70718 17.7071L0.292969 16.2929L7.58586 9Z" fill="#91979F" />
             </svg>
           </Link>
           <button type="button" className="testwidget-cancel-btn">
             <span>
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.99994 6.23744L1.24366 9.99372L0.00622559 8.75629L3.76251 5L0.00622559 1.24372L1.24366 0.00628662L4.99994 3.76257L8.75623 0.00628662L9.99366 1.24372L6.23738 5L9.99366 8.75629L8.75623 9.99372L4.99994 6.23744Z" fill="black" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M4.99994 6.23744L1.24366 9.99372L0.00622559 8.75629L3.76251 5L0.00622559 1.24372L1.24366 0.00628662L4.99994 3.76257L8.75623 0.00628662L9.99366 1.24372L6.23738 5L9.99366 8.75629L8.75623 9.99372L4.99994 6.23744Z" fill="black" />
               </svg>
               <span>Cancel</span>
             </span>

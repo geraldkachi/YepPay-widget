@@ -15,6 +15,7 @@ const App = () => {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
+      
         <Routes>
           <Route exact path="/" element={<Home/>} />
           <Route exact path="/authorize_transaction" element={<AuthorizeTransaction/>} />

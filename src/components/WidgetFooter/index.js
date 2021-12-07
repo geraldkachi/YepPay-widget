@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const WidgetFooter = ({verb}) => {
   return (
@@ -17,3 +18,7 @@ const WidgetFooter = ({verb}) => {
 }
 
 export default WidgetFooter;
+
+WidgetFooter.propTypes = {
+  verb: PropTypes.string
+};

@@ -6,6 +6,7 @@ import { formatCreditCardNumber, formatCVC, formatExpirationDate } from "../../u
 import RememberCard from './RememberCard';
 // hooks
 import useForm from '../../hooks/useForm';
+// icons
 import MasterCard from '../../assets/mastercardmd.svg';
 import VisaCard from '../../assets/visacard.svg';
 import MaestroCard from '../../assets/maestrocard.svg';

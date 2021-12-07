@@ -36,15 +36,15 @@ const TestWidget = () => {
                 <p>
                   Test your payment with the options <br /> listed below
                 </p>
-                <label class="testcard-check success">
+                <label className="testcard-check success">
                   <span>Test Successful Payment </span>
                   <input type="checkbox" />
-                  <span class="checkmark"></span>
+                  <span className="checkmark"></span>
                 </label>
-                <label class="testcard-check failure">
+                <label className="testcard-check failure">
                   <span>Test Failed Payment</span>
                   <input type="checkbox" />
-                  <span class="checkmark"></span>
+                  <span className="checkmark"></span>
                 </label>
                 <div className="pt-40">
                   <button type="button" to="/authorize_transaction" className="submitbutton">
