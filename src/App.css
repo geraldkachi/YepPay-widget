@@ -4,10 +4,21 @@
 .h-full {
   height: 100%;
 }
+.w-200 {
+  width: 200px;
+}
 .cashenvoypaymentwidget {
-  width: 391px;
+  width: 100%;
   background: #FFFFFF;
   border: 1px solid #f2f4f7;
+  overflow-x: hidden;
+  margin: 0 10px;
+}
+@media screen and (min-width: 578px) {
+  .cashenvoypaymentwidget {
+    width: 391px;
+    margin: 0 0;
+  }
 }
 .widget-header {
   width: 100%;
@@ -16,21 +27,79 @@
   border-radius: 10px 10px 0px 0px;
 }
 .widget-header-pill {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-top: 30px;
   padding: 15px;
   background: #382B3D;
   border-radius: 10px;
+  position: relative;
+  z-index: 1;
 }
-.widget-header-pill > span:nth-child(1) {
+.widget-header-user {
+  display: flex;
+  justify-content: space-between;
+}
+
+.widget-header-user > span:nth-child(1) {
   font-size: 12px;
   color: #fff;
 }
-.widget-header-pill > span:nth-child(2) {
+.widget-header-user > span:nth-child(2) {
   font-size: 16px;
   color: #fff;
+  font-weight: 500;
+}
+.widget-header-meta {
+  display: flex;
+  justify-content: flex-end;
+}
+.meta-child {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-top: 10px;
+}
+.meta-child > span {
+  font-size: 12px;
+  color: #FDE5E5;
+}.meta-child > button:focus {
+  outline: none;
+}
+.hidden-charges {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: ease-in-out 0.5s;
+}
+.hidden-charges-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 15px;
+  background: #6C6170;
+  border-radius: 10px;
+}
+.display-hidden-charges {
+  z-index: 2;
+}
+.display-hidden-charges:hover + .hidden-charges {
+  display: block;
+  width: 100%;
+}
+.hidden-charges-child > span:nth-child(1){
+  font-size: 12px;
+  color: #fff;
+  line-height: 13.5px;
+}
+.hidden-charges-child > span:nth-child(2){
+  font-size: 14px;
+  color: #fff;
+  font-weight: 700;
+  line-height: 18px;
 }
 .buttonGroup {
   display: flex;
@@ -42,7 +111,7 @@
   padding: 8px 28px;
   font-size: 12px;
   color: #162858;
-  border: 0.5px solid #DAEDE5;
+  border: 0.5px solid #EFDBDB;
   border-radius: 5px;
 }
 .button:focus {
@@ -68,9 +137,11 @@
 .cardpaymentwidget > h1, .ussdwidget > h1 {
   font-size: 13px;
   color: #382B3D;
+  font-weight: 500;
 }
 .ussd-collections {
   margin-top: 20px;
+  padding-bottom: 100px;
 }
 .input-wrapper {
   position: relative;
@@ -91,6 +162,10 @@
 }
 .infobtn:focus {
   outline: none;
+}
+.retry-svg-icon {
+  position: absolute;
+  top: 15px;
 }
 .form-control {
   width: 100%;
@@ -131,6 +206,24 @@
 .input-cvv {
   position: relative;
   flex-basis: 1;
+}
+.hidden-cvv-info {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: #F9F9F9;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+.hidden-cvv-info > span {
+  font-size: 10px;
+  line-height: 11px;
+  color: #2A4368;
+}
+.infobtn:hover + .hidden-cvv-info {
+  display: block;
 }
 .label {
   position: absolute;
@@ -178,27 +271,36 @@
 .ussdbutton > span:nth-child(2) {
   color: #F12F58;
 }
+
 /*RememberCard*/
 .remembercard-collections {
   display: flex;
-  margin-top: 20px;
+  margin-top: 15px;
   margin-bottom: 20px;
+  overflow-x: scroll;
+}
+.remembercard-collections::-webkit-scrollbar {
+  display: none;
 }
 .remembercard-collections .remembercard:not(:first-child) {
  margin-left: 10px;
 }
 .remembercard {
+  min-width: 90px;
   width: 90px;
   height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 6px;
+  padding: 0 8px;
   background: #FFFFFF;
   border: 1px solid #f2f4f7;
   border-radius: 5px;
 }
-.remembercard > span:nth-child(2) {
+.remembercard > button:focus {
+  outline: none;
+}
+.remembercard > a:nth-child(2) {
   font-size: 12px;
   color: #1D1B1B;
 }
@@ -227,22 +329,99 @@
 .submitbutton:hover {
   background: #d4163f;
 }
-.cardwidget-footer {
+.widget-footer {
   padding: 14px 20px;
   border-top: 1px solid #eef1f5;
 }
-.cardwidget-footer > button {
+.widget-footer > button {
   color: #162858;
   font-size: 12px;
 }
-.cardwidget-footer > button:hover {
+.widget-footer > button:hover {
   font-weight: 500;
 }
-.cardwidget-footer > button > span:nth-child(2) {
+.widget-footer > button > span:nth-child(2) {
   margin-left: 5px;
+  font-weight: 500;
 }
-.text-center {
+
+/* Bank Widget */
+.bankwidget {
+  position: relative;
+}
+.bankwidget > h1 {
+  font-size: 14px;
+  color: #162858;
+  font-weight: 500;
+  line-height: 18px;
   text-align: center;
+  padding: 20px 0 16px 0;
+}
+.bankform {
+  padding: 0 0 60px 0;
+}
+.select-label {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+.select-label > select, .account-number, .otp-input {
+  width: 100%;
+  height: 50px;
+  background: #FFFFFF;
+  border: 1px solid rgb(241, 241, 241);
+  border-radius: 5px;
+  padding: 0 20px;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
+}
+.otp-input::placeholder, .account-number::placeholder {
+  color: #8797B1;
+}
+.otp-input:focus, .account-number:focus {
+  outline: none;
+  border-color: #1595eb;
+  transition: border-color ease-in .3s;
+}
+
+.custom-select-icon {
+  position: absolute;
+  top: 22px;
+  right: 20px;
+}
+.auth-account-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #F12F58;
+  padding: 10px 15px;
+  margin: 15px 0 25px 0;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 500;
+  position: relative;
+}
+.auth-account-btn:hover {
+  background: #d4163f;
+}
+.auth-account-btn-icon {
+  position: absolute;
+  right: 15px;
+}
+.account-number {
+  margin-top: 15px;
+}
+.select-label 
+/* utilities */
+.relative {
+  position: relative;
+}
+.centralize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .flex {
   display: flex;
@@ -271,6 +450,9 @@
   display: flex;
   align-items: center;
 }
+.bt-grey {
+  border-top: 1px solid #EDF3F8;
+}
 .mt-5 {
   margin-top: 5px;
 }
@@ -292,14 +474,98 @@
 .mb-15 {
   margin-bottom: 15px;
 }
+.p-20 {
+  padding: 20px;
+}
+.pt-20 {
+  padding-top: 20px;
+}
+.pt-100 {
+  padding-top: 100px;
+}
+.pt-120 {
+  padding-top: 120px;
+}
+.pb-10 {
+  padding-bottom: 10px;
+}
+.py-20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.px-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.f-13 {
+  font-size: 13px;
+}
+.f-20 {
+  font-size: 20px;
+}
+.font-normal {
+  font-weight: normal;
+}
+.font-500 {
+  font-weight: 500;
+}
+.primary-color {
+  color: #382B3D;
+}
+.cashenvoy-blue {
+  color: #162858;
+}
+.cashenvoyred {
+  color: #F12F58;
+}
+.grey-color {
+  color: #939393;
+}
 .block-btn {
  display: block;
  width: 100%;
 }
+.text-center {
+  text-align: center;
+}
+
+/* special classes */
+.copy-usd-code {
+  display: flex;
+  gap: 7px;
+  padding: 10px 15px;
+  font-size: 13px;
+  background: #FFFFFF;
+  color: #8797B1;
+  border: 1px solid #f5f1f1;
+  line-height: 14.3px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.copy-usd-code:focus {
+  outline: none;
+}
+.hide-on-mobile {
+  display: none;
+}
+.hide-on-desktop {
+  display: block;
+}
+.show-on-mobile {
+  display: none;
+}
+@media (min-width: 640px) { 
+  .hide-on-desktop {
+    display: none;
+  }
+  .show-on-desktop {
+    display: block;
+  }
+}
 .btn {
   display: inline-block;
   font: inherit;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 1rem;
   color: #222;
   text-align: center;
@@ -314,7 +580,7 @@
 }
 .btn.success {
  background: #F12F58;
-  color: #fff;
+ color: #fff;
 }
 .btn.success:hover {
   background: #d4143d;
@@ -365,6 +631,7 @@
   text-align: center;
   color: #382B3D;
   font-size: 1rem;
+  font-weight: 500;
 }
 .paymentstatus-content.error {
   padding: 30px 80px 0 80px;
@@ -384,18 +651,8 @@
   padding: 5px 0 20px 0;
   color: #F12F58;
   text-align: center;
+  font-weight: 600;
 }
-/* .paymentstatus-footer {
-  padding: 20px 0;
-} */
-.paymentstatus-footer > p {
-  text-align: center;
-  color: #382B3D;
-  font-size: 13px;
-  padding: 15px 0;
-  border-top: 1px solid #E5E5E5;
-}
-
 /*Animated Checkmark*/
 .animated-icon {
   width: 80px;
@@ -442,4 +699,217 @@
   100% {
     stroke-dashoffset: 900;
  }
+}
+
+.test-mode{
+  display: block;
+  background-color: #FDE5E5;
+  color: #F12F58;
+  font-weight: 600;
+  padding: 7px 20px;
+  border-radius: 5px;
+}
+.testcard-content > p {
+  text-align: center;
+  color: #6F717E;
+  font-weight: 500;
+  padding: 20px 0 20PX 0;
+}
+.testcard-check, .paymentcheck {
+  width: 100%;
+  display: flex;
+  padding: 20px;
+  position: relative;
+  margin-bottom: 15px;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #EDF3F8;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: #6F717E;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.paymentcheck {
+  margin-top: 20px;
+  border: 1px solid #34A853;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1)
+}
+.paymentcheck:hover {
+  box-shadow: none;
+}
+.existing-card-btn-wrapper {
+  padding-top: 80px;
+}
+.user-another-card-link {
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #382B3D;
+}
+.testcard-check:focus {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.testcard-check.success:focus {
+  border: 1px solid #34A853;
+}
+.testcard-check input, .paymentcheck input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.testcard-check .checkmark, .paymentcheck .checkmark {
+  position: absolute;
+  top: 17px;
+  right: 20px;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #EDF3F8;
+}
+.testcard-check .checkmark::after, .paymentcheck .checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.testcard-check input:checked ~ .checkmark::after, .paymentcheck input:checked ~ .checkmark::after {
+  display: block;
+}
+.testcard-check  .checkmark::after, .paymentcheck .checkmark::after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.testcard-check.success input:checked ~ .checkmark, .paymentcheck input:checked ~ .checkmark {
+  border: 1px solid #34A853;
+  background-color: #34A853;
+}
+
+.testcard-check.failure input:checked ~ .checkmark {
+  border: 1px solid #F12F58;
+  background-color: #F12F58;
+}
+.existing-card-type {
+  display: flex;
+  gap: 5px;
+}
+.testcard-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #F12F58;
+  padding: 20px;
+  font-size: 15px;
+  line-height: 17px;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 5px;
+}
+.testcard-footer {
+  padding-top: 50px;
+}
+@media screen and (min-width: 601px) {
+  .testwidget {
+    width: 411px;
+    margin-top: 20px;
+  }
+}
+
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 320px;
+  height: 500px;
+  background-color: #fefefe;
+  margin: 60px auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 10px;
+}
+.modal-content-child {
+  width: 100%;
+  padding: 20px;
+}
+.modal-content-child > svg {
+  margin: 0 auto;
+}
+.modal-content-child > h1 {
+  text-align: center;
+  font-size: 15px;
+  line-height: 17px;
+  color: #382B3D;
+  padding-top: 20px;
+  font-weight: 500;
+}
+.modal-content-child > p {
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #5D627B;
+  padding: 10px 0 40px 0;
+}
+.modal-content-child > button {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  height: 45px;
+  background: #F12F58;
+  border-radius: 5px;
+  color: #fff;
+}
+.modal-content-child > button:hover {
+  background: #d42249;
+}
+.modal-content-child > button:focus {
+  outline: none;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.modal-content-footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+@media screen and (min-width: 578px) {
+  .modal-content {
+    width: 391px;
+    height: 660px;
+    margin: 10px auto;
+  }
 }
