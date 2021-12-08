@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SelectCheckmark = ({ textContent, cardType }) => {
   return (
@@ -14,3 +15,8 @@ const SelectCheckmark = ({ textContent, cardType }) => {
 }
 
 export default SelectCheckmark;
+
+SelectCheckmark.propTypes = {
+  textContent: PropTypes.string,
+  cardType: PropTypes.string
+};

@@ -9,7 +9,7 @@ const AuthorizeTransaction = () => {
   return (
     <div className="h-full flex justify-center items-center">
       <div className="mt-50 cashenvoypaymentwidget">
-        <WidgetHeader email="zahrawiz@gmail.com" amount="NGN 10,000.00" />
+        <WidgetHeader email="zahrawiz@gmail.com" amount="10,000.00" />
         <div className="p-20">
           <p className="text-center f-13">Kindly enter thr OTP code sent to <br /> *******2345 or *********@email.com or enter the</p>
           <p className="text-center f-13"> OTP generated from your Hardware Token device.</p>
