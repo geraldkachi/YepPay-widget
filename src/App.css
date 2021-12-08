@@ -8,9 +8,17 @@
   width: 200px;
 }
 .cashenvoypaymentwidget {
-  width: 391px;
+  width: 100%;
   background: #FFFFFF;
   border: 1px solid #f2f4f7;
+  overflow-x: hidden;
+  margin: 0 10px;
+}
+@media screen and (min-width: 578px) {
+  .cashenvoypaymentwidget {
+    width: 391px;
+    margin: 0 0;
+  }
 }
 .widget-header {
   width: 100%;
@@ -284,10 +292,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 6px;
+  padding: 0 8px;
   background: #FFFFFF;
   border: 1px solid #f2f4f7;
   border-radius: 5px;
+}
+.remembercard > button:focus {
+  outline: none;
 }
 .remembercard > span:nth-child(2) {
   font-size: 12px;
@@ -354,7 +365,7 @@
   width: 100%;
   position: relative;
 }
-.select-label > select, .account-number {
+.select-label > select, .account-number, .otp-input {
   width: 100%;
   height: 50px;
   background: #FFFFFF;
@@ -364,6 +375,14 @@
   -moz-appearance:none; /* Firefox */
   -webkit-appearance:none; /* Safari and Chrome */
   appearance:none;
+}
+.otp-input::placeholder, .account-number::placeholder {
+  color: #8797B1;
+}
+.otp-input:focus, .account-number:focus {
+  outline: none;
+  border-color: #1595eb;
+  transition: border-color ease-in .3s;
 }
 
 .custom-select-icon {
@@ -696,7 +715,7 @@
   font-weight: 500;
   padding: 20px 0 20PX 0;
 }
-.testcard-check {
+.testcard-check, .paymentcheck {
   width: 100%;
   display: flex;
   padding: 20px;
@@ -717,20 +736,44 @@
   -ms-user-select: none;
   user-select: none;
 }
+.paymentcheck {
+  margin-top: 20px;
+  border: 1px solid #34A853;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1)
+}
+.paymentcheck:hover {
+  box-shadow: none;
+}
+.existing-card-btn-wrapper {
+  padding-top: 80px;
+}
+.user-another-card-link {
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #382B3D;
+}
 .testcard-check:focus {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 .testcard-check.success:focus {
   border: 1px solid #34A853;
 }
-.testcard-check input {
+.testcard-check input, .paymentcheck input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
   height: 0;
   width: 0;
 }
-.testcard-check .checkmark {
+.testcard-check .checkmark, .paymentcheck .checkmark {
   position: absolute;
   top: 17px;
   right: 20px;
@@ -740,15 +783,15 @@
   background-color: #fff;
   border: 1px solid #EDF3F8;
 }
-.testcard-check .checkmark::after {
+.testcard-check .checkmark::after, .paymentcheck .checkmark::after {
   content: "";
   position: absolute;
   display: none;
 }
-.testcard-check input:checked ~ .checkmark::after {
+.testcard-check input:checked ~ .checkmark::after, .paymentcheck input:checked ~ .checkmark::after {
   display: block;
 }
-.testcard-check  .checkmark::after {
+.testcard-check  .checkmark::after, .paymentcheck .checkmark::after {
   left: 9px;
   top: 5px;
   width: 5px;
@@ -758,13 +801,18 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-.testcard-check.success input:checked ~ .checkmark {
+.testcard-check.success input:checked ~ .checkmark, .paymentcheck input:checked ~ .checkmark {
   border: 1px solid #34A853;
   background-color: #34A853;
 }
+
 .testcard-check.failure input:checked ~ .checkmark {
   border: 1px solid #F12F58;
   background-color: #F12F58;
+}
+.existing-card-type {
+  display: flex;
+  gap: 5px;
 }
 .testcard-btn {
   width: 100%;
@@ -785,5 +833,83 @@
   .testwidget {
     width: 411px;
     margin-top: 20px;
+  }
+}
+
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 320px;
+  height: 500px;
+  background-color: #fefefe;
+  margin: 60px auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 10px;
+}
+.modal-content-child {
+  width: 100%;
+  padding: 20px;
+}
+.modal-content-child > svg {
+  margin: 0 auto;
+}
+.modal-content-child > h1 {
+  text-align: center;
+  font-size: 15px;
+  line-height: 17px;
+  color: #382B3D;
+  padding-top: 20px;
+  font-weight: 500;
+}
+.modal-content-child > p {
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #5D627B;
+  padding: 10px 0 40px 0;
+}
+.modal-content-child > button {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  height: 45px;
+  background: #F12F58;
+  border-radius: 5px;
+  color: #fff;
+}
+.modal-content-child > button:hover {
+  background: #d42249;
+}
+.modal-content-child > button:focus {
+  outline: none;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.modal-content-footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+@media screen and (min-width: 578px) {
+  .modal-content {
+    width: 391px;
+    height: 660px;
+    margin: 10px auto;
   }
 }

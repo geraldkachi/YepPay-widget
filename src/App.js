@@ -7,6 +7,7 @@ const PaymentSuccess = React.lazy(() => import('./pages/PaymentSuccess'));
 const PaymentFailure = React.lazy(() => import('./pages/PaymentFailure'));
 const Ussd = React.lazy(() => import('./pages/Ussd'));
 const TestWidget = React.lazy(() => import('./pages/TestWidget'));
+const SelectExistingCard = React.lazy(() => import('./pages/SelectExistingCard'));
 const CardTestWidget = React.lazy(() => import('./pages/CardTestWidget'));
 
 
@@ -15,7 +16,6 @@ const App = () => {
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>
-      
         <Routes>
           <Route exact path="/" element={<Home/>} />
           <Route exact path="/authorize_transaction" element={<AuthorizeTransaction/>} />
@@ -24,6 +24,7 @@ const App = () => {
           <Route exact path="/ussd" element={<Ussd/>} />
           <Route exact path="/test" element={<TestWidget/>} />
           <Route exact path="/test/card" element={<CardTestWidget/>} />
+          <Route exact path="/existing_card" element={<SelectExistingCard/>} />
         </Routes>
       </Suspense>
     </div>

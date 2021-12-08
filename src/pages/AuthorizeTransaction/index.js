@@ -20,15 +20,12 @@ const AuthorizeTransaction = () => {
               <input
                 type="tel"
                 name="number"
-                className="form-control input-cardnumber"
-                placeholder="0000"
-                pattern="[\d| ]{16,22}"
-                autocompletetype="cc-number"
+                className="otp-input"
+                placeholder="Enter OTP Code"
                 required
               />
-              <label htmlFor="cardNumber" className="label label--floating">OTP CODE</label>
             </div>
-            <Link type="button" to="/success" className="submitbutton mt-20">
+            <Link type="button" to="/payment_success" className="submitbutton mt-20">
               <span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="3.33331" y="7.33333" width="9.33333" height="6.66667" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

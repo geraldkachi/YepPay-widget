@@ -28,7 +28,6 @@ const Home = () => {
           setActive={setActive}
           toggleTab={toggleTab}
           showTabs
-          element={<button><img src={CancelIcon} alt="Cancel Icon" /></button>}
         />
         <div className="widget-body">
           <div className="tab-content">
