@@ -62,3 +62,16 @@ export function formatExpirationDate(value) {
 export function formatFormData(data) {
   return Object.keys(data).map(d => `${d}: ${data[d]}`);
 }
+
+export const BASE_PAYMENT_URL = 'https://staging-ws2.ce-nextgen.com/api/v1';
+
+
+/**
+ * async delay function
+ * 
+ * @param { Number } duration in milliseconds
+ * @returns { Promise } 
+ */
+ export const delay = async (duration=1000) => new Promise(resolve => setTimeout(resolve, duration));
+
+ 

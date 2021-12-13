@@ -5,7 +5,7 @@ import WidgetFooter from '../WidgetFooter';
 
 const DeleteCardModal = ({ setShowDeleteCardModal }) => {
   return (
-    <div id="deleteCardModal" class="modal">
+    <div id="deleteCardModal" className="modal">
       <div className="modal-content">
         <div className="modal-content-child">
           <svg width="66" height="60" viewBox="0 0 66 60" fill="none" xmlns="http://www.w3.org/2000/svg">
