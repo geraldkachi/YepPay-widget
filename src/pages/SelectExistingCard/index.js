@@ -22,13 +22,13 @@ const SelectExistingCard = () => {
   return (
     <div className="h-full flex justify-center items-center">
       <div className="mt-50 cashenvoypaymentwidget">
-        <WidgetHeader
+        {/* <WidgetHeader
           email="wiztemple7@cashenvoy.com"
           amount="NGN 1,000.00"
           setActive={setActive}
           toggleTab={toggleTab}
           showTabs
-        />
+        /> */}
         <div className="widget-body">
           <div className="tab-content">
             {setActive === 'CardPayment' && (
@@ -59,15 +59,8 @@ const SelectExistingCard = () => {
                 </div>
               </div>
             )}
-            {setActive === 'USSDPayment' && (
-              <USSDWidget />
-            )}
-            {setActive === 'BankPayment' && (
-              <BankWidget />
-            )}
           </div>
         </div>
-        <WidgetFooter verb="Cancel Payment" />
       </div>
 
     </div>
