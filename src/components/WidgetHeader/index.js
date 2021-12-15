@@ -7,7 +7,7 @@ import USSDIcon from '../../assets/ussd.svg';
 import BankIcon from '../../assets/bank.svg';
 import { urls } from '../../utils/urls';
 
-const WidgetHeader = ({ showTabs, showMeta, element, paymentDetail }) => {
+const WidgetHeader = ({ showTabs, showMeta, paymentDetail }) => {
   const { accessCode } = useParams();
 
   const { customer, amount, currency, amount_formatted, channels } =
@@ -53,7 +53,9 @@ const WidgetHeader = ({ showTabs, showMeta, element, paymentDetail }) => {
           src="https://res.cloudinary.com/cashenvoy/image/upload/v1638092035/Cashenvoy-nextgen/cashenvoylogo_pkci6s.svg"
           alt="Cashenvoy Logo"
         />
-        {element}
+        {!Boolean(paymentDetail?.is_live) && (
+          <span className="test-mode">Test Mode</span>
+        )}
       </div>
       <div className="widget-header-pill">
         <div className="widget-header-user">

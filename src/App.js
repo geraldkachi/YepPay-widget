@@ -19,7 +19,6 @@ const BankTransferWidget = React.lazy(() =>
 const SelectExistingCard = React.lazy(() =>
   import('./pages/SelectExistingCard')
 );
-const CardTestWidget = React.lazy(() => import('./pages/CardTestWidget'));
 
 const queryClient = new QueryClient();
 
@@ -66,18 +65,11 @@ const App = () => {
                   path={urls.failure(':accessCode')}
                   children={<PaymentFailure />}
                 />
-                {/* <Route exact path="/ussd" children={<Ussd />} />
-              <Route exact path="/test" children={<TestWidget />} />
-              <Route exact path="/test/card" children={<CardTestWidget />} />
-              <Route
-                exact
-                path="/existing_card"
-                children={<SelectExistingCard />}
-              /> */}
-                {/* <Route
-                  path={urls.home(':accessCode')}
-                  children={<Home />}
-                /> */}
+                <Route
+                  exact
+                  path="/existing-card"
+                  children={<SelectExistingCard />}
+                />
               </Switch>
             </Suspense>
             <Toaster position="top-center" />

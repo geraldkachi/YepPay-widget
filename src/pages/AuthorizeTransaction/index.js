@@ -6,8 +6,6 @@ import ActionButton from '../../components/Button/ActionButton';
 import withInitiatePayment from '../../components/HOC/withInitiatePayment';
 
 // images/icons
-import WidgetFooter from '../../components/WidgetFooter';
-import WidgetHeader from '../../components/WidgetHeader';
 import { usePaymentContext } from '../../context/PaymentContext';
 import { validatePayment } from '../../services';
 import FormError from '../../utils/form/FormError';
