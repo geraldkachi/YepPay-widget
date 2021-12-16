@@ -65,11 +65,6 @@ const App = () => {
                   path={urls.failure(':accessCode')}
                   children={<PaymentFailure />}
                 />
-                <Route
-                  exact
-                  path="/existing-card"
-                  children={<SelectExistingCard />}
-                />
               </Switch>
             </Suspense>
             <Toaster position="top-center" />
