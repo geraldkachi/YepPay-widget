@@ -34,34 +34,19 @@ const CardPaymentWidget = ({ paymentDetail }) => {
   const paymentContext = usePaymentContext();
 
   const { data, isLoading } = useQuery(
-    [GET_REMEMBERED_CARDS, paymentDetail.customer?.email],
-    () => getRememberedCards(paymentDetail.customer?.email)
+    [
+      GET_REMEMBERED_CARDS,
+      paymentDetail.customer?.email,
+      paymentDetail.business?.id,
+    ],
+    () =>
+      getRememberedCards(
+        paymentDetail.customer?.email,
+        paymentDetail.business?.id
+      )
   );
 
-  let rememberedCards = [
-    {
-      first_6: '553188',
-      last_4: '2950',
-      issuer: ' CREDIT ZENITH BANK PLC',
-      country: 'NG',
-      type: 'MASTERCARD',
-      expiry: '09/32',
-      token: 'CfTkDr6AnWIP3xz04f70BLCz5LJZQt6b',
-      created_at: '2021-12-06T15:10:52.000000Z',
-      updated_at: '2021-12-06T15:11:16.000000Z',
-    },
-    {
-      first_6: '539983',
-      last_4: '8381',
-      issuer: 'GUARANTY TRUST BANK Mastercard Naira Debit Card',
-      country: 'NG',
-      type: 'MASTERCARD',
-      expiry: '10/31',
-      token: '3HdVVK2Di04b7J4bE17AdzUuB9SYAyPL',
-      created_at: '2021-12-07T04:08:13.000000Z',
-      updated_at: '2021-12-07T04:08:29.000000Z',
-    },
-  ];
+  let rememberedCards = [];
   if (data?.data) {
     rememberedCards = data.data?.data;
   }
@@ -112,16 +97,11 @@ const CardPaymentWidget = ({ paymentDetail }) => {
     const response = await payWithTokenizedCard(payload);
     formik.setSubmitting(false);
     if (response.status) {
-      paymentContext.setSuccessMessage(response.message);
+      paymentContext.setPayment(response.data);
       return history.push(urls.success(accessCode));
     } else {
-      if (response.data?.errors) {
-        toast.error(response.message);
-        return formik.setErrors(response.data?.errors);
-      } else {
-        paymentContext.setErrorMessage(response.message);
-        return history.push(urls.failure(accessCode));
-      }
+      paymentContext.setErrorMessage(response.message);
+      return history.push(urls.failure(accessCode));
     }
   };
 

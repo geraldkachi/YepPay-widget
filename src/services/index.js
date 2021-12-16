@@ -45,7 +45,7 @@ export const queryRequestHandler = async (url, method = GET, data = null) => {
 };
 
 export const validatePayment = async (payload) => {
-  const url = `${BASE_PAYMENT_URL}/payment/validate`;
+  const url = `${BASE_PAYMENT_URL}/validate`;
   const { data } = await requestHandler(url, POST, payload);
   return data;
 };
