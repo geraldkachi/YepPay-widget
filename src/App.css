@@ -117,7 +117,7 @@
 .button:focus {
   outline: none;
 }
-.buttonGroup > .button.active {
+.buttonGroup .active {
   background-color: #fff;
   background: #FFFFFF;
   border: 0.5px solid #F12F58;
@@ -745,7 +745,8 @@
   box-shadow: none;
 }
 .existing-card-btn-wrapper {
-  padding-top: 80px;
+  margin: 50px 0;
+
 }
 .user-another-card-link {
   width: 100%;
@@ -912,4 +913,10 @@
     height: 660px;
     margin: 10px auto;
   }
+}
+
+button.card-pill {
+  font-size: 12px;
+  margin: 0 7px;
+  color: #333;
 }

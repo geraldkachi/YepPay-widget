@@ -1,35 +1,78 @@
 import React, { Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Toaster } from 'react-hot-toast';
+
 import './App.css';
-const Home = React.lazy(() => import('./pages/Home'));
-const AuthorizeTransaction = React.lazy(() => import('./pages/AuthorizeTransaction'));
+import { PaymentProvider } from './context/PaymentContext';
+import { urls } from './utils/urls';
+const AuthorizeTransaction = React.lazy(() =>
+  import('./pages/AuthorizeTransaction')
+);
 const PaymentSuccess = React.lazy(() => import('./pages/PaymentSuccess'));
 const PaymentFailure = React.lazy(() => import('./pages/PaymentFailure'));
-const Ussd = React.lazy(() => import('./pages/Ussd'));
-const TestWidget = React.lazy(() => import('./pages/TestWidget'));
-const SelectExistingCard = React.lazy(() => import('./pages/SelectExistingCard'));
-const CardTestWidget = React.lazy(() => import('./pages/CardTestWidget'));
+const USSDWidget = React.lazy(() => import('./pages/USSDWidget'));
+const CardWidget = React.lazy(() => import('./pages/CardWidget'));
+const BankTransferWidget = React.lazy(() =>
+  import('./pages/BankTransferWidget')
+);
+const SelectExistingCard = React.lazy(() =>
+  import('./pages/SelectExistingCard')
+);
 
-
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route exact path="/" element={<Home/>} />
-          <Route exact path="/authorize_transaction" element={<AuthorizeTransaction/>} />
-          <Route exact path="/payment_success" element={<PaymentSuccess/>} />
-          <Route exact path="/payment_failure" element={<PaymentFailure/>} />
-          <Route exact path="/ussd" element={<Ussd/>} />
-          <Route exact path="/test" element={<TestWidget/>} />
-          <Route exact path="/test/card" element={<CardTestWidget/>} />
-          <Route exact path="/existing_card" element={<SelectExistingCard/>} />
-        </Routes>
-      </Suspense>
+      <QueryClientProvider client={queryClient}>
+        <PaymentProvider>
+          <BrowserRouter>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Switch>
+                <Route
+                  exact
+                  path={urls.home(':accessCode')}
+                  children={<CardWidget />}
+                />
+                <Route
+                  exact
+                  path={urls.card(':accessCode')}
+                  children={<CardWidget />}
+                />
+                <Route
+                  exact
+                  path={urls.ussd(':accessCode')}
+                  children={<USSDWidget />}
+                />
+                <Route
+                  exact
+                  path={urls.bankTransfer(':accessCode')}
+                  children={<BankTransferWidget />}
+                />
+                <Route
+                  exact
+                  path={urls.otp(':accessCode', ':reference')}
+                  children={<AuthorizeTransaction />}
+                />
+                <Route
+                  exact
+                  path={urls.success(':accessCode')}
+                  children={<PaymentSuccess />}
+                />
+                <Route
+                  exact
+                  path={urls.failure(':accessCode')}
+                  children={<PaymentFailure />}
+                />
+              </Switch>
+            </Suspense>
+            <Toaster position="top-center" />
+          </BrowserRouter>
+        </PaymentProvider>
+      </QueryClientProvider>
     </div>
   );
-
-}
+};
 
 export default App;
