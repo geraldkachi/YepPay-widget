@@ -16,9 +16,6 @@ const CardWidget = React.lazy(() => import('./pages/CardWidget'));
 const BankTransferWidget = React.lazy(() =>
   import('./pages/BankTransferWidget')
 );
-const SelectExistingCard = React.lazy(() =>
-  import('./pages/SelectExistingCard')
-);
 
 const queryClient = new QueryClient();
 
