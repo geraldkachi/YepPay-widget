@@ -10,8 +10,7 @@ const PaymentSuccess = () => {
   const { payment } = paymentContext;
 
   const openCallbackUrl = () => {
-    window.close();
-    window.open(payment.callback_url, '_blank')?.focus();
+    return window.location.replace(payment.callback_url);
   };
 
   useEffect(() => {
