@@ -6,14 +6,15 @@ import { getIssuerType } from '../../utils/getIssuerType';
 import Spinner from '../Spinner';
 
 const RememberCard = ({ cards, handleSelectCard }) => {
-  const [showDeleteCardModal, setShowDeleteCardModal] = useState(false);
+  const [cardToDelete, setCardToDelete] = useState(null);
+
 
   return (
     <>
       <div className="remembercard-collections">
         {cards.map((card) => (
           <div className="remembercard" type="button" key={card.token}>
-            <button type="button" onClick={() => setShowDeleteCardModal(true)}>
+            <button type="button" onClick={() => setCardToDelete(card)}>
               <svg
                 width="12"
                 height="12"
@@ -36,8 +37,8 @@ const RememberCard = ({ cards, handleSelectCard }) => {
           </div>
         ))}
       </div>
-      {showDeleteCardModal && (
-        <DeleteCardModal setShowDeleteCardModal={setShowDeleteCardModal} />
+      {Boolean(cardToDelete) && (
+        <DeleteCardModal card={cardToDelete} setCardToDelete={() => setCardToDelete(null)} />
       )}
     </>
   );
