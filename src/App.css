@@ -7,6 +7,12 @@
 .w-200 {
   width: 200px;
 }
+
+.button-disabled {
+  cursor: not-allowed;
+  background: #dfa0ae !important;
+}
+
 .cashenvoypaymentwidget {
   width: 100%;
   background: #FFFFFF;
@@ -321,6 +327,7 @@
   justify-content: space-between;
   align-items: center;
   background: #F12F58;
+ 
   padding: 10px 15px;
   margin: 15px 0 25px 0;
   border-radius: 5px;
@@ -709,9 +716,15 @@
   padding: 7px 20px;
   border-radius: 5px;
 }
+
+.testcard-content {
+  margin-bottom: 60px;
+}
+
 .testcard-content > p {
   text-align: center;
-  color: #6F717E;
+  color: #382B3D;
+  font-size: 14px;
   font-weight: 500;
   padding: 20px 0 20PX 0;
 }
@@ -761,12 +774,23 @@
   line-height: 18px;
   color: #382B3D;
 }
-.testcard-check:focus {
+.testcard-check:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 .testcard-check.success:focus {
   border: 1px solid #34A853;
 }
+
+.test-card-active-green {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #34A853;
+}
+.test-card-active-red {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #F12F58;
+}
+
+
 .testcard-check input, .paymentcheck input {
   position: absolute;
   opacity: 0;
@@ -830,9 +854,11 @@
 .testcard-footer {
   padding-top: 50px;
 }
+
+
 @media screen and (min-width: 601px) {
   .testwidget {
-    width: 411px;
+    width: 100%;
     margin-top: 20px;
   }
 }

@@ -2,18 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
 
-const ActionButton = ({ className, children, onClick, loading, testId, disabled, spinColour }) => (
-  <button data-testid={testId} type="button" onClick={onClick} className={`flex items-center ${className}`} disabled={disabled}>
-    {loading ? (
-      <span className="w-full centralize">
-        <Spinner height="20" width="20" colour={spinColour} />
-      </span>
-    ) : (
-      <>
-        {children}
-      </>
-    )}
-  </button>
+const ActionButton = ({
+	className,
+	children,
+	onClick,
+	loading,
+	testId,
+	disabled,
+	spinColour,
+}) => (
+	<button
+		data-testid={testId}
+		type="button"
+		onClick={onClick}
+		className={`flex items-center ${className} ${
+			disabled ? "button-disabled" : ""
+		}`}
+		disabled={disabled}
+	>
+		{loading ? (
+			<span className="w-full centralize">
+				<Spinner height="20" width="20" colour={spinColour} />
+			</span>
+		) : (
+			<>{children}</>
+		)}
+	</button>
 );
 
 ActionButton.propTypes = {

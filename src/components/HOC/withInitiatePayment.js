@@ -25,45 +25,49 @@ const withInitiatePayment =
       () => getPaymentDetails(accessCode)
     );
 
-    let paymentDetail = {};
-    if (data?.data) {
-      paymentDetail = data.data?.data;
-    }
+    console.log("data", data);
+		console.log("isError", isError);
+		console.log("isLoading", isLoading);
 
-    useEffect(() => {
-      if (paymentDetail.amount) {
-        paymentContext.setPaymentDetail(paymentDetail);
-      }
-    }, [paymentDetail]);
+		let paymentDetail = {};
+		if (data?.data) {
+			paymentDetail = data.data?.data;
+		}
 
-    if (isError) {
-      history.push(urls.failure(accessCode));
-    }
+		useEffect(() => {
+			if (paymentDetail.amount) {
+				paymentContext.setPaymentDetail(paymentDetail);
+			}
+		}, [paymentDetail]);
 
-    if (isLoading) {
-      return <LoadingPage />;
-    }
+		if (isLoading) {
+			return <LoadingPage />;
+		}
 
-    const props = {
-      paymentDetail,
-    };
+		if (isError) {
+			history.push(urls.failure(accessCode));
+		}
 
-    return (
-      <div className="h-full flex justify-center items-center">
-        <div className="mt-50 cashenvoypaymentwidget">
-          <WidgetHeader showTabs={showTabs} paymentDetail={paymentDetail} />
-          <div className="widget-body">
-            <div className="tab-content">
-              <Component {...props} {...passThroughProps} />
-            </div>
-          </div>
-          <WidgetFooter
-            onClick={() => history.push(urls.home(accessCode))}
-            verb="Cancel Payment"
-          />
-        </div>
-      </div>
-    );
+		const props = {
+			paymentDetail,
+		};
+
+		return (
+			<div className="h-full flex justify-center items-center">
+				<div className="mt-50 cashenvoypaymentwidget">
+					<WidgetHeader showTabs={showTabs} paymentDetail={paymentDetail} />
+					<div className="widget-body">
+						<div className="tab-content">
+							<Component {...props} {...passThroughProps} />
+						</div>
+					</div>
+					<WidgetFooter
+						onClick={() => history.push(urls.home(accessCode))}
+						verb="Cancel Payment"
+					/>
+				</div>
+			</div>
+		);
   };
 
 export default withInitiatePayment;
