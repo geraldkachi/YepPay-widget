@@ -16,6 +16,7 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 		paymentDetail;
 
 	const showAdditionContent = bearer !== "account";
+	console.log(additionalFee);
 	const showFee = additionalFee !== null;
 
 	const navigation = {
@@ -32,32 +33,32 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 				Card
 			</NavLink>
 		),
-		ussd: (
-			<NavLink
-				to={urls.ussd(accessCode)}
-				onClick={() => {
-					setAdditionalFee(null);
-				}}
-				className="button flex items-center"
-				activeClassName="active"
-			>
-				<img className="mr-4" src={USSDIcon} alt="USSD Icon" />
-				USSD
-			</NavLink>
-		),
-		bank: (
-			<NavLink
-				to={urls.bankTransfer(accessCode)}
-				onClick={() => {
-					setAdditionalFee(null);
-				}}
-				className="button flex items-center"
-				activeClassName="active"
-			>
-				<img className="mr-4" src={BankIcon} alt="Bank Payment Icon" />
-				Bank
-			</NavLink>
-		),
+		// ussd: (
+		// 	<NavLink
+		// 		to={urls.ussd(accessCode)}
+		// 		onClick={() => {
+		// 			setAdditionalFee(null);
+		// 		}}
+		// 		className="button flex items-center"
+		// 		activeClassName="active"
+		// 	>
+		// 		<img className="mr-4" src={USSDIcon} alt="USSD Icon" />
+		// 		USSD
+		// 	</NavLink>
+		// ),
+		// bank: (
+		// 	<NavLink
+		// 		to={urls.bankTransfer(accessCode)}
+		// 		onClick={() => {
+		// 			setAdditionalFee(null);
+		// 		}}
+		// 		className="button flex items-center"
+		// 		activeClassName="active"
+		// 	>
+		// 		<img className="mr-4" src={BankIcon} alt="Bank Payment Icon" />
+		// 		Bank
+		// 	</NavLink>
+		// ),
 	};
 
 	return (
@@ -75,7 +76,7 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 				<div className="widget-header-user">
 					<span>{customer.email}</span>
 					<span>
-						{currency} {amount}
+						{currency} {amount_formatted}
 					</span>
 				</div>
 				{showAdditionContent && (

@@ -6,10 +6,12 @@ import { Toaster } from "react-hot-toast";
 import "./App.css";
 import { PaymentProvider } from "./context/PaymentContext";
 import { urls } from "./utils/urls";
+import LoadingPage from "./pages/LoadingPage";
 
 const AuthorizeTransaction = React.lazy(() =>
 	import("./pages/AuthorizeTransaction")
 );
+const ConfirmPayment = React.lazy(() => import("./pages/ConfirmPayment"));
 const PaymentSuccess = React.lazy(() => import("./pages/PaymentSuccess"));
 const PaymentFailure = React.lazy(() => import("./pages/PaymentFailure"));
 const USSDWidget = React.lazy(() => import("./pages/USSDWidget"));
@@ -27,7 +29,7 @@ const App = () => {
 			<QueryClientProvider client={queryClient}>
 				<PaymentProvider>
 					<BrowserRouter>
-						<Suspense fallback={<div>Loading...</div>}>
+						<Suspense fallback={<LoadingPage />}>
 							<Switch>
 								<Route
 									exact
@@ -39,7 +41,7 @@ const App = () => {
 									path={urls.card(":accessCode")}
 									children={<CardWidget />}
 								/>
-								<Route
+								{/* <Route
 									exact
 									path={urls.ussd(":accessCode")}
 									children={<USSDWidget />}
@@ -48,7 +50,7 @@ const App = () => {
 									exact
 									path={urls.bankTransfer(":accessCode")}
 									children={<BankTransferWidget />}
-								/>
+								/> */}
 								<Route
 									exact
 									path={urls.otp(":accessCode", ":reference")}
@@ -63,6 +65,11 @@ const App = () => {
 									exact
 									path={urls.failure(":accessCode")}
 									children={<PaymentFailure />}
+								/>
+								<Route
+									exact
+									path={urls["confirm-payment"]()}
+									children={<ConfirmPayment />}
 								/>
 							</Switch>
 						</Suspense>
