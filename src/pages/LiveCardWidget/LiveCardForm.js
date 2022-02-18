@@ -188,7 +188,6 @@ const LiveCardForm = ({
 							value={formatCreditCardNumber(card_number)}
 							onChange={formik.handleChange}
 							onBlur={() => {
-								formik.handleBlur;
 								// console.log("handled");
 
 								if (shouldResolveFees) {
@@ -221,6 +220,8 @@ const LiveCardForm = ({
 										paymentContext.setAdditionalFee(null);
 									}
 								}
+
+								// formik.handleBlur();
 							}}
 							autocompletetype="cc-number"
 						/>
