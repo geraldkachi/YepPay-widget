@@ -63,7 +63,8 @@ export function formatFormData(data) {
   return Object.keys(data).map(d => `${d}: ${data[d]}`);
 }
 
-export const BASE_PAYMENT_URL = 'https://staging-ws.ce-nextgen.com/api/v1/widget';
+// export const BASE_PAYMENT_URL = 'https://staging-ws.ce-nextgen.com/api/v1/widget';
+export const BASE_PAYMENT_URL = 'https://staging-services.ce-nextgen.com/api/v1/widget';
 
 
 /**
