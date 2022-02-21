@@ -57,8 +57,9 @@ const ConfirmPayment = () => {
 				if (data?.response) {
 					if (data.response.status) {
 						paymentContext.setPayment({
-							currency: data.response.data.currency,
-							amount: data.response.data.amount_formatted,
+							currency: data.response.data?.currency,
+							amount: data.response.data?.amount_formatted,
+							callback_url: data.response.data?.callback_url,
 						});
 						paymentContext.setSuccessMessage(data.response.message);
 						return history.push(urls.success(data.accessCode));
