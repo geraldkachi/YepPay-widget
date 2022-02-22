@@ -74,7 +74,7 @@ const LiveCardForm = ({
 			expiry: "",
 			cvv: "",
 
-			remember_card: [],
+			remember_card: paymentDetail.remember_card === 1 ? ["on"] : [],
 		},
 		onSubmit: async (values) => {
 			const expiryInfo = values.expiry.split("/");
@@ -289,6 +289,7 @@ const LiveCardForm = ({
 							type="checkbox"
 							id="remembercard"
 							name="remember_card"
+							checked={formik.values.remember_card.length > 0 ? true : false}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 						/>
