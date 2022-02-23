@@ -169,13 +169,13 @@ const LiveCardForm = ({
 					</div>
 				)}
 				<h1 className="text-center">Enter your card details to make payment</h1>
-				{Boolean(paymentDetail.remember_card) && (
-					<RememberCard
-						cards={rememberedCards}
-						handleSelectCard={handleSelectCard}
-						loading={isLoading}
-					/>
-				)}
+
+				<RememberCard
+					cards={rememberedCards}
+					handleSelectCard={handleSelectCard}
+					loading={isLoading}
+				/>
+
 				<form>
 					<div className="input-wrapper">
 						<input
