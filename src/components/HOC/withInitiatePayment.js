@@ -1,69 +1,82 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useParams, useHistory, Redirect } from "react-router-dom";
+import { useQuery } from "react-query";
 
-import { GET_PAYMENT_DETAILS } from '../../utils/constants/queryTypes';
-import LoadingPage from '../../pages/LoadingPage';
-import { urls } from '../../utils/urls';
+import { GET_PAYMENT_DETAILS } from "../../utils/constants/queryTypes";
+import LoadingPage from "../../pages/LoadingPage";
+import { urls } from "../../utils/urls";
 
 // Components
-import WidgetHeader from '../WidgetHeader';
-import WidgetFooter from '../WidgetFooter';
+import WidgetHeader from "../WidgetHeader";
+import WidgetFooter from "../WidgetFooter";
 
-import { usePaymentContext } from '../../context/PaymentContext';
-import { getPaymentDetails } from '../../services/card';
+import { usePaymentContext } from "../../context/PaymentContext";
+import { getPaymentDetails } from "../../services/card";
 
 const withInitiatePayment =
-  (Component, showTabs = true) =>
-  (passThroughProps) => {
-    const paymentContext = usePaymentContext();
-    const { accessCode } = useParams();
-    const history = useHistory();
+	(Component, showTabs = true) =>
+	(passThroughProps) => {
+		const paymentContext = usePaymentContext();
+		const { accessCode } = useParams();
+		const history = useHistory();
 
-    const { data, isError, isLoading } = useQuery(
-      [GET_PAYMENT_DETAILS, accessCode],
-      () => getPaymentDetails(accessCode)
-    );
+		const { data, isError, isLoading } = useQuery(
+			[GET_PAYMENT_DETAILS, accessCode],
+			() => getPaymentDetails(accessCode),
+			{
+				onSuccess: (data) => {
+					console.log(data);
+				},
+				onError: (data) => {
+					console.log(data);
+				},
+			}
+		);
 
-    let paymentDetail = {};
-    if (data?.data) {
-      paymentDetail = data.data?.data;
-    }
+		// console.log("data", data);
+		// console.log("isError", isError);
+		// console.log("isLoading", isLoading);
 
-    useEffect(() => {
-      if (paymentDetail.amount) {
-        paymentContext.setPaymentDetail(paymentDetail);
-      }
-    }, [paymentDetail]);
+		let paymentDetail = {};
+		if (data?.data) {
+			paymentDetail = data.data?.data;
+		}
 
-    if (isError) {
-      history.push(urls.failure(accessCode));
-    }
+		useEffect(() => {
+			if (paymentDetail.amount) {
+				paymentContext.setPaymentDetail(paymentDetail);
+			}
+		}, [paymentDetail]);
 
-    if (isLoading) {
-      return <LoadingPage />;
-    }
+		if (isLoading) {
+			return <LoadingPage />;
+		}
 
-    const props = {
-      paymentDetail,
-    };
+		if (isError) {
+			return <Redirect to={`${accessCode}/failure`} />;
+			// return history.push(urls.failure(accessCode));
+		}
 
-    return (
-      <div className="h-full flex justify-center items-center">
-        <div className="mt-50 cashenvoypaymentwidget">
-          <WidgetHeader showTabs={showTabs} paymentDetail={paymentDetail} />
-          <div className="widget-body">
-            <div className="tab-content">
-              <Component {...props} {...passThroughProps} />
-            </div>
-          </div>
-          <WidgetFooter
-            onClick={() => history.push(urls.home(accessCode))}
-            verb="Cancel Payment"
-          />
-        </div>
-      </div>
-    );
-  };
+		const props = {
+			paymentDetail,
+		};
+
+		return (
+			<div className="h-full flex justify-center items-center">
+				<div className="mt-50 cashenvoypaymentwidget">
+					<WidgetHeader showTabs={showTabs} paymentDetail={paymentDetail} />
+					<div className="widget-body">
+						<div className="tab-content">
+							<Component {...props} {...passThroughProps} />
+						</div>
+					</div>
+					<WidgetFooter
+						onClick={() => history.push(urls.home(accessCode))}
+						verb="Cancel Payment"
+					/>
+				</div>
+			</div>
+		);
+	};
 
 export default withInitiatePayment;

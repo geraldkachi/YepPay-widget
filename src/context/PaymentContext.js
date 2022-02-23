@@ -11,19 +11,22 @@ export const PaymentProvider = ({ children, initialValue }) => {
   const [paymentDetail, setPaymentDetail] = useState({});
   const [reference, setReference] = useState('');
   const [payment, setPayment] = useState({});
+  const [additionalFee, setAdditionalFee] = useState(null);
 
-  const value = {
-    errorMessage,
-    setErrorMessage,
-    successMessage,
-    setSuccessMessage,
-    paymentDetail,
-    setPaymentDetail,
-    reference,
-    setReference,
-    payment,
-    setPayment
-  };
+	const value = {
+		errorMessage,
+		setErrorMessage,
+		successMessage,
+		setSuccessMessage,
+		paymentDetail,
+		setPaymentDetail,
+		reference,
+		setReference,
+		payment,
+		setPayment,
+		additionalFee,
+		setAdditionalFee,
+	};
   return (
     <paymentContext.Provider value={value}>
       {children}

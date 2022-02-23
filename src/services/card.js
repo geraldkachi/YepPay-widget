@@ -31,3 +31,15 @@ export const removeRememberedCard = async (payload) => {
   const { data } = await requestHandler(url, POST, payload);
   return data;
 };
+
+export const triggerPaymentConfirmation = async (payload) => {
+	const url = `${BASE_PAYMENT_URL}/flutterwave/callback${payload}`;
+	const { data } = await requestHandler(url, GET);
+	return data;
+};
+
+export const resolveFeesCard = async (bin, accessCode) => {
+	const url = `${BASE_PAYMENT_URL}/card/resolve-fees?bin=${bin}&access_code=${accessCode}`;
+	const { data } = await requestHandler(url, GET);
+	return data;
+};
