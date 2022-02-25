@@ -64,7 +64,10 @@ export function formatFormData(data) {
 }
 
 // export const BASE_PAYMENT_URL = 'https://staging-ws.ce-nextgen.com/api/v1/widget';
-export const BASE_PAYMENT_URL = 'https://staging-services.ce-nextgen.com/api/v1/widget';
+// export const BASE_PAYMENT_URL = 'https://staging-services.ce-nextgen.com/api/v1/widget';
+export const BASE_PAYMENT_URL = process.env.REACT_APP_BACKEND_URL
+
+// REACT_APP_BACKEND_URL_PROD = https://services.cashenvoy.com
 
 
 /**
