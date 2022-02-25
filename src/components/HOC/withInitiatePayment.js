@@ -20,7 +20,7 @@ const withInitiatePayment =
 		const { accessCode } = useParams();
 		const history = useHistory();
 
-		console.log(accessCode);
+		// console.log(accessCode);
 
 		const { data, isError, isLoading } = useQuery(
 			[GET_PAYMENT_DETAILS, accessCode],
@@ -57,8 +57,6 @@ const withInitiatePayment =
 		if (isLoading) {
 			return <LoadingPage />;
 		}
-
-	
 
 		if (isError) {
 			return <Redirect to={`${accessCode}/failure`} />;
