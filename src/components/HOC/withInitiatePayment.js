@@ -20,19 +20,11 @@ const withInitiatePayment =
 		const { accessCode } = useParams();
 		const history = useHistory();
 
-		// console.log(accessCode);
+		
 
 		const { data, isError, isLoading } = useQuery(
 			[GET_PAYMENT_DETAILS, accessCode],
-			() => getPaymentDetails(accessCode),
-			{
-				onSuccess: (data) => {
-					// console.log(data);
-				},
-				onError: (data) => {
-					// console.log(data);
-				},
-			}
+			() => getPaymentDetails(accessCode)
 		);
 
 		// console.log("data", data);
