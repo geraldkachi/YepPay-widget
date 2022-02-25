@@ -20,17 +20,11 @@ const withInitiatePayment =
 		const { accessCode } = useParams();
 		const history = useHistory();
 
+		
+
 		const { data, isError, isLoading } = useQuery(
 			[GET_PAYMENT_DETAILS, accessCode],
-			() => getPaymentDetails(accessCode),
-			{
-				onSuccess: (data) => {
-					console.log(data);
-				},
-				onError: (data) => {
-					console.log(data);
-				},
-			}
+			() => getPaymentDetails(accessCode)
 		);
 
 		// console.log("data", data);
@@ -47,6 +41,10 @@ const withInitiatePayment =
 				paymentContext.setPaymentDetail(paymentDetail);
 			}
 		}, [paymentDetail]);
+
+		if (accessCode === "icons") {
+			return window.location.replace("https://app.cashenvoy.com");
+		}
 
 		if (isLoading) {
 			return <LoadingPage />;
