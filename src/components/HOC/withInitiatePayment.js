@@ -12,6 +12,7 @@ import WidgetFooter from "../WidgetFooter";
 
 import { usePaymentContext } from "../../context/PaymentContext";
 import { getPaymentDetails } from "../../services/card";
+import WidgetError from "../WidgetError";
 
 const withInitiatePayment =
 	(Component, showTabs = true) =>
@@ -20,16 +21,10 @@ const withInitiatePayment =
 		const { accessCode } = useParams();
 		const history = useHistory();
 
-		
-
 		const { data, isError, isLoading } = useQuery(
 			[GET_PAYMENT_DETAILS, accessCode],
 			() => getPaymentDetails(accessCode)
 		);
-
-		// console.log("data", data);
-		// console.log("isError", isError);
-		// console.log("isLoading", isLoading);
 
 		let paymentDetail = {};
 		if (data?.data) {
@@ -51,8 +46,7 @@ const withInitiatePayment =
 		}
 
 		if (isError) {
-			return <Redirect to={`${accessCode}/failure`} />;
-			// return history.push(urls.failure(accessCode));
+			return <WidgetError />;
 		}
 
 		const props = {
