@@ -6,7 +6,7 @@ import { triggerPaymentConfirmation } from "../../services/card";
 import { usePaymentContext } from "../../context/PaymentContext";
 import AnimatedFailureCheckmark from "../../components/AnimatedFailureCheckmark";
 import { urls } from "../../utils/urls";
-import Error from "../../assets/Widget-Error.svg";
+import ErrorIcon from "../../assets/Widget-Error.svg";
 
 const WidgetError = () => {
 	const reloadPage = () => {
@@ -19,7 +19,7 @@ const WidgetError = () => {
 				<div className="confirm-payment">
 					<div className="confirm-payment-inner">
 						<div className="confirm-payment-spinner-wrapper">
-							<img src={Error} alt="" />
+							<img src={ErrorIcon} alt="" />
 						</div>
 						<h4>Oops! Operation Failed</h4>
 						<h5>
