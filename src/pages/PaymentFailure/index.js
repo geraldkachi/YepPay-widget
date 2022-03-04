@@ -1,8 +1,9 @@
-import React from 'react';
-import { useHistory, useParams } from "react-router";
+import React, { useState } from "react";
+import { useHistory, useParams, Redirect } from "react-router";
 import AnimatedFailureCheckmark from "../../components/AnimatedFailureCheckmark";
 import WidgetFooter from "../../components/WidgetFooter";
 import { usePaymentContext } from "../../context/PaymentContext";
+import useInterval from "../../hooks/useInterval";
 
 const PaymentFailure = () => {
 	const history = useHistory();
@@ -10,8 +11,15 @@ const PaymentFailure = () => {
 	const { accessCode } = useParams();
 
 	const handleClick = () => {
-		history.push(`/${accessCode}`);
+		return history.push(`/${accessCode}`);
 	};
+
+	if (
+		!paymentContext.errorMessage ||
+		!paymentContext.paymentDetail?.callback_url
+	) {
+		return <Redirect to={`/${accessCode}`} />;
+	}
 
 	return (
 		<div className="h-full flex justify-center items-center">
@@ -24,6 +32,7 @@ const PaymentFailure = () => {
 				<div className="paymentstatus-content error">
 					<p>Payment Failed</p>
 					<span>{paymentContext.errorMessage}</span>
+
 					<button
 						type="button"
 						to="/authorize_transaction"

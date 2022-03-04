@@ -162,7 +162,7 @@ const LiveCardForm = ({
 					<div className="card-redirect-loader">
 						<div className="center">
 							<div>
-								<Spinner height="40" width="40" colour="#F12F58" />
+								<Spinner height="40" width="40" colour="#0066FF" />
 							</div>
 							<h1 className="text-center">...Redirecting...</h1>
 						</div>

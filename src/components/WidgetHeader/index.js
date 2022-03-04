@@ -8,6 +8,8 @@ import BankIcon from '../../assets/bank.svg';
 import { urls } from '../../utils/urls';
 import { usePaymentContext } from "../../context/PaymentContext";
 
+import YEPLOGO from "../../assets/Yep-Logo.svg";
+
 const WidgetHeader = ({ showTabs, paymentDetail }) => {
 	const { accessCode } = useParams();
 	const { additionalFee, setAdditionalFee } = usePaymentContext();
@@ -65,7 +67,8 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 		<div className="widget-header">
 			<div className="w-full flex items-center justify-between">
 				<img
-					src="https://res.cloudinary.com/cashenvoy/image/upload/v1638092035/Cashenvoy-nextgen/cashenvoylogo_pkci6s.svg"
+					// src="https://res.cloudinary.com/cashenvoy/image/upload/v1638092035/Cashenvoy-nextgen/cashenvoylogo_pkci6s.svg"
+					src={YEPLOGO}
 					alt="Cashenvoy Logo"
 				/>
 				{!Boolean(paymentDetail?.is_live) && (
