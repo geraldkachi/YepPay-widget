@@ -67,7 +67,7 @@ const CardPin = ({ accessCode }) => {
 		<div className="cardpaymentwidget">
 			{loading && (
 				<div className="card-pin-loader">
-					<Spinner height="40" width="40" colour="#F12F58" />
+					<Spinner height="40" width="40" colour="#0066FF" />
 				</div>
 			)}
 			<h1 style={{ textAlign: "center", width: "254px", margin: "0px auto" }}>

@@ -91,7 +91,7 @@ const ConfirmPayment = () => {
 					{confirmed && (
 						<div className="confirm-payment-inner">
 							<div className="confirm-payment-spinner-wrapper">
-								<Spinner height="50" width="50" colour="#F12F58" />
+								<Spinner height="50" width="50" colour="#0066FF" />
 							</div>
 							<h4>Transaction in progress</h4>
 							<h5>Do not close this tab</h5>

@@ -10,7 +10,7 @@
 
 .button-disabled {
   cursor: not-allowed;
-  background: #dfa0ae !important;
+  background: #6fa9ff !important;
 }
 
 .cashenvoypaymentwidget {
@@ -29,13 +29,14 @@
 .widget-header {
   width: 100%;
   padding: 20px 20px 20px 20px;
-  background: #FFFAFA;
+  background: #EDF4FF;
+  /* background: #FFFAFA; */
   border-radius: 10px 10px 0px 0px;
 }
 .widget-header-pill {
   margin-top: 30px;
   padding: 15px;
-  background: #382B3D;
+  background: #100F3C;
   border-radius: 10px;
   position: relative;
   z-index: 1;
@@ -117,7 +118,7 @@
   padding: 8px 28px;
   font-size: 12px;
   color: #162858;
-  border: 0.5px solid #EFDBDB;
+  border: 0.5px solid #9AC2FF;
   border-radius: 5px;
 }
 .button:focus {
@@ -126,7 +127,7 @@
 .buttonGroup .active {
   background-color: #fff;
   background: #FFFFFF;
-  border: 0.5px solid #F12F58;
+  border: 0.5px solid #0066FF;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.05);
 }
 .widget-body {
@@ -278,7 +279,7 @@
   color: #5D627B;
 }
 .ussdbutton > span:nth-child(2) {
-  color: #F12F58;
+  color: #0066FF;
 }
 
 /*RememberCard*/
@@ -329,7 +330,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #F12F58;
+  background: #0066FF;
  
   padding: 10px 15px;
   margin: 15px 0 25px 0;
@@ -337,7 +338,7 @@
   color: #fff;
 }
 .submitbutton:hover {
-  background: #d4163f;
+  background: #0161f2;
 }
 .widget-footer {
   padding: 14px 20px;
@@ -405,7 +406,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #F12F58;
+  background: #0066FF;
   padding: 10px 15px;
   margin: 15px 0 25px 0;
   border-radius: 5px;
@@ -592,6 +593,12 @@
  background: #F12F58;
  color: #fff;
 }
+
+.btn.blue {
+  background: #0066FF;
+  color: #fff;
+}
+
 .btn.success:hover {
   background: #d4143d;
 }
@@ -713,8 +720,8 @@
 
 .test-mode{
   display: block;
-  background-color: #FDE5E5;
-  color: #F12F58;
+  background-color: #DBE9FF;
+  color: #0066FF;
   font-weight: 600;
   padding: 7px 20px;
   border-radius: 5px;
@@ -982,6 +989,24 @@ button.card-pill {
   color: #0066FF;
 }
 
+
+.redirect-wrapper {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.redirect-button {
+  padding: 10px 20px;
+  border-radius: 100px;
+  background: #fae1e1;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #F62727;
+}
+
 .resend-text-cursor {
   cursor: pointer;
 }
@@ -1054,7 +1079,7 @@ button.card-pill {
 
 .card-redirect-loader > .center > h1 {
   margin-top: 8px;
-  color: #f12f58;
+  color: #0066FF;
   font-size: 14px;
 
 }
@@ -1101,6 +1126,8 @@ button.card-pill {
 }
 .confirm-payment-inner > h5 {
   font-weight: 400;
+  max-width: 239px;
+  margin: 0 auto;
   color: #939BA9;
   
 }
@@ -1187,6 +1214,12 @@ button.card-pill {
   margin-top: 48px;
 }
 
+
+
+.widget-error-btn-wrapper {
+  
+  margin-top: 24px;
+}
 
 
 
