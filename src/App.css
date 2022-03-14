@@ -258,6 +258,7 @@
   align-items: center;
   background: #FFFFFF;
   padding: 12px 20px;
+  cursor: pointer;
   border: 1px solid #e5e7eb;
   border-radius: 5px;
 }
@@ -527,7 +528,7 @@
   color: #162858;
 }
 .cashenvoyred {
-  color: #F12F58;
+  color: #0066FF;
 }
 .grey-color {
   color: #939393;
@@ -539,6 +540,7 @@
 .text-center {
   text-align: center;
 }
+
 
 /* special classes */
 .copy-usd-code {
@@ -666,7 +668,7 @@
 .paymentstatus-content > h1 {
   font-size: 20px;
   padding: 5px 0 20px 0;
-  color: #F12F58;
+  color: #0066FF;
   text-align: center;
   font-weight: 600;
 }
@@ -1000,11 +1002,11 @@ button.card-pill {
 .redirect-button {
   padding: 10px 20px;
   border-radius: 100px;
-  background: #fae1e1;
+  background: #EDF4FF;
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
-  color: #F62727;
+  color: #0066FF;
 }
 
 .resend-text-cursor {
@@ -1222,5 +1224,24 @@ button.card-pill {
 }
 
 
+/* ussd copy section */
 
+.ussd-copy-container {
+  position: relative;
+  cursor: pointer;
+}
 
+.ussd-copied-text {
+  width: 100px;
+  display:flex;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  position: absolute;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  white-space: nowrap;
+  right: 0;
+  top: -10px;
+}
