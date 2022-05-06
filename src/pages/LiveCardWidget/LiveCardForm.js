@@ -90,7 +90,6 @@ const LiveCardForm = ({
 			try {
 				const response = await payWithCard(payload);
 				if (response.status) {
-					console.log(response);
 					if (response.data.authorization_mode === "pin") {
 						const cardData = {
 							...payload,

@@ -7,6 +7,8 @@ import "./App.css";
 import { PaymentProvider } from "./context/PaymentContext";
 import { urls } from "./utils/urls";
 import LoadingPage from "./pages/LoadingPage";
+import NoConfiguredPaymentOption from "./components/NoConfiguredPaymentOption";
+import PageNotFound from "./components/PageNotFound";
 
 const AuthorizeTransaction = React.lazy(() =>
 	import("./pages/AuthorizeTransaction")
@@ -16,6 +18,7 @@ const PaymentSuccess = React.lazy(() => import("./pages/PaymentSuccess"));
 const PaymentFailure = React.lazy(() => import("./pages/PaymentFailure"));
 const USSDWidget = React.lazy(() => import("./pages/USSDWidget"));
 const CardWidget = React.lazy(() => import("./pages/CardWidget"));
+const OfflineWidget = React.lazy(() => import("./pages/OfflineWidget"));
 const RedirectWidget = React.lazy(() => import("./pages/RedirectWidget"));
 const BankTransferWidget = React.lazy(() =>
 	import("./pages/BankTransferWidget")
@@ -36,6 +39,7 @@ const App = () => {
 									path={urls.home(":accessCode")}
 									children={<RedirectWidget />}
 								/>
+
 								<Route
 									exact
 									path={urls.card(":accessCode")}
@@ -50,6 +54,11 @@ const App = () => {
 									exact
 									path={urls.bankTransfer(":accessCode")}
 									children={<BankTransferWidget />}
+								/> */}
+								{/* <Route
+									exact
+									path={urls.offlineTransfer(":accessCode")}
+									children={<OfflineWidget />}
 								/> */}
 								<Route
 									exact
@@ -68,9 +77,15 @@ const App = () => {
 								/>
 								<Route
 									exact
+									path={urls["no-payment-option"](":accessCode")}
+									children={<NoConfiguredPaymentOption />}
+								/>
+								<Route
+									exact
 									path={urls["confirm-payment"]()}
 									children={<ConfirmPayment />}
 								/>
+								<Route component={PageNotFound} />
 							</Switch>
 						</Suspense>
 						<Toaster position="top-center" />
