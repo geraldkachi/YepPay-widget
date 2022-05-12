@@ -5,10 +5,14 @@ import PropTypes from 'prop-types';
 import CardIcon from '../../assets/card.svg';
 import USSDIcon from '../../assets/ussd.svg';
 import BankIcon from '../../assets/bank.svg';
-import { urls } from '../../utils/urls';
+import OfflineIcon from "../../assets/offline_transfer_icon.svg";
+import { urls } from "../../utils/urls";
 import { usePaymentContext } from "../../context/PaymentContext";
 
 import YEPLOGO from "../../assets/Yep-Logo.svg";
+
+// navigation and availablePaymentChannels must always be in sync
+export const availablePaymentChannels = ["card"];
 
 const WidgetHeader = ({ showTabs, paymentDetail }) => {
 	const { accessCode } = useParams();
@@ -18,7 +22,7 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 		paymentDetail;
 
 	const showAdditionContent = bearer !== "account";
-	console.log(additionalFee);
+	// console.log(additionalFee);
 	const showFee = additionalFee !== null;
 
 	const navigation = {
@@ -28,7 +32,7 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 				onClick={() => {
 					setAdditionalFee(null);
 				}}
-				className="button flex items-center"
+				className="button flex justify-center items-center"
 				activeClassName="active"
 			>
 				<img className="mr-4" src={CardIcon} alt="Card Icon" />
@@ -41,7 +45,7 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 		// 		onClick={() => {
 		// 			setAdditionalFee(null);
 		// 		}}
-		// 		className="button flex items-center"
+		// 		className="button flex justify-center items-center"
 		// 		activeClassName="active"
 		// 	>
 		// 		<img className="mr-4" src={USSDIcon} alt="USSD Icon" />
@@ -54,11 +58,24 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 		// 		onClick={() => {
 		// 			setAdditionalFee(null);
 		// 		}}
-		// 		className="button flex items-center"
+		// 		className="button flex justify-center items-center"
 		// 		activeClassName="active"
 		// 	>
 		// 		<img className="mr-4" src={BankIcon} alt="Bank Payment Icon" />
 		// 		Bank
+		// 	</NavLink>
+		// ),
+		// offline_transfer: (
+		// 	<NavLink
+		// 		to={urls.offlineTransfer(accessCode)}
+		// 		onClick={() => {
+		// 			setAdditionalFee(null);
+		// 		}}
+		// 		className="button flex justify-center items-center"
+		// 		activeClassName="active"
+		// 	>
+		// 		<img className="mr-4" src={OfflineIcon} alt="Bank Payment Icon" />
+		// 		Transfer
 		// 	</NavLink>
 		// ),
 	};
@@ -139,7 +156,7 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 			)}
 		</div>
 	);
-};
+};;;
 
 export default WidgetHeader;
 

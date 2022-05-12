@@ -53,7 +53,6 @@ const ConfirmPayment = () => {
 			});
 			var channel = pusher.subscribe(channelName);
 			channel.bind(eventName, function (data) {
-				console.log(data);
 				if (data?.response) {
 					if (data.response.status) {
 						paymentContext.setPayment({

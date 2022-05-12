@@ -1,9 +1,9 @@
 import React from 'react';
-import USSD from '../../components/USSDWidget';
-import withInitiatePayment from '../../components/HOC/withInitiatePayment';
+import withInitiatePayment from "../../components/HOC/withInitiatePayment";
+import UssdPaymentWidget from "../UssdPaymentWidget/index";
 
 const USSDWidget = ({ paymentDetail }) => (
-  <USSD paymentDetail={paymentDetail} />
+	<UssdPaymentWidget paymentDetail={paymentDetail} />
 );
 
-export default withInitiatePayment(USSDWidget);
+export default withInitiatePayment(UssdPaymentWidget);

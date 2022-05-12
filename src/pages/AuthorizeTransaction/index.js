@@ -61,8 +61,6 @@ const AuthorizeTransaction = () => {
 	const submitPin = async (payload) => {
 		const response = await payWithCard(payload);
 		if (response.status) {
-			console.log(response);
-
 			paymentContext.setReference(response.data.reference);
 			setIsCounting(true);
 			toast.success("OTP Resent. Kindly Check your email or Phone Number.", {
