@@ -1170,8 +1170,54 @@ button.card-pill {
   border: 1px solid transparent;
 }
 
+/* .textInputWithLabel-wrapper {
+
+} */
+.textInputWithLabel-wrapper > label {
+  font-weight: 400;
+  font-size: 15px;
+  color: #382B3D;
+  display:block;
+  margin-bottom: 10px;
+}
+.textInputWithLabel-wrapper > input{
+  height: 45px;
+  border-radius: 5px;
+  padding: 0 10px;
+  display:block;
+  width:100%;
+  background-color: #F8F8F8;
+  border: 1px solid transparent;
+}
+.textInputWithLabel-wrapper > input:disabled:read-only{
+  cursor:not-allowed;
+  color: #5D627B
+}
+.textInputWithLabel-wrapper > .error{
+ font-size: 12px;
+ margin-top: 5px;
+ color: rgb(251 113 133);;
+}
+
+.textInputWithLabel-wrapper > input::placeholder{
+   font-weight: 400;
+  font-size: 15px;
+ 
+}
+
+
+.textInputWithLabel-wrapper > input:focus{
+  border: 1px solid #9AC2FF;
+  transition: border-color 0.5s ease;
+  outline: none;
+}
+
+
+
+
 .custom-text-wrapper:focus-within {
   border: 1px solid #9AC2FF;
+  transition: border-color 0.5s ease;
   /* box-shadow: 0px 0px 0px #0066FF; */
 }
 
@@ -1469,3 +1515,64 @@ button.card-pill {
 }
 
 
+/* Payment Pages Styles */
+
+.paymentPages-bg {
+  background: #F4F6F8 url("./assets/payment-pages-contour.svg") no-repeat bottom center/contain;
+
+  width:100vw;
+  height: 100vh;
+  padding: 40px 0px;
+ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.paymentPages-customer-logo{
+  width: 60px;
+  margin-bottom: 100px;
+}
+
+.paymentPages-card {
+  max-width:600px;
+  width:600px;
+  padding: 30px;
+  background-color: #ffffff;
+  box-shadow: 0px 10px 15px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.paymentPages-card > .actionButton {
+  margin-top: 30px;
+}
+
+.paymentPages-card > .poweredByYep {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.paymentPages-card > .poweredByYep > p {
+  margin-right: 3px;
+  color: #6F717E;
+  font-size: 14px;
+
+}
+.paymentPages-card > .poweredByYep > img {
+  margin-left: 3px;
+  width: 40px;
+}
+
+.paymentPages-card > form > .actionButton > .submitbutton {
+  justify-content: center;
+}
+.paymentPages-card > form > .actionButton .actionButton-lock {
+  margin-right: 8px;
+}
+
+.paymentPages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}

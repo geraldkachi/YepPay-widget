@@ -1,9 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ActionButton from "../../components/Button/ActionButton";
 import SucccessCheck from "../../assets/success-check-icon.svg";
 import ArrowRight from "../../assets/arrow-right.svg";
+import Pusher from "pusher-js";
+import { usePaymentContext } from "../../context/PaymentContext";
 import Spinner from "../../components/Spinner";
+import { useHistory, useParams, Link } from "react-router-dom";
 import useInterval from "../../hooks/useInterval";
+import { urls } from "../../utils/urls";
 
 function secondsToTime(secs) {
 	// let hours = Math.floor(secs / (60 * 60));
@@ -21,9 +25,9 @@ function secondsToTime(secs) {
 	return obj;
 }
 
-const timeBeforeOtpResend = 5;
+const timeBeforeOtpResend = 300;
 
-const ConfirmOfflinePayment = ({ back }) => {
+const ConfirmOfflinePayment = ({ back, reference }) => {
 	const [buttonText, setButtonText] = useState("Wait for another 5mins?");
 	const [paymentConfirmed, setPaymentConfirmed] = useState(false);
 	// const [showButton, setShowButton] = useState(false);
@@ -35,6 +39,9 @@ const ConfirmOfflinePayment = ({ back }) => {
 
 	const [delay, setDelay] = useState(1000);
 	const [isCounting, setIsCounting] = useState(true);
+	const history = useHistory();
+	const { accessCode } = useParams();
+	const paymentContext = usePaymentContext();
 
 	useInterval(
 		() => {
@@ -57,6 +64,49 @@ const ConfirmOfflinePayment = ({ back }) => {
 		// Delay in milliseconds or null to stop it
 		isCounting && !paymentConfirmed ? delay : null
 	);
+
+	useEffect(() => {
+		const eventName = "transaction.attempted";
+		const channelName = `transaction${reference}`;
+
+		let pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+			cluster: process.env.REACT_APP_CLUSTER,
+		});
+		var channel = pusher.subscribe(channelName);
+		console.log("listening to", channel);
+
+		channel.bind(eventName, function (data) {
+			console.log(data);
+			if (data?.response) {
+				if (data.response.status) {
+					setPaymentConfirmed(true);
+					paymentContext.setPayment({
+						currency: data.response.data?.currency,
+						amount: data.response.data?.amount_formatted,
+						callback_url: data.response.data?.callback_url,
+					});
+					paymentContext.setSuccessMessage(data.response.message);
+					return history.push(urls.success(data.accessCode));
+				} else {
+					setIsCounting(false);
+					let errorMessage = "";
+					if (data.response.message?.toLowerCase() === "error") {
+						errorMessage =
+							"Operation failed due to poor network or insufficient funds. Please try again or use another card";
+					} else {
+						errorMessage = data.response.message;
+					}
+					paymentContext.setErrorMessage(errorMessage);
+					return history.push(urls.failure(data.accessCode));
+				}
+			}
+		});
+
+		// Ensure Pusher Connection has been established before calling API
+		// setTimeout(() => {
+		// 	confirmPayment(params);
+		// }, 5000);
+	}, []);
 
 	const { seconds, minutes } = secondsToTime(count);
 

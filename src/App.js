@@ -9,6 +9,7 @@ import { urls } from "./utils/urls";
 import LoadingPage from "./pages/LoadingPage";
 import NoConfiguredPaymentOption from "./components/NoConfiguredPaymentOption";
 import PageNotFound from "./components/PageNotFound";
+import PaymentPages from "./pages/PaymentPages/PaymentPages";
 
 const AuthorizeTransaction = React.lazy(() =>
 	import("./pages/AuthorizeTransaction")
@@ -44,6 +45,11 @@ const App = () => {
 									exact
 									path={urls.card(":accessCode")}
 									children={<CardWidget />}
+								/>
+								<Route
+									exact
+									path={urls["payment-pages"](":accessCode")}
+									children={<PaymentPages />}
 								/>
 								{/* <Route
 									exact
