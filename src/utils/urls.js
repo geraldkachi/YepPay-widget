@@ -8,6 +8,8 @@ export const urls = {
 		`/${accessCode}/authorize/${transactionReference}/${queryParams}`,
 	failure: (accessCode) => `/${accessCode}/failure`,
 	success: (accessCode) => `/${accessCode}/success`,
+	"payment-pages": (accessCode) => `/payment-pages/${accessCode}`,
+
 	"confirm-payment": () => "/payment/confirm-payment",
 	"no-payment-option": (accessCode) => `/error/${accessCode}`,
 };
