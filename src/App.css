@@ -1428,8 +1428,8 @@ button.card-pill {
 }
 
 .offline-confirming-payment {
-  padding: 15px 20px 15px 20px;
-  border-bottom: 1px solid #EDF3F8;
+  padding: 15px 20px 0px 20px;
+  
 
   display: flex;
   justify-content: space-between;
@@ -1450,7 +1450,8 @@ button.card-pill {
 }
 
 .show-details-again {
-  padding: 0 20px;
+  border-top: 1px solid #EDF3F8;
+  padding: 15px 20px 0px 20px;
   margin-top: 18px;
   cursor: pointer;
   display: flex;

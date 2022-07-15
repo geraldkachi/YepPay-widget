@@ -103,6 +103,7 @@ const OfflineWidget = ({ paymentDetail }) => {
 					)}
 					{activeTab === 2 && (
 						<ConfirmOfflinePayment
+							accountNumber={accountNumber}
 							reference={paymentDetail.reference}
 							back={back}
 						/>
