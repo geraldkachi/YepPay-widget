@@ -8,6 +8,7 @@ import Spinner from "../../components/Spinner";
 import { useHistory, useParams, Link } from "react-router-dom";
 import useInterval from "../../hooks/useInterval";
 import { urls } from "../../utils/urls";
+import { logAsDisputeToBackend } from "../../services/offline_transfer";
 
 function secondsToTime(secs) {
 	// let hours = Math.floor(secs / (60 * 60));
@@ -25,13 +26,16 @@ function secondsToTime(secs) {
 	return obj;
 }
 
-const timeBeforeOtpResend = 300;
+// Todo.. Listen to second event that handles unforseen circumstances
 
-const ConfirmOfflinePayment = ({ back, reference }) => {
+
+const waitingTime = 300;
+
+const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 	const [buttonText, setButtonText] = useState("Wait for another 5mins?");
 	const [paymentConfirmed, setPaymentConfirmed] = useState(false);
 	// const [showButton, setShowButton] = useState(false);
-	const [count, setCount] = useState(timeBeforeOtpResend);
+	const [count, setCount] = useState(waitingTime);
 
 	const [waitingCount, setWaitingCount] = useState(0);
 
@@ -42,6 +46,21 @@ const ConfirmOfflinePayment = ({ back, reference }) => {
 	const history = useHistory();
 	const { accessCode } = useParams();
 	const paymentContext = usePaymentContext();
+
+	const logAsDispute = async (payload) => {
+		try {
+			const response = await logAsDisputeToBackend(payload);
+			paymentContext.setErrorMessage(
+				"This transaction is taking longer than usual to confirm. It has been logged for a refund, please retry the transaction."
+			);
+			history.push(urls.failure(accessCode));
+		} catch (error) {
+			paymentContext.setErrorMessage(
+				"This transaction is taking longer than usual to confirm. It has been logged for a refund, please retry the transaction."
+			);
+			history.push(urls.failure(accessCode));
+		}
+	};
 
 	useInterval(
 		() => {
@@ -56,7 +75,7 @@ const ConfirmOfflinePayment = ({ back, reference }) => {
 					setWaitingCount(1);
 				}
 				if (waitingCount === 1) {
-					setButtonText("Keep Waiting");
+					// setButtonText("Keep Waiting");
 					setWaitingCount(2);
 				}
 			}
@@ -76,7 +95,7 @@ const ConfirmOfflinePayment = ({ back, reference }) => {
 		console.log("listening to", channel);
 
 		channel.bind(eventName, function (data) {
-			console.log(data);
+			console.log("DATA FROM EVENT", data);
 			if (data?.response) {
 				if (data.response.status) {
 					setPaymentConfirmed(true);
@@ -92,7 +111,7 @@ const ConfirmOfflinePayment = ({ back, reference }) => {
 					let errorMessage = "";
 					if (data.response.message?.toLowerCase() === "error") {
 						errorMessage =
-							"Operation failed due to poor network or insufficient funds. Please try again or use another card";
+							"Operation failed due to poor network or insufficient funds. Please try again.";
 					} else {
 						errorMessage = data.response.message;
 					}
@@ -101,12 +120,13 @@ const ConfirmOfflinePayment = ({ back, reference }) => {
 				}
 			}
 		});
-
-		// Ensure Pusher Connection has been established before calling API
-		// setTimeout(() => {
-		// 	confirmPayment(params);
-		// }, 5000);
 	}, []);
+
+	useEffect(() => {
+		if (waitingCount === 2) {
+			logAsDispute({ account_number: accountNumber });
+		}
+	}, [waitingCount]);
 
 	const { seconds, minutes } = secondsToTime(count);
 
@@ -134,10 +154,12 @@ const ConfirmOfflinePayment = ({ back, reference }) => {
 								)}
 							</div>
 						</div>
-						<div onClick={back} className="show-details-again">
-							<p>Show bank details again</p>
-							<img src={ArrowRight} alt="" />
-						</div>
+						{/* {waitingCount === 2 && (
+							<div onClick={back} className="show-details-again">
+								<p>Show bank details again</p>
+								<img src={ArrowRight} alt="" />
+							</div>
+						)} */}
 					</>
 				)}
 
@@ -154,11 +176,11 @@ const ConfirmOfflinePayment = ({ back, reference }) => {
 					<div className="">
 						<div className="wait-section">
 							<div className="wait-button-wrapper">
-								{waitingCount > 0 && !isCounting && (
+								{waitingCount === 1 && !isCounting && (
 									<button
 										onClick={() => {
 											// setShowButton(false);
-											setCount(timeBeforeOtpResend);
+											setCount(waitingTime);
 											setIsCounting(true);
 										}}
 									>

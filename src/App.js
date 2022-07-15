@@ -55,17 +55,17 @@ const App = () => {
 									exact
 									path={urls.ussd(":accessCode")}
 									children={<USSDWidget />}
-								/>
-								<Route
+								/> */}
+								{/* <Route
 									exact
 									path={urls.bankTransfer(":accessCode")}
 									children={<BankTransferWidget />}
 								/> */}
-								{/* <Route
+								<Route
 									exact
 									path={urls.offlineTransfer(":accessCode")}
 									children={<OfflineWidget />}
-								/> */}
+								/>
 								<Route
 									exact
 									path={urls.otp(":accessCode", ":reference")}

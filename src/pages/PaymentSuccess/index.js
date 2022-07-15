@@ -86,7 +86,7 @@ const PaymentSuccess = () => {
 					{true && (
 						<div className="redirect-wrapper">
 							<span className="redirect-button">
-								<span className="redirect-text">Redirects in :</span>
+								<span className="redirect-text">Redirects in : </span>
 								<span className="redirect-timer">
 									{`${seconds < 10 ? "0" : ""}${seconds}`}
 								</span>

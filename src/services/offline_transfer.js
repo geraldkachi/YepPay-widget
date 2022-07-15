@@ -7,3 +7,8 @@ export const generateDynamicAccountNumber = async (payload) => {
 	const { data } = await requestHandler(url, POST, payload);
 	return data;
 };
+export const logAsDisputeToBackend = async (payload) => {
+	const url = `${BASE_PAYMENT_URL}/nuban/refund`;
+	const { data } = await requestHandler(url, POST, payload);
+	return data;
+};
