@@ -29,7 +29,7 @@ function secondsToTime(secs) {
 // Todo.. Listen to second event that handles unforseen circumstances
 
 
-const waitingTime = 300;
+const waitingTime = 299;
 
 const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 	const [buttonText, setButtonText] = useState("Wait for another 5mins?");
@@ -64,7 +64,6 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 
 	useInterval(
 		() => {
-			// Your custom logic here
 			if (count > 0) {
 				setCount(count - 1);
 			}
@@ -92,10 +91,10 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 			cluster: process.env.REACT_APP_CLUSTER,
 		});
 		var channel = pusher.subscribe(channelName);
-		console.log("listening to", channel);
+		// console.log("listening to", channel);
 
 		channel.bind(eventName, function (data) {
-			console.log("DATA FROM EVENT", data);
+			// console.log("DATA FROM EVENT", data);
 			if (data?.response) {
 				if (data.response.status) {
 					setPaymentConfirmed(true);
@@ -111,15 +110,57 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 					let errorMessage = "";
 					if (data.response.message?.toLowerCase() === "error") {
 						errorMessage =
-							"Operation failed due to poor network or insufficient funds. Please try again.";
+							"Something went wrong. This might be due to due to poor network. Please try again.";
 					} else {
 						errorMessage = data.response.message;
 					}
 					paymentContext.setErrorMessage(errorMessage);
-					return history.push(urls.failure(data.accessCode));
+					return history.push(
+						urls.failure(data.accessCode ?? accessCode)
+					);
 				}
 			}
 		});
+
+		return () => {
+			// cancel the listener before component unmounts
+			// console.log("UnSubscribedstart");
+			pusher.unsubscribe(channelName);
+			// console.log("UnSubscribedend");
+		};
+	}, []);
+
+	useEffect(() => {
+		const eventName = "transaction.nuban-error";
+		const channelName = `nuban-error${accountNumber}`;
+		// const channelName = `nuban-error930340403930`;
+
+		let pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+			cluster: process.env.REACT_APP_CLUSTER,
+		});
+		var channel = pusher.subscribe(channelName);
+		// console.log("listening to second channel2", channel);
+
+		channel.bind(eventName, function (data) {
+			// console.log("DATA FROM EVENT2", data);
+			if (data?.response) {
+				if (!data.response.status) {
+					setIsCounting(false);
+					const errorMessage = data.response?.message ?? "";
+					paymentContext.setErrorMessage(errorMessage);
+					return history.push(
+						urls.failure(data.accessCode ?? accessCode)
+					);
+				}
+			}
+		});
+
+		return () => {
+			// cancel the listener before component unmounts
+			// console.log("UnSubscribedstart");
+			pusher.unsubscribe(channelName);
+			// console.log("UnSubscribedend");
+		};
 	}, []);
 
 	useEffect(() => {
@@ -133,7 +174,8 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 	return (
 		<div className="offline">
 			<h4>
-				We are confirming your transfer. This could take a couple of minutes.
+				We are confirming your transfer. This could take a couple of
+				minutes.
 			</h4>
 			<div className="offline-confirmation-wrapper">
 				<div className="money-sent">
@@ -150,7 +192,11 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 									{`${seconds < 10 ? "0" : ""}${seconds}`}
 								</p>
 								{isCounting && (
-									<Spinner height="20" width="20" colour={"#5D627B"} />
+									<Spinner
+										height="20"
+										width="20"
+										colour={"#5D627B"}
+									/>
 								)}
 							</div>
 						</div>
@@ -191,7 +237,8 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 						</div>
 					</div>
 					<p className="support-content">
-						If you have any issues with this transfer, please contact{" "}
+						If you have any issues with this transfer, please
+						contact{" "}
 						<span className="support">support@getyep.co</span>
 					</p>
 				</>
