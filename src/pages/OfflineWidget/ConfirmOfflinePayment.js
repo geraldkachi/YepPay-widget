@@ -64,7 +64,6 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 
 	useInterval(
 		() => {
-			// Your custom logic here
 			if (count > 0) {
 				setCount(count - 1);
 			}
@@ -140,7 +139,7 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 			cluster: process.env.REACT_APP_CLUSTER,
 		});
 		var channel = pusher.subscribe(channelName);
-		console.log("listening to second channel2", channel);
+		// console.log("listening to second channel2", channel);
 
 		channel.bind(eventName, function (data) {
 			// console.log("DATA FROM EVENT2", data);
