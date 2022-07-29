@@ -102,7 +102,9 @@ export const capitalizeFirstCharacters = (name: string) => {
 
 export const generateInitialState = (config) => {
 	const initialState = { email: "" };
-	if (config.amount === null) [(initialState["amount"] = "")];
+	if (config.amount === null) {
+		initialState["amount"] = "";
+	}
 	if (config.can_collect_name) {
 		initialState["first_name"] = "";
 		initialState["last_name"] = "";
@@ -124,7 +126,7 @@ export const generateInitialState = (config) => {
 	}
 
 	return initialState;
-};
+};;
 
 export const generateSchema = (config) => {
 	const _yupObject = {
@@ -134,12 +136,11 @@ export const generateSchema = (config) => {
 			.required("Email is required"),
 	};
 
-	if (config.amount === null)
-		[
-			(_yupObject["amount"] = Yup.string()
-				.trim()
-				.required("Amount is required")),
-		];
+	if (config.amount === null) {
+		_yupObject["amount"] = Yup.string()
+			.trim()
+			.required("Amount is required");
+	}
 
 	if (config.can_collect_name) {
 		_yupObject["first_name"] = Yup.string()
@@ -173,7 +174,7 @@ export const generateSchema = (config) => {
 	}
 
 	return Yup.object().shape(_yupObject);
-};
+};;
 
 export const shouldSubmit = (values) => {
 	let response = false;
