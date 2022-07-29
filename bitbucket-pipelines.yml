@@ -14,19 +14,19 @@ clone:
 definitions:
   services:
     docker:
-      memory: 4096 
+      memory: 4096
 
   caches:
-    sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
-  
+    sonar: ~/.sonar/cache # Caching SonarCloud artifacts will speed up your build
+
   steps:
     - step: &build-test-sonarcloud
-        name: Build, test and analyze on SonarCloud 
+        name: Build, test and analyze on SonarCloud
         caches:
           - node
           - sonar
         script:
-          #- mkdir -p src && cd src 
+          #- mkdir -p src && cd src
           - echo "sonar.sources=./src" > sonar-project.properties
           - echo "sonar.tests=./src" >> sonar-project.properties
           - echo "sonar.testExecutionReportPaths=./test-report.xml" >> sonar-project.properties
@@ -34,15 +34,15 @@ definitions:
           - chmod 755 sonar-project.properties
           - npm ci --quiet
           - npm test -- --coverage=true --passWithNoTests --watchAll=false --no-progress --ci --colors --testResultsProcessor=jest-sonar-reporter
-          - pipe: sonarsource/sonarcloud-scan:1.2.0
+          - pipe: sonarsource/sonarcloud-scan:1.4.0
           - rm -rf sonar-project.properties && cd ..
         services:
           - docker
     - step: &check-quality-gate-sonarcloud
         name: Check the Quality Gate on SonarCloud
         script:
-          - pipe: sonarsource/sonarcloud-quality-gate:0.1.4
-          
+          - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
+
 pipelines:
   branches:
     develop:
@@ -53,6 +53,6 @@ pipelines:
       - step: *check-quality-gate-sonarcloud
 
   pull-requests:
-    '**':
+    "**":
       - step: *build-test-sonarcloud
       - step: *check-quality-gate-sonarcloud
