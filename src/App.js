@@ -9,6 +9,7 @@ import { urls } from "./utils/urls";
 import LoadingPage from "./pages/LoadingPage";
 import NoConfiguredPaymentOption from "./components/NoConfiguredPaymentOption";
 import PageNotFound from "./components/PageNotFound";
+import PaymentPages from "./pages/PaymentPages/PaymentPages";
 
 const AuthorizeTransaction = React.lazy(() =>
 	import("./pages/AuthorizeTransaction")
@@ -45,21 +46,26 @@ const App = () => {
 									path={urls.card(":accessCode")}
 									children={<CardWidget />}
 								/>
+								<Route
+									exact
+									path={urls["payment-pages"](":accessCode")}
+									children={<PaymentPages />}
+								/>
 								{/* <Route
 									exact
 									path={urls.ussd(":accessCode")}
 									children={<USSDWidget />}
-								/>
-								<Route
+								/> */}
+								{/* <Route
 									exact
 									path={urls.bankTransfer(":accessCode")}
 									children={<BankTransferWidget />}
 								/> */}
-								{/* <Route
+								<Route
 									exact
 									path={urls.offlineTransfer(":accessCode")}
 									children={<OfflineWidget />}
-								/> */}
+								/>
 								<Route
 									exact
 									path={urls.otp(":accessCode", ":reference")}
