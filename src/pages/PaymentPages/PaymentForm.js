@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 const PaymentForm = ({ config }) => {
 	const history = useHistory();
 
+
 	const showName = config.can_collect_name;
 	const showAmount = !config.amount;
 
@@ -91,6 +92,12 @@ const PaymentForm = ({ config }) => {
 		},
 	});
 
+	const cancelPayment = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		window.location.replace("https://app.yeppay.io/");
+	};
+
 	const {
 		handleSubmit,
 		handleChange,
@@ -101,9 +108,6 @@ const PaymentForm = ({ config }) => {
 		errors,
 		isSubmitting,
 	} = form;
-
-	console.log("values", values);
-	console.log("errors", errors);
 
 	const canSubmit = shouldSubmit(values) && Object.keys(errors).length === 0;
 
@@ -175,7 +179,10 @@ const PaymentForm = ({ config }) => {
 						name="phone_number"
 						error={evaluateFormikError(form, "phone_number")}
 						onChange={(e) => {
-							const onlyNumbers = e.target.value.replace(/[^\d]/g, "");
+							const onlyNumbers = e.target.value.replace(
+								/[^\d]/g,
+								""
+							);
 							if (onlyNumbers.length > 11) {
 								return;
 							}
@@ -276,6 +283,10 @@ const PaymentForm = ({ config }) => {
 								</svg>
 							</span> */}
 				</ActionButton>
+
+				<button onClick={cancelPayment} className="cancelButton">
+					Cancel Payment
+				</button>
 			</div>
 		</form>
 	);

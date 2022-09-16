@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
-import YEPLOGO from "../../assets/Yep-Logo.svg";
+import YEPLOGO from "../../assets/Yep-Logo2.svg";
 
 import WidgetError from "../../components/WidgetError";
 import { fetchPaymentPageSettings } from "../../services/payment_pages";
@@ -9,21 +9,6 @@ import { fetchPaymentPageSettings } from "../../services/payment_pages";
 import LoadingPage from "../LoadingPage";
 import { useQuery } from "react-query";
 import PaymentForm from "./PaymentForm";
-
-// const _config = {
-// 	amount: "50,000,000,000",
-// 	business_id: 2,
-// 	callback_url: "https://google.com",
-// 	can_collect_name: false,
-// 	can_collect_phone_number: true,
-// 	channels: ["card", "offline transfer"],
-// 	currency: "ngn",
-// 	has_customer_as_bearer: false,
-// 	id: 30,
-// 	is_live: 0,
-// 	metadata: ["home_address", "city"],
-// 	recipients: [""],
-// };
 
 const PaymentPages = () => {
 	const { accessCode } = useParams();
@@ -39,13 +24,7 @@ const PaymentPages = () => {
 		}
 	);
 
-	// if (isLoading && !pageSettings[0]) {
-	// 	return <LoadingPage />;
-	// }
-
-	// if (isError && !pageSettings[0]) {
-	// 	return <WidgetError />;
-	// }
+	console.log(pageSettings[0]);
 
 	return (
 		<>
@@ -66,7 +45,24 @@ const PaymentPages = () => {
 						<title>Yep Payment Pages</title>
 					</Helmet>
 					<main className="paymentPages-bg">
-						<img className="paymentPages-customer-logo" src={YEPLOGO} alt="" />
+						<img
+							className="paymentPages-customer-logo"
+							src={
+								pageSettings[0]?.business_details?.logo
+									? pageSettings[0].business_details.logo
+									: YEPLOGO
+							}
+							alt=""
+						/>
+						<h2 className="paymentPages-businessName">
+							Business Name -{" "}
+							{pageSettings[0]?.business_details?.name ?? ""}
+						</h2>
+						{pageSettings[0]?.description && (
+							<h2 className="paymentPages-description">
+								{pageSettings[0].description}
+							</h2>
+						)}
 						<section className="paymentPages-card">
 							<PaymentForm config={pageSettings[0]} />
 
