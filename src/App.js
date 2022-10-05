@@ -61,11 +61,11 @@ const App = () => {
 									path={urls.bankTransfer(":accessCode")}
 									children={<BankTransferWidget />}
 								/> */}
-								<Route
+								{/* <Route
 									exact
 									path={urls.offlineTransfer(":accessCode")}
 									children={<OfflineWidget />}
-								/>
+								/> */}
 								<Route
 									exact
 									path={urls.otp(":accessCode", ":reference")}
@@ -83,7 +83,9 @@ const App = () => {
 								/>
 								<Route
 									exact
-									path={urls["no-payment-option"](":accessCode")}
+									path={urls["no-payment-option"](
+										":accessCode"
+									)}
 									children={<NoConfiguredPaymentOption />}
 								/>
 								<Route
