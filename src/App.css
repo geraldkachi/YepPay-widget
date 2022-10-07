@@ -1522,21 +1522,38 @@ button.card-pill {
   background: #F4F6F8 url("./assets/payment-pages-contour.svg") no-repeat bottom center/contain;
 
   width:100vw;
-  height: 100vh;
-  padding: 40px 0px;
+  min-height: 100vh;
+  padding: 64px 0px;
  
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  
 }
 
 .paymentPages-customer-logo{
-  width: 60px;
-  margin-bottom: 100px;
+  width: 112px;
+ 
+}
+
+.paymentPages-businessName {
+  font-size: 20px;
+  color: #382B3D;
+  margin-top: 40px;
+}
+
+.paymentPages-description {
+  width:426px;
+  text-align: center;
+  margin-top: 30px;
+  color: #5D627B;
+  font-size: 16px;
 }
 
 .paymentPages-card {
   max-width:600px;
+  margin-top: 30px;
   width:600px;
   padding: 30px;
   background-color: #ffffff;
@@ -1544,7 +1561,7 @@ button.card-pill {
   border-radius: 10px;
 }
 
-.paymentPages-card > .actionButton {
+.paymentPages-card > form > .actionButton {
   margin-top: 30px;
 }
 
@@ -1568,6 +1585,9 @@ button.card-pill {
 .paymentPages-card > form > .actionButton > .submitbutton {
   justify-content: center;
 }
+.paymentPages-card > form > .actionButton > .cancelButton {
+  display: none;
+}
 .paymentPages-card > form > .actionButton .actionButton-lock {
   margin-right: 8px;
 }
@@ -1576,4 +1596,48 @@ button.card-pill {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+}
+
+@media (max-width:600px) {
+  .paymentPages-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap:20px;
+  }
+
+  .paymentPages-bg {
+    background: #ffffff;
+    height: 100vh;
+    padding: 30px 0;
+  }
+
+  .paymentPages-card {
+    box-shadow:none;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 10px;
+  }
+
+  .paymentPages-description {
+    width: 100%;
+    padding: 0 20px;
+
+  }
+
+  .paymentPages-card > form > .actionButton > .cancelButton {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    background:none;
+    outline: none;
+    font-weight: 600;
+    color: #5D627B;
+    margin-top: 20px;
+    width: 100%;
+    height: 45px;
+    border-radius: 10px;
+    border:  1px solid #e5e4e4
+  }
+  
 }
