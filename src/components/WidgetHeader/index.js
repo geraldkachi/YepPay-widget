@@ -12,11 +12,7 @@ import { usePaymentContext } from "../../context/PaymentContext";
 import YEPLOGO from "../../assets/Yep-Logo.svg";
 
 // navigation and availablePaymentChannels must always be in sync
-export const availablePaymentChannels = [
-	"card",
-	"offline transfer",
-	// "ussd",
-];
+export const availablePaymentChannels = ["card", "offline transfer", "ussd"];
 
 const WidgetHeader = ({ showTabs, paymentDetail }) => {
 	const { accessCode } = useParams();
