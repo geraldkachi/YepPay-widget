@@ -10,13 +10,16 @@ import LoadingPage from "./pages/LoadingPage";
 import NoConfiguredPaymentOption from "./components/NoConfiguredPaymentOption";
 import PageNotFound from "./components/PageNotFound";
 import PaymentPages from "./pages/PaymentPages/PaymentPages";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFailure from "./pages/PaymentFailure";
+
 
 const AuthorizeTransaction = React.lazy(() =>
 	import("./pages/AuthorizeTransaction")
 );
 const ConfirmPayment = React.lazy(() => import("./pages/ConfirmPayment"));
-const PaymentSuccess = React.lazy(() => import("./pages/PaymentSuccess"));
-const PaymentFailure = React.lazy(() => import("./pages/PaymentFailure"));
+// const PaymentSuccess = React.lazy(() => import("./pages/PaymentSuccess"));
+// const PaymentFailure = React.lazy(() => import("./pages/PaymentFailure"));
 const USSDWidget = React.lazy(() => import("./pages/USSDWidget"));
 const CardWidget = React.lazy(() => import("./pages/CardWidget"));
 const OfflineWidget = React.lazy(() => import("./pages/OfflineWidget"));
