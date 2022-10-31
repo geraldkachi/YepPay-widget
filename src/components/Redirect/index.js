@@ -4,8 +4,8 @@ import { availablePaymentChannels } from "../WidgetHeader/index";
 
 const urls = {
 	card: "card",
-	ussd: "ussd-payment",
-	bank: "bank-transfer",
+	// ussd: "ussd-payment",
+	// bank: "bank-transfer",
 	"offline transfer": "offline-transfer",
 };
 

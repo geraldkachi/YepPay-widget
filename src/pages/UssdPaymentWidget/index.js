@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ActionButton from "../../components/Button/ActionButton";
+import UssdBankDropdown from "./UssdBankDropdown";
 
 const UssdPaymentWidget = ({ paymentDetail }) => {
 	const [step, setStep] = useState(1);
 	const [copied, setCopied] = useState(false);
+	const selected = useState({ name: "- Choose Bank", code: "" });
 
 	const chooseADiffBank = () => {
+		selected[1]({ name: "- Choose Bank", code: "" });
 		setStep(1);
 	};
 
@@ -39,31 +43,60 @@ const UssdPaymentWidget = ({ paymentDetail }) => {
 	return (
 		<>
 			{step === 1 && (
-				<div className="ussdwidget">
-					<h1 className="text-center">Choose your bank to start payment</h1>
-					<div className="ussd-collections">
-						<span onClick={goToStep2} type="button" className="ussdbutton">
-							<span>Guaranty Trust Bank</span>
-							<span>*737#</span>
-						</span>
-						<span onClick={goToStep2} type="button" className="ussdbutton">
-							<span>Zenith Bank</span>
-							<span>*966#</span>
-						</span>
+				<>
+					<div className="ussdwidget">
+						<h1 className="text-center">
+							Choose your bank to start payment
+						</h1>
+						<UssdBankDropdown selected={selected} />
 					</div>
-				</div>
+					<ActionButton
+						type="button"
+						className="submitbutton"
+						onClick={() => {
+							setStep(2);
+						}}
+						disabled={selected[0].code.trim() ? false : true}
+						// loading={formik.isSubmitting}
+						spinColour="#FFFFFF"
+						testId="card-payment"
+					>
+						<span></span>
+						<span>Proceed</span>
+						<span>
+							<svg
+								width="8"
+								height="13"
+								viewBox="0 0 8 13"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fillRule="evenodd"
+									clipRule="evenodd"
+									d="M5.76438 6.5L0 1.05573L1.11781 0L8 6.5L1.11781 13L0 11.9443L5.76438 6.5Z"
+									fill="white"
+								/>
+							</svg>
+						</span>
+					</ActionButton>
+				</>
 			)}
 			{step === 2 && (
 				<div className="ussdwidget">
 					<p className="text-center primary-color font-500 f-13">
-						Dial the code below on your mobile to <br /> complete this
-						transaction
+						Dial the code below on your mobile to <br /> complete
+						this transaction
 					</p>
 					<p className="text-center f-20 font-500 cashenvoy-blue pt-20">
 						*966*123456789#
 					</p>
 					<div className="centralize ussd-copy-container pt-20">
-						{copied && <span className="ussd-copied-text">Code Copied</span>}
+						{copied && (
+							<span className="ussd-copied-text">
+								Code Copied
+							</span>
+						)}
 						<button
 							onClick={() => {
 								setCopied(true);
@@ -88,7 +121,10 @@ const UssdPaymentWidget = ({ paymentDetail }) => {
 						</button>
 					</div>
 					<div className="centralize pt-20">
-						<button onClick={chooseADiffBank} className="cashenvoyred font-500">
+						<button
+							onClick={chooseADiffBank}
+							className="cashenvoyred font-500"
+						>
 							Choose Another Bank
 						</button>
 					</div>

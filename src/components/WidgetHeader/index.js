@@ -15,7 +15,8 @@ import YEPLOGO from "../../assets/Yep-Logo.svg";
 export const availablePaymentChannels = [
 	"card",
 	"offline transfer",
-	// "ussd",
+
+	// "ussd"
 ];
 
 const WidgetHeader = ({ showTabs, paymentDetail }) => {

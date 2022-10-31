@@ -29,7 +29,7 @@ const withInitiatePayment =
 		let paymentDetail = {};
 		if (data?.data) {
 			paymentDetail = data.data?.data;
-			// paymentDetail.channels = ["card", "offline_transfer", "ussd"];
+			// paymentDetail.channels = ["card", "offline transfer", "ussd"];
 		}
 
 		useEffect(() => {
