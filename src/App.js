@@ -54,11 +54,11 @@ const App = () => {
 									path={urls["payment-pages"](":accessCode")}
 									children={<PaymentPages />}
 								/>
-								{/* <Route
+								<Route
 									exact
 									path={urls.ussd(":accessCode")}
 									children={<USSDWidget />}
-								/> */}
+								/>
 								{/* <Route
 									exact
 									path={urls.bankTransfer(":accessCode")}

@@ -12,12 +12,7 @@ import { usePaymentContext } from "../../context/PaymentContext";
 import YEPLOGO from "../../assets/Yep-Logo.svg";
 
 // navigation and availablePaymentChannels must always be in sync
-export const availablePaymentChannels = [
-	"card",
-	"offline transfer",
-
-	// "ussd"
-];
+export const availablePaymentChannels = ["card", "offline transfer", "ussd"];
 
 const WidgetHeader = ({ showTabs, paymentDetail }) => {
 	const { accessCode } = useParams();
@@ -44,19 +39,19 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 				Card
 			</NavLink>
 		),
-		// ussd: (
-		// 	<NavLink
-		// 		to={urls.ussd(accessCode)}
-		// 		onClick={() => {
-		// 			setAdditionalFee(null);
-		// 		}}
-		// 		className="button flex justify-center items-center"
-		// 		activeClassName="active"
-		// 	>
-		// 		<img className="mr-4" src={USSDIcon} alt="USSD Icon" />
-		// 		USSD
-		// 	</NavLink>
-		// ),
+		ussd: (
+			<NavLink
+				to={urls.ussd(accessCode)}
+				onClick={() => {
+					setAdditionalFee(null);
+				}}
+				className="button flex justify-center items-center"
+				activeClassName="active"
+			>
+				<img className="mr-4" src={USSDIcon} alt="USSD Icon" />
+				USSD
+			</NavLink>
+		),
 		// bank: (
 		// 	<NavLink
 		// 		to={urls.bankTransfer(accessCode)}
