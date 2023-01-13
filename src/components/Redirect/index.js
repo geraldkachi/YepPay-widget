@@ -4,7 +4,7 @@ import { availablePaymentChannels } from "../WidgetHeader/index";
 
 const urls = {
 	card: "card",
-	// ussd: "ussd-payment",
+	ussd: "ussd-payment",
 	// bank: "bank-transfer",
 	"offline transfer": "offline-transfer",
 };
@@ -18,13 +18,11 @@ const RedirectToFirstChannel = ({ paymentDetail }) => {
 		availablePaymentChannels.includes(channel)
 	);
 
-
-
 	if (channelsAvailable.length === 0) {
 		return <Redirect to={`/error/${accessCode}`} />;
 	}
 
 	return <Redirect to={`/${accessCode}/${urls[channelsAvailable[0]]}`} />;
-};;
+}
 
 export default RedirectToFirstChannel;
