@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CopyIcon from "../../assets/copy-icon.svg";
 import ActionButton from "../../components/Button/ActionButton";
 
-const SendMoney = ({ proceed, accountNumber, expiresIn, amount }) => {
+const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
 	const [copied, setCopied] = useState(false);
 
 	const copyText = async (val) => {
@@ -64,7 +64,7 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount }) => {
 				</div>
 				<div className="offline-bank-name-wrapper">
 					<h6 className="">Bank</h6>
-					<p className="">Providus Bank</p>
+					<p className="">{bank}</p>
 				</div>
 
 				<p className="offline-details">

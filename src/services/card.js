@@ -38,14 +38,13 @@ export const triggerPaymentConfirmation = async (payload) => {
 	return data;
 };
 
-export const resolveFeesCard = async (bin, accessCode) => {
+export const resolveFeesCard = async (bin, accessCode, payment_channel) => {
 	let url;
 	if (bin) {
-		url = `${BASE_PAYMENT_URL}/card/resolve-fees?bin=${bin}&access_code=${accessCode}`;
+		url = `${BASE_PAYMENT_URL}/resolve-fees?bin=${bin}&access_code=${accessCode}&payment_channel=${payment_channel}`;
 	} else {
-		url = `${BASE_PAYMENT_URL}/card/resolve-fees?access_code=${accessCode}`;
+		url = `${BASE_PAYMENT_URL}/resolve-fees?access_code=${accessCode}&payment_channel=${payment_channel}`;
 	}
-	// const url = `${BASE_PAYMENT_URL}/card/resolve-fees?bin=${bin}&access_code=${accessCode}`;
 	const { data } = await requestHandler(url, GET);
 	return data;
-};;
+};

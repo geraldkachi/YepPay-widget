@@ -1012,6 +1012,16 @@ button.card-pill {
   color: #0066FF;
 }
 
+.redirect-button.error {
+  padding: 10px 20px;
+  border-radius: 100px;
+  background: #fff0ed;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #F62727;
+}
+
 .resend-text-cursor {
   cursor: pointer;
 }

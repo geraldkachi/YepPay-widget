@@ -30,6 +30,7 @@ const withInitiatePayment =
 		if (data?.data) {
 			paymentDetail = data.data?.data;
 			// paymentDetail.channels = ["card", "offline transfer", "ussd"];
+			// paymentDetail.bearer = "customer";
 		}
 
 		useEffect(() => {

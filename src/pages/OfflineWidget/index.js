@@ -18,6 +18,7 @@ const OfflineWidget = ({ paymentDetail }) => {
 	const [activeTab, setActive] = useState(1);
 	const [paymentConfirmed, setPaymentConfirmed] = useState(false);
 	const [accountNumber, setAccountNumber] = useState("");
+	const [bank, setBank] = useState("");
 	const [expiryTime, setExpiryTime] = useState(0);
 	const [hasAccountNumber, setHasAccountNumber] = useState(false);
 	const [resolveFees, setResolveFees] = useState(() => {
@@ -28,7 +29,10 @@ const OfflineWidget = ({ paymentDetail }) => {
 	const renderView = hasAccountNumber && resolveFees;
 
 	const resolveFeesForOffline = useFetchWithParams(
-		["resolveFeesForOffline", { bin: null, accessCode }],
+		[
+			"resolveFeesForOffline",
+			{ bin: null, accessCode, payment_channel: "offline_transfer" },
+		],
 		resolveFeesCard,
 		{
 			onSuccess: (data) => {
@@ -41,7 +45,7 @@ const OfflineWidget = ({ paymentDetail }) => {
 			enabled: paymentDetail.bearer !== "account",
 			keepPreviousData: false,
 			refetchOnWindowFocus: false,
-			refetchOnMount: false,
+			refetchOnMount: true,
 		}
 	);
 
@@ -55,6 +59,7 @@ const OfflineWidget = ({ paymentDetail }) => {
 				setExpiryTime(response.data.expires_in);
 				setHasAccountNumber(true);
 				setAccountNumber(response.data.account_number);
+				setBank(response.data.bank);
 			}
 		},
 		onError: (error) => {
@@ -109,6 +114,9 @@ const OfflineWidget = ({ paymentDetail }) => {
 						} else {
 							errorMessage = data.response.message;
 						}
+						paymentContext.setErrorCallback(
+							data.response?.data?.callback_url ?? ""
+						);
 						paymentContext.setErrorMessage(errorMessage);
 						return history.push(
 							urls.failure(data?.accessCode ?? accessCode)
@@ -172,6 +180,7 @@ const OfflineWidget = ({ paymentDetail }) => {
 					{activeTab === 1 && (
 						<SendMoney
 							proceed={proceed}
+							bank={bank}
 							accountNumber={accountNumber}
 							expiresIn={expiryTime}
 							amount={

@@ -21,13 +21,13 @@ function secondsToTime(secs) {
 	return obj;
 }
 
-const timeBeforeOtpResend = 4;
+const timeToRedirect = 4;
 
 const PaymentSuccess = () => {
 	const paymentContext = usePaymentContext();
 	const { payment } = paymentContext;
 	const { accessCode } = useParams();
-	const [count, setCount] = useState(timeBeforeOtpResend);
+	const [count, setCount] = useState(timeToRedirect);
 	// Dynamic delay
 	const [delay, setDelay] = useState(1000);
 	// ON/OFF
@@ -54,15 +54,6 @@ const PaymentSuccess = () => {
 		isCounting ? delay : null
 	);
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		if (payment?.amount) {
-	// 			await delay(3500); // wait for user to see the success message
-	// 			openCallbackUrl();
-	// 		}
-	// 	})();
-	// }, [payment]);
-
 	if (!payment?.amount) {
 		return <Redirect to={`/${accessCode}`} />;
 	}
@@ -83,16 +74,18 @@ const PaymentSuccess = () => {
 					<h1>
 						{payment.currency || "NGN"} {payment.amount}
 					</h1>
-					{true && (
-						<div className="redirect-wrapper">
-							<span className="redirect-button">
-								<span className="redirect-text">Redirects in : </span>
-								<span className="redirect-timer">
-									{`${seconds < 10 ? "0" : ""}${seconds}`}
-								</span>
+
+					<div className="redirect-wrapper">
+						<span className="redirect-button">
+							<span className="redirect-text">
+								Redirects in :{" "}
 							</span>
-						</div>
-					)}
+							<span className="redirect-timer">
+								{`${seconds < 10 ? "0" : ""}${seconds}`}
+							</span>
+						</span>
+					</div>
+
 					{/* <div className="centralize">
             <button type="button" to="/authorize_transaction" className="btn success w-200">
               <span>View Receipt</span>
