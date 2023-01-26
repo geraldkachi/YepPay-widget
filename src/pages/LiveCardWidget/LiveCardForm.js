@@ -50,12 +50,13 @@ const LiveCardForm = ({
 	const shouldResolveFees = paymentDetail.bearer !== "account";
 
 	const resolvedFeesForInputtedCard = useFetchWithParams(
-		["resolveFeesCardInputtedCard", { bin: cachedBin, accessCode }],
+		[
+			"resolveFeesCardInputtedCard",
+			{ bin: cachedBin, accessCode, payment_channel: "card" },
+		],
 		resolveFeesCard,
 		{
 			onSuccess: (data) => {
-				// console.log(data);
-				// console.log(data?.fee_formatted ?? null);
 				paymentContext.setAdditionalFee(data?.fee_formatted ?? null);
 			},
 			onError: (error) => {
@@ -68,20 +69,22 @@ const LiveCardForm = ({
 		}
 	);
 
+	// true or false
+	// remember_card: Boolean(values.remember_card.length), // true or false
+	// remember_card: paymentDetail.remember_card === 1 ? ["on"] : [],
+
 	const formik = useFormik({
 		initialValues: {
 			card_number: "",
 			expiry: "",
 			cvv: "",
-
-			remember_card: paymentDetail.remember_card === 1 ? ["on"] : [],
 		},
 		onSubmit: async (values) => {
 			const expiryInfo = values.expiry.split("/");
 			const payload = {
 				access_code: paymentDetail.access_code,
 				...values,
-				remember_card: Boolean(values.remember_card.length), // true or false
+				remember_card: false,
 				card_number: values.card_number.split(" ").join(""),
 				expiry_month: expiryInfo[0],
 				expiry_year: expiryInfo[1].substring(0, 2),
@@ -93,17 +96,25 @@ const LiveCardForm = ({
 					if (response.data.authorization_mode === "pin") {
 						const cardData = {
 							...payload,
-							authorization_mode: response.data.authorization_mode,
+							authorization_mode:
+								response.data.authorization_mode,
 						};
 						paymentContext.setPayment((prev) => cardData);
 						setShowPin(true);
-					} else if (response.data.authorization_mode === "redirect") {
+					} else if (
+						response.data.authorization_mode === "redirect"
+					) {
 						setShowRedirecting(true);
-						window.location.replace(response.data.additional_information);
-					} else if (response.data.authorization_mode === "avs_noauth") {
+						window.location.replace(
+							response.data.additional_information
+						);
+					} else if (
+						response.data.authorization_mode === "avs_noauth"
+					) {
 						const cardData = {
 							...payload,
-							authorization_mode: response.data.authorization_mode,
+							authorization_mode:
+								response.data.authorization_mode,
 						};
 						paymentContext.setPayment((prev) => cardData);
 						setShowLocationDetails(true);
@@ -161,19 +172,25 @@ const LiveCardForm = ({
 					<div className="card-redirect-loader">
 						<div className="center">
 							<div>
-								<Spinner height="40" width="40" colour="#0066FF" />
+								<Spinner
+									height="40"
+									width="40"
+									colour="#0066FF"
+								/>
 							</div>
 							<h1 className="text-center">...Redirecting...</h1>
 						</div>
 					</div>
 				)}
-				<h1 className="text-center">Enter your card details to make payment</h1>
+				<h1 className="text-center">
+					Enter your card details to make payment
+				</h1>
 
-				<RememberCard
+				{/* <RememberCard
 					cards={rememberedCards}
 					handleSelectCard={handleSelectCard}
 					loading={isLoading}
-				/>
+				/> */}
 
 				<form>
 					<div className="input-wrapper">
@@ -192,28 +209,41 @@ const LiveCardForm = ({
 								if (shouldResolveFees) {
 									if (
 										!cachedBin &&
-										formik.values.card_number.trim().length >= 8
+										formik.values.card_number.trim()
+											.length >= 8
 									) {
 										setCachedBin(
-											formik.values.card_number.split(" ").join("").slice(0, 6)
+											formik.values.card_number
+												.split(" ")
+												.join("")
+												.slice(0, 6)
 										);
 										return;
 									}
 
 									if (
 										cachedBin &&
-										formik.values.card_number.trim().length >= 8 &&
-										cachedBin !== formik.values.card_number.slice(0, 6)
+										formik.values.card_number.trim()
+											.length >= 8 &&
+										cachedBin !==
+											formik.values.card_number.slice(
+												0,
+												6
+											)
 									) {
 										setCachedBin(
-											formik.values.card_number.split(" ").join("").slice(0, 6)
+											formik.values.card_number
+												.split(" ")
+												.join("")
+												.slice(0, 6)
 										);
 										return;
 									}
 
 									if (
 										!formik.values.card_number.trim() ||
-										formik.values.card_number.trim().length < 6
+										formik.values.card_number.trim()
+											.length < 6
 									) {
 										setCachedBin("");
 										paymentContext.setAdditionalFee(null);
@@ -224,7 +254,10 @@ const LiveCardForm = ({
 							}}
 							autocompletetype="cc-number"
 						/>
-						<label htmlFor="cardNumber" className="label label--floating">
+						<label
+							htmlFor="cardNumber"
+							className="label label--floating"
+						>
 							Card Number
 						</label>
 						<div className="cardtype">
@@ -248,7 +281,10 @@ const LiveCardForm = ({
 									autocompletetype="cc-exp"
 									required
 								/>
-								<label htmlFor="cardNumber" className="label label--floating">
+								<label
+									htmlFor="cardNumber"
+									className="label label--floating"
+								>
 									Card Expiry
 								</label>
 							</div>
@@ -269,21 +305,26 @@ const LiveCardForm = ({
 									autocompletetype="cc-csc"
 									required
 								/>
-								<label htmlFor="cardNumber" className="label label--floating">
+								<label
+									htmlFor="cardNumber"
+									className="label label--floating"
+								>
 									CVV
 								</label>
 								<button className="infobtn" type="button">
 									Info?
 								</button>
 								<div className="hidden-cvv-info">
-									<span>The 3 digits number behind your atm card</span>
+									<span>
+										The 3 digits number behind your atm card
+									</span>
 								</div>
 							</div>
 							<FormError formik={formik} inputName="cvv" />
 						</div>
 					</div>
 
-					<p className="remembercard-check">
+					{/* <p className="remembercard-check">
 						<input
 							type="checkbox"
 							id="remembercard"
@@ -293,7 +334,7 @@ const LiveCardForm = ({
 							onBlur={formik.handleBlur}
 						/>
 						<label htmlFor="remembercard">Remember card</label>
-					</p>
+					</p> */}
 				</form>
 			</div>
 			<ActionButton
@@ -334,17 +375,20 @@ const LiveCardForm = ({
 				</span>
 				<span>
 					Pay{" "}
-					{shouldResolveFees && paymentContext.additionalFee !== null && (
-						<span>
-							{paymentDetail.currency}{" "}
-							{paymentDetail.amount + +paymentContext.additionalFee}
-						</span>
-					)}
-					{!shouldResolveFees && paymentContext.additionalFee === null && (
-						<span>
-							{paymentDetail.currency} {paymentDetail.amount}
-						</span>
-					)}
+					{shouldResolveFees &&
+						paymentContext.additionalFee !== null && (
+							<span>
+								{paymentDetail.currency}{" "}
+								{paymentDetail.amount +
+									+paymentContext.additionalFee}
+							</span>
+						)}
+					{!shouldResolveFees &&
+						paymentContext.additionalFee === null && (
+							<span>
+								{paymentDetail.currency} {paymentDetail.amount}
+							</span>
+						)}
 				</span>
 				<span>
 					<svg

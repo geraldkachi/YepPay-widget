@@ -106,6 +106,9 @@ const AuthorizeTransaction = () => {
 			} else {
 				paymentContext.setReference("");
 
+				paymentContext.setErrorCallback(
+					response?.data?.callback_url ?? ""
+				);
 				paymentContext.setErrorMessage(response.message);
 				return history.push(urls.failure(accessCode));
 			}

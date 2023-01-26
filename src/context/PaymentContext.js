@@ -6,14 +6,15 @@ const paymentContext = createContext();
 export const usePaymentContext = () => useContext(paymentContext);
 
 export const PaymentProvider = ({ children, initialValue }) => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [errorCallback, setErrorCallback] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [paymentDetail, setPaymentDetail] = useState({});
-  const [reference, setReference] = useState('');
+  const [reference, setReference] = useState("");
   const [payment, setPayment] = useState({});
   const [additionalFee, setAdditionalFee] = useState(null);
 
-	const value = {
+  const value = {
 		errorMessage,
 		setErrorMessage,
 		successMessage,
@@ -26,7 +27,9 @@ export const PaymentProvider = ({ children, initialValue }) => {
 		setPayment,
 		additionalFee,
 		setAdditionalFee,
-	};
+		errorCallback,
+		setErrorCallback,
+  };
   return (
     <paymentContext.Provider value={value}>
       {children}

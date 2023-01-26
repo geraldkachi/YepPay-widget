@@ -55,6 +55,9 @@ const ShowUssdCode = ({ chooseADiffBank, code, traceId, reference }) => {
 					} else {
 						errorMessage = data.response.message;
 					}
+					paymentContext.setErrorCallback(
+						data.response?.data?.callback_url ?? ""
+					);
 					paymentContext.setErrorMessage(errorMessage);
 					return history.push(
 						urls.failure(data?.accessCode ?? accessCode)
