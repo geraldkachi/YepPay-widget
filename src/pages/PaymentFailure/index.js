@@ -124,7 +124,7 @@ const PaymentFailure = () => {
 						onClick={() => {
 							!!errorCallback.trim()
 								? openCallbackUrl()
-								: handleClick;
+								: handleClick();
 						}}
 					/>
 				</div>
