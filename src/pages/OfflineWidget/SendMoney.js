@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CopyIcon from "../../assets/copy-icon.svg";
+import DisclaimerIcon from "../../assets/disclaimer.svg";
 import ActionButton from "../../components/Button/ActionButton";
 
 const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
@@ -71,6 +72,14 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
 					Use this account to complete this transaction only. Account
 					expires in{" "}
 					<span>{Math.ceil(expiresIn / (60 * 60))} hours</span>
+				</p>
+			</div>
+			<div className="offline-disclaimer">
+				<img src={DisclaimerIcon} alt="disclaimer icon" />
+				<p className="disclaimer-content">
+					Please ensure you transfer the exact amount requested.
+					Transferring an amount higher or lower than the requested
+					amount will result in a failed transaction.
 				</p>
 			</div>
 
