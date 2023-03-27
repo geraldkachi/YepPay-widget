@@ -1460,6 +1460,28 @@ button.card-pill {
   margin-right: 7px;
 }
 
+
+.offline-disclaimer {
+  margin-top: 20px;
+  padding:10px;
+  background-color: #F4F5F6;
+  display: flex;
+  align-items: start;
+  border-radius: 10px;
+  gap: 12px;
+}
+
+.offline-disclaimer > img {
+  margin-top: 4px;
+ width: 20px;
+ height: 20px;
+}
+.offline-disclaimer > .disclaimer-content {
+  color: #626E81;
+  font-size: 12px;
+}
+
+
 .show-details-again {
   border-top: 1px solid #EDF3F8;
   padding: 15px 20px 0px 20px;
