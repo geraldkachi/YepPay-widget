@@ -31,15 +31,11 @@ function secondsToTime(secs) {
 
 const waitingTime = 299;
 
-const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
+const ConfirmOfflinePayment = ({ back, paymentConfirmed, accountNumber }) => {
 	const [buttonText, setButtonText] = useState("Wait for another 5mins?");
-	const [paymentConfirmed, setPaymentConfirmed] = useState(false);
-	// const [showButton, setShowButton] = useState(false);
 	const [count, setCount] = useState(waitingTime);
 
 	const [waitingCount, setWaitingCount] = useState(0);
-
-	// const timeRef= useRef(0)
 
 	const [delay, setDelay] = useState(1000);
 	const [isCounting, setIsCounting] = useState(true);
@@ -74,7 +70,6 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 					setWaitingCount(1);
 				}
 				if (waitingCount === 1) {
-					// setButtonText("Keep Waiting");
 					setWaitingCount(2);
 				}
 			}
@@ -82,86 +77,6 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 		// Delay in milliseconds or null to stop it
 		isCounting && !paymentConfirmed ? delay : null
 	);
-
-	useEffect(() => {
-		const eventName = "transaction.attempted";
-		const channelName = `transaction${reference}`;
-
-		let pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-			cluster: process.env.REACT_APP_CLUSTER,
-		});
-		var channel = pusher.subscribe(channelName);
-		// console.log("listening to", channel);
-
-		channel.bind(eventName, function (data) {
-			// console.log("DATA FROM EVENT", data);
-			if (data?.response) {
-				if (data.response.status) {
-					setPaymentConfirmed(true);
-					paymentContext.setPayment({
-						currency: data.response.data?.currency,
-						amount: data.response.data?.amount_formatted,
-						callback_url: data.response.data?.callback_url,
-					});
-					paymentContext.setSuccessMessage(data.response.message);
-					return history.push(urls.success(data.accessCode));
-				} else {
-					setIsCounting(false);
-					let errorMessage = "";
-					if (data.response.message?.toLowerCase() === "error") {
-						errorMessage =
-							"Something went wrong. This might be due to due to poor network. Please try again.";
-					} else {
-						errorMessage = data.response.message;
-					}
-					paymentContext.setErrorMessage(errorMessage);
-					return history.push(
-						urls.failure(data.accessCode ?? accessCode)
-					);
-				}
-			}
-		});
-
-		return () => {
-			// cancel the listener before component unmounts
-			// console.log("UnSubscribedstart");
-			pusher.unsubscribe(channelName);
-			// console.log("UnSubscribedend");
-		};
-	}, []);
-
-	useEffect(() => {
-		const eventName = "transaction.nuban-error";
-		const channelName = `nuban-error${accountNumber}`;
-		// const channelName = `nuban-error930340403930`;
-
-		let pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-			cluster: process.env.REACT_APP_CLUSTER,
-		});
-		var channel = pusher.subscribe(channelName);
-		// console.log("listening to second channel2", channel);
-
-		channel.bind(eventName, function (data) {
-			// console.log("DATA FROM EVENT2", data);
-			if (data?.response) {
-				if (!data.response.status) {
-					setIsCounting(false);
-					const errorMessage = data.response?.message ?? "";
-					paymentContext.setErrorMessage(errorMessage);
-					return history.push(
-						urls.failure(data.accessCode ?? accessCode)
-					);
-				}
-			}
-		});
-
-		return () => {
-			// cancel the listener before component unmounts
-			// console.log("UnSubscribedstart");
-			pusher.unsubscribe(channelName);
-			// console.log("UnSubscribedend");
-		};
-	}, []);
 
 	useEffect(() => {
 		if (waitingCount === 2) {
@@ -249,7 +164,9 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 					<ActionButton
 						type="button"
 						className="submitbutton justify-center"
-						onClick={() => {}}
+						onClick={() => {
+							history.push(urls.home(accessCode));
+						}}
 						disabled={false}
 						loading={false}
 						spinColour="#FFFFFF"
@@ -261,6 +178,6 @@ const ConfirmOfflinePayment = ({ back, reference, accountNumber }) => {
 			)}
 		</div>
 	);
-};
+};;
 
 export default ConfirmOfflinePayment;

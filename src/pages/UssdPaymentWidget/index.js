@@ -1,11 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import ActionButton from "../../components/Button/ActionButton";
+import useFetchWithParams from "../../hooks/useFetchWithParams";
+import { generateUssdCode, getAllBankUsdCode } from "../../services/ussd";
+import UssdBankDropdown from "./UssdBankDropdown";
+import { useQuery } from "react-query";
+import toast from "react-hot-toast";
+import ShowUssdCode from "./ShowUssdCode";
+import Spinner from "../../components/Spinner";
+import { resolveFeesCard } from "../../services/card";
+import { usePaymentContext } from "../../context/PaymentContext";
 
 const UssdPaymentWidget = ({ paymentDetail }) => {
+	const { accessCode } = useParams();
+	const paymentContext = usePaymentContext();
 	const [step, setStep] = useState(1);
-	const [copied, setCopied] = useState(false);
+	const [hasResolvedFees, setHasResolvedFees] = useState(() => {
+		return paymentDetail.bearer === "account";
+	});
+
+	const [submitting, setSubmitting] = useState(false);
+	const selected = useState({
+		bankName: "- Choose Bank",
+		bankCode: "",
+		status: false,
+	});
+	const bankList = useState([]);
+	const traceId = useState("");
+	const ussdCode = useState("");
+
+	useFetchWithParams(
+		[
+			"resolveFeesForUssd",
+			{ bin: null, accessCode, payment_channel: "ussd" },
+		],
+		resolveFeesCard,
+		{
+			onSuccess: (data) => {
+				paymentContext.setAdditionalFee(data?.fee_formatted ?? null);
+				setHasResolvedFees(true);
+			},
+			onError: (error) => {
+				console.log(error);
+			},
+			enabled: paymentDetail.bearer !== "account",
+			keepPreviousData: false,
+			refetchOnWindowFocus: false,
+			refetchOnMount: true,
+		}
+	);
+
+	const allBanksList = useQuery("ussdBankList", getAllBankUsdCode, {
+		onSuccess: (response) => {
+			bankList[1](response?.data?.data ?? []);
+		},
+		onError: (error) => {
+			console.log(error);
+		},
+		refetchOnWindowFocus: false,
+		refetchOnMount: true,
+	});
 
 	const chooseADiffBank = () => {
+		selected[1]({ bankName: "- Choose Bank", bankCode: "" });
 		setStep(1);
 	};
 
@@ -13,86 +70,95 @@ const UssdPaymentWidget = ({ paymentDetail }) => {
 		setStep(2);
 	};
 
-	const copyText = async (val) => {
-		const el = document.createElement("textarea");
-		el.value = val;
-		el.setAttribute("readonly", "");
-		el.style.position = "absolute";
-		el.style.opacity = 0;
-		el.style.left = "-9999px";
-		document.body.appendChild(el);
-		el.select();
-		el.setSelectionRange(0, 99999);
-		document.execCommand("copy");
-		document.body.removeChild(el);
-		setCopied(true);
-	};
-
-	useEffect(() => {
-		if (copied) {
-			setTimeout(() => {
-				setCopied(false);
-			}, 1500);
+	const handleProceed = async () => {
+		try {
+			setSubmitting(true);
+			const response = await generateUssdCode({
+				payment_id: paymentDetail.id,
+				bank_code: selected[0].bankCode,
+			});
+			if (!response.status) {
+				toast.error(response?.message ?? "Error generating ussd code.");
+			} else {
+				traceId[1](response.data?.trace_id);
+				ussdCode[1](response.data?.ussd_code);
+				goToStep2();
+			}
+			setSubmitting(false);
+		} catch (error) {
+			setSubmitting(false);
+			console.log(error);
 		}
-	}, [copied]);
+	};
 
 	return (
 		<>
-			{step === 1 && (
-				<div className="ussdwidget">
-					<h1 className="text-center">Choose your bank to start payment</h1>
-					<div className="ussd-collections">
-						<span onClick={goToStep2} type="button" className="ussdbutton">
-							<span>Guaranty Trust Bank</span>
-							<span>*737#</span>
-						</span>
-						<span onClick={goToStep2} type="button" className="ussdbutton">
-							<span>Zenith Bank</span>
-							<span>*966#</span>
-						</span>
+			{!hasResolvedFees && (
+				<div style={{ height: "419px", width: "100%" }}>
+					<div className="flex mt-20 justify-center">
+						<Spinner height="50" width="50" colour="#0066FF" />
 					</div>
 				</div>
 			)}
-			{step === 2 && (
-				<div className="ussdwidget">
-					<p className="text-center primary-color font-500 f-13">
-						Dial the code below on your mobile to <br /> complete this
-						transaction
-					</p>
-					<p className="text-center f-20 font-500 cashenvoy-blue pt-20">
-						*966*123456789#
-					</p>
-					<div className="centralize ussd-copy-container pt-20">
-						{copied && <span className="ussd-copied-text">Code Copied</span>}
-						<button
-							onClick={() => {
-								setCopied(true);
-							}}
-							className="copy-usd-code"
-						>
-							<svg
-								width="16"
-								height="16"
-								viewBox="0 0 16 16"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									fillRule="evenodd"
-									clipRule="evenodd"
-									d="M6.5 0.5H14C14.8642 0.5 15.5 1.13579 15.5 2V9.5C15.5 10.3642 14.8642 11 14 11H11V14C11 14.8642 10.3642 15.5 9.5 15.5H2C1.13579 15.5 0.5 14.8642 0.5 14V6.5C0.5 5.63579 1.13579 5 2 5H5V2C5 1.13579 5.63579 0.5 6.5 0.5ZM5 6.5H2V14H9.5V11H6.5C5.63579 11 5 10.3642 5 9.5V6.5ZM6.5 2V9.5H14V2H6.5Z"
-									fill="#8797B1"
+			{hasResolvedFees && (
+				<>
+					{step === 1 && (
+						<>
+							<div className="ussdwidget">
+								<h1 className="text-center">
+									Choose your bank to start payment
+								</h1>
+								<UssdBankDropdown
+									list={bankList[0]}
+									selected={selected}
 								/>
-							</svg>
-							Click here to copy USSD code
-						</button>
-					</div>
-					<div className="centralize pt-20">
-						<button onClick={chooseADiffBank} className="cashenvoyred font-500">
-							Choose Another Bank
-						</button>
-					</div>
-				</div>
+							</div>
+							<ActionButton
+								type="button"
+								className="submitbutton"
+								onClick={() => {
+									// setStep(2);
+									handleProceed();
+								}}
+								disabled={
+									submitting || selected[0].bankCode.trim()
+										? false
+										: true
+								}
+								loading={submitting}
+								spinColour="#FFFFFF"
+								testId="card-payment"
+							>
+								<span></span>
+								<span>Proceed</span>
+								<span>
+									<svg
+										width="8"
+										height="13"
+										viewBox="0 0 8 13"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fillRule="evenodd"
+											clipRule="evenodd"
+											d="M5.76438 6.5L0 1.05573L1.11781 0L8 6.5L1.11781 13L0 11.9443L5.76438 6.5Z"
+											fill="white"
+										/>
+									</svg>
+								</span>
+							</ActionButton>
+						</>
+					)}
+					{step === 2 && (
+						<ShowUssdCode
+							code={ussdCode[0]}
+							traceId={traceId[0]}
+							reference={paymentDetail.reference}
+							chooseADiffBank={chooseADiffBank}
+						/>
+					)}
+				</>
 			)}
 		</>
 	);

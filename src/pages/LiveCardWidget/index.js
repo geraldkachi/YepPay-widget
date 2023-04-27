@@ -71,7 +71,14 @@ const LiveCardWidget = ({ paymentDetail }) => {
 	}
 
 	const resolvedFeesForSelectedCard = useFetchWithParams(
-		["resolveFeesCard2", { bin: selectedCard?.first_6, accessCode }],
+		[
+			"resolveFeesCard2",
+			{
+				bin: selectedCard?.first_6 ?? null,
+				accessCode,
+				payment_channel: "card",
+			},
+		],
 		resolveFeesCard,
 		{
 			onSuccess: (data) => {
@@ -89,16 +96,18 @@ const LiveCardWidget = ({ paymentDetail }) => {
 
 	return (
 		<>
-			{selectedCard && !showPin && !showLocationDetails && (
+			{/* {selectedCard && !showPin && !showLocationDetails && (
 				<ExistingCard
 					paymentDetail={paymentDetail}
 					selectedCard={selectedCard}
 					setSelectedCard={setSelectedCard}
 					accessCode={accessCode}
 				/>
-			)}
+			)} */}
 
-			{showPin && !showLocationDetails && <CardPin accessCode={accessCode} />}
+			{showPin && !showLocationDetails && (
+				<CardPin accessCode={accessCode} />
+			)}
 
 			{!selectedCard && !showPin && !showLocationDetails && (
 				<LiveCardForm

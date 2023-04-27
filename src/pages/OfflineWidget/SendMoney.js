@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CopyIcon from "../../assets/copy-icon.svg";
+import DisclaimerIcon from "../../assets/disclaimer.svg";
 import ActionButton from "../../components/Button/ActionButton";
 
-const SendMoney = ({ proceed, accountNumber, expiresIn, amount }) => {
+const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
 	const [copied, setCopied] = useState(false);
 
 	const copyText = async (val) => {
@@ -30,15 +31,29 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount }) => {
 
 	return (
 		<div className="offline">
-			<h4>Transfer NGN {amount} to the account details below</h4>
+			<h4>
+				Transfer NGN{" "}
+				{Number(amount).toLocaleString("en-NG", {
+					minimumFractionDigits: 0,
+				})}{" "}
+				to the account details below
+			</h4>
 			<div className="offline-account-details-wrapper">
 				<div className="offline-account-number-wrapper">
 					<div className="">
-						<h6 className="offline-account-number-title">Account Number</h6>
-						<p className="offline-account-number-value">{accountNumber}</p>
+						<h6 className="offline-account-number-title">
+							Account Number
+						</h6>
+						<p className="offline-account-number-value">
+							{accountNumber}
+						</p>
 					</div>
 					<div className="offline-copy">
-						{copied && <span className="ussd-copied-text">Account Copied</span>}
+						{copied && (
+							<span className="ussd-copied-text">
+								Account Copied
+							</span>
+						)}
 						<img
 							onClick={() => {
 								copyText(accountNumber);
@@ -50,12 +65,21 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount }) => {
 				</div>
 				<div className="offline-bank-name-wrapper">
 					<h6 className="">Bank</h6>
-					<p className="">Providus Bank</p>
+					<p className="">{bank}</p>
 				</div>
 
 				<p className="offline-details">
-					Use this account to complete this transaction only. Account expires in{" "}
+					Use this account to complete this transaction only. Account
+					expires in{" "}
 					<span>{Math.ceil(expiresIn / (60 * 60))} hours</span>
+				</p>
+			</div>
+			<div className="offline-disclaimer">
+				<img src={DisclaimerIcon} alt="disclaimer icon" />
+				<p className="disclaimer-content">
+					Please ensure you transfer the exact amount requested.
+					Transferring an amount higher or lower than the requested
+					amount will result in a failed transaction.
 				</p>
 			</div>
 

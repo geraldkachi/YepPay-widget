@@ -4,7 +4,7 @@ import AnimatedSuccessCheckmark from "../../components/AnimatedSuccessCheckmark"
 import WidgetFooter from "../../components/WidgetFooter";
 import { usePaymentContext } from "../../context/PaymentContext";
 import { delay } from "../../utils";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import useInterval from "../../hooks/useInterval";
 
 function secondsToTime(secs) {
@@ -21,17 +21,34 @@ function secondsToTime(secs) {
 	return obj;
 }
 
-const timeBeforeOtpResend = 4;
+const timeToRedirect = 4;
 
 const PaymentSuccess = () => {
+	const history = useHistory();
 	const paymentContext = usePaymentContext();
-	const { payment } = paymentContext;
+	const { payment, paymentDetail, setPayment } = paymentContext;
 	const { accessCode } = useParams();
-	const [count, setCount] = useState(timeBeforeOtpResend);
-	// Dynamic delay
+	const [count, setCount] = useState(timeToRedirect);
+
+	const [allowRedirect, setAllowRedirect] = useState(() => {
+		if (paymentDetail?.callback_type !== undefined) {
+			if (paymentDetail.callback_type === "webhook") {
+				return false;
+			} else if (paymentDetail.callback_type === "callback") {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	});
 	const [delay, setDelay] = useState(1000);
-	// ON/OFF
+
 	const [isCounting, setIsCounting] = useState(true);
+
+	const returnHome = () => {
+		setPayment({});
+		return history.push(`/${accessCode}`);
+	};
 
 	const openCallbackUrl = () => {
 		return window.location.replace(payment.callback_url);
@@ -51,17 +68,8 @@ const PaymentSuccess = () => {
 			}
 		},
 		// Delay in milliseconds or null to stop it
-		isCounting ? delay : null
+		isCounting && allowRedirect ? delay : null
 	);
-
-	// useEffect(() => {
-	// 	(async () => {
-	// 		if (payment?.amount) {
-	// 			await delay(3500); // wait for user to see the success message
-	// 			openCallbackUrl();
-	// 		}
-	// 	})();
-	// }, [payment]);
 
 	if (!payment?.amount) {
 		return <Redirect to={`/${accessCode}`} />;
@@ -83,16 +91,20 @@ const PaymentSuccess = () => {
 					<h1>
 						{payment.currency || "NGN"} {payment.amount}
 					</h1>
-					{true && (
+
+					{allowRedirect && (
 						<div className="redirect-wrapper">
 							<span className="redirect-button">
-								<span className="redirect-text">Redirects in : </span>
+								<span className="redirect-text">
+									Redirects in :{" "}
+								</span>
 								<span className="redirect-timer">
 									{`${seconds < 10 ? "0" : ""}${seconds}`}
 								</span>
 							</span>
 						</div>
 					)}
+
 					{/* <div className="centralize">
             <button type="button" to="/authorize_transaction" className="btn success w-200">
               <span>View Receipt</span>
@@ -100,7 +112,12 @@ const PaymentSuccess = () => {
           </div> */}
 				</div>
 				<div className="pt-120">
-					<WidgetFooter onClick={openCallbackUrl} verb="Dismiss" />
+					<WidgetFooter
+						onClick={() => {
+							allowRedirect ? openCallbackUrl() : returnHome();
+						}}
+						verb="Dismiss"
+					/>
 				</div>
 			</div>
 		</div>
