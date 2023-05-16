@@ -12,7 +12,8 @@ import { usePaymentContext } from "../../context/PaymentContext";
 import YEPLOGO from "../../assets/Yep-Logo.svg";
 
 // navigation and availablePaymentChannels must always be in sync
-export const availablePaymentChannels = ["card", "offline transfer", "ussd"];
+export const availablePaymentChannels = ["card", "ussd"];
+// export const availablePaymentChannels = ["card", "offline transfer", "ussd"];
 
 const WidgetHeader = ({ showTabs, paymentDetail }) => {
 	const { accessCode } = useParams();
@@ -65,23 +66,23 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 		// 		Bank
 		// 	</NavLink>
 		// ),
-		"offline transfer": (
-			<NavLink
-				to={urls.offlineTransfer(accessCode)}
-				onClick={() => {
-					setAdditionalFee(null);
-				}}
-				className="button flex justify-center items-center"
-				activeClassName="active"
-			>
-				<img
-					className="mr-4"
-					src={OfflineIcon}
-					alt="Bank Payment Icon"
-				/>
-				Transfer
-			</NavLink>
-		),
+		// "offline transfer": (
+		// 	<NavLink
+		// 		to={urls.offlineTransfer(accessCode)}
+		// 		onClick={() => {
+		// 			setAdditionalFee(null);
+		// 		}}
+		// 		className="button flex justify-center items-center"
+		// 		activeClassName="active"
+		// 	>
+		// 		<img
+		// 			className="mr-4"
+		// 			src={OfflineIcon}
+		// 			alt="Bank Payment Icon"
+		// 		/>
+		// 		Transfer
+		// 	</NavLink>
+		// ),
 	};
 
 	return (
@@ -152,9 +153,15 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 			{showTabs && (
 				<div className="tab-headers">
 					<div className="buttonGroup">
-						{channels.map((channel) => (
-							<span key={channel}>{navigation[channel]} </span>
-						))}
+						{channels
+							.filter((chan) =>
+								availablePaymentChannels.includes(chan)
+							)
+							.map((channel) => (
+								<span key={channel}>
+									{navigation[channel]}{" "}
+								</span>
+							))}
 					</div>
 				</div>
 			)}

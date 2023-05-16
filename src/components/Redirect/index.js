@@ -6,7 +6,7 @@ const urls = {
 	card: "card",
 	ussd: "ussd-payment",
 	// bank: "bank-transfer",
-	"offline transfer": "offline-transfer",
+	// "offline transfer": "offline-transfer",
 };
 
 const RedirectToFirstChannel = ({ paymentDetail }) => {
