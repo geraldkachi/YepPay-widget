@@ -1,63 +1,63 @@
 {
-  "name": "cashenvoypaymentwidget",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "axios": "^0.24.0",
-    "countrycitystatejson": "^20.8.14",
-    "formik": "^2.2.9",
-    "payment": "^2.4.0",
-    "pusher-js": "^7.0.6",
-    "react": "^17.0.2",
-    "react-credit-cards": "^0.8.3",
-    "react-dom": "^17.0.2",
-    "react-helmet": "^6.1.0",
-    "react-hot-toast": "^2.1.1",
-    "react-number-format": "^4.9.3",
-    "react-otp-input": "^2.4.0",
-    "react-pusher": "^0.2.0",
-    "react-query": "^3.34.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "4.0.2",
-    "react-select": "^5.2.2",
-    "web-vitals": "^1.0.1",
-    "yup": "^0.32.11"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "jest-sonar-reporter": "^2.0.0"
-  },
-  "jest": {
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test/"
-    ],
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!src/index.js",
-      "!src/serviceWorker.js",
-      "!src/postcss.config.js",
-      "!src/app/store.js"
-    ]
-  }
+	"name": "cashenvoypaymentwidget",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@testing-library/jest-dom": "^5.11.4",
+		"@testing-library/react": "^11.1.0",
+		"@testing-library/user-event": "^12.1.10",
+		"axios": "^0.24.0",
+		"countrycitystatejson": "^20.8.14",
+		"formik": "^2.2.9",
+		"payment": "^2.4.0",
+		"pusher-js": "^7.0.6",
+		"react": "^17.0.2",
+		"react-credit-cards": "^0.8.3",
+		"react-dom": "^17.0.2",
+		"react-helmet": "^6.1.0",
+		"react-hot-toast": "^2.1.1",
+		"react-number-format": "^4.9.3",
+		"react-otp-input": "^2.4.0",
+		"react-pusher": "^0.2.0",
+		"react-query": "^3.34.0",
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "4.0.2",
+		"react-select": "^5.2.2",
+		"web-vitals": "^1.0.1",
+		"yup": "^0.32.11"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "GENERATE_SOURCEMAP=false react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"jest-sonar-reporter": "^2.0.0"
+	},
+	"jest": {
+		"coveragePathIgnorePatterns": [
+			"/node_modules/",
+			"/test/"
+		],
+		"collectCoverageFrom": [
+			"**/*.{js,jsx}",
+			"!src/index.js",
+			"!src/serviceWorker.js",
+			"!src/postcss.config.js",
+			"!src/app/store.js"
+		]
+	}
 }
