@@ -3,27 +3,14 @@ import { usePaymentContext } from "../../context/PaymentContext";
 import { urls } from "../../utils/urls";
 import Pusher from "pusher-js";
 import { useParams, useHistory } from "react-router-dom";
+import useCopyToClipboard from "../../hooks/useCopyToClickboard";
 
 const ShowUssdCode = ({ chooseADiffBank, code, traceId, reference }) => {
-	const [copied, setCopied] = useState(false);
 	const { accessCode } = useParams();
 	const history = useHistory();
 	const paymentContext = usePaymentContext();
 
-	const copyText = async (val) => {
-		const el = document.createElement("textarea");
-		el.value = val;
-		el.setAttribute("readonly", "");
-		el.style.position = "absolute";
-		el.style.opacity = 0;
-		el.style.left = "-9999px";
-		document.body.appendChild(el);
-		el.select();
-		el.setSelectionRange(0, 99999);
-		document.execCommand("copy");
-		document.body.removeChild(el);
-		setCopied(true);
-	};
+	const [, copy] = useCopyToClipboard("Code");
 
 	useEffect(() => {
 		const eventName = "transaction.attempted";
@@ -50,18 +37,13 @@ const ShowUssdCode = ({ chooseADiffBank, code, traceId, reference }) => {
 				} else {
 					let errorMessage = "";
 					if (data.response.message?.toLowerCase() === "error") {
-						errorMessage =
-							"Something went wrong. This might be due to poor network. Please try again.";
+						errorMessage = "Something went wrong. This might be due to poor network. Please try again.";
 					} else {
 						errorMessage = data.response.message;
 					}
-					paymentContext.setErrorCallback(
-						data.response?.data?.callback_url ?? ""
-					);
+					paymentContext.setErrorCallback(data.response?.data?.callback_url ?? "");
 					paymentContext.setErrorMessage(errorMessage);
-					return history.push(
-						urls.failure(data?.accessCode ?? accessCode)
-					);
+					return history.push(urls.failure(data?.accessCode ?? accessCode));
 				}
 			}
 		});
@@ -88,9 +70,7 @@ const ShowUssdCode = ({ chooseADiffBank, code, traceId, reference }) => {
 				if (!data.response.status) {
 					const errorMessage = data.response?.message ?? "";
 					paymentContext.setErrorMessage(errorMessage);
-					return history.push(
-						urls.failure(data.accessCode ?? accessCode)
-					);
+					return history.push(urls.failure(data.accessCode ?? accessCode));
 				}
 			}
 		});
@@ -100,40 +80,20 @@ const ShowUssdCode = ({ chooseADiffBank, code, traceId, reference }) => {
 		};
 	}, []);
 
-	useEffect(() => {
-		if (copied) {
-			setTimeout(() => {
-				setCopied(false);
-			}, 1500);
-		}
-	}, [copied]);
-
 	return (
 		<div className="ussdwidget">
 			<p className="text-center primary-color font-500 f-13">
-				Dial the code below on your mobile to <br /> complete this
-				transaction
+				Dial the code below on your mobile to <br /> complete this transaction
 			</p>
-			<p className="text-center f-20 font-500 cashenvoy-blue pt-20">
-				{code}
-			</p>
+			<p className="text-center f-20 font-500 cashenvoy-blue pt-20">{code}</p>
 			<div className="centralize ussd-copy-container pt-20">
-				{copied && (
-					<span className="ussd-copied-text">Code Copied</span>
-				)}
 				<button
 					onClick={() => {
-						setCopied(true);
+						copy(code);
 					}}
 					className="copy-usd-code"
 				>
-					<svg
-						width="16"
-						height="16"
-						viewBox="0 0 16 16"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
+					<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
 							fillRule="evenodd"
 							clipRule="evenodd"
@@ -145,10 +105,7 @@ const ShowUssdCode = ({ chooseADiffBank, code, traceId, reference }) => {
 				</button>
 			</div>
 			<div className="centralize pt-20">
-				<button
-					onClick={chooseADiffBank}
-					className="cashenvoyred font-500"
-				>
+				<button onClick={chooseADiffBank} className="cashenvoyred font-500">
 					Choose Another Bank
 				</button>
 			</div>
