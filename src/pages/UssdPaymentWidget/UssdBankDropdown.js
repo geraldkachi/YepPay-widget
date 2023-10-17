@@ -18,9 +18,7 @@ const UssdBankDropdown = ({ selected, list }) => {
 	const _bankList = useMemo(() => {
 		return debouncedValue.trim()
 			? list.filter((item) => {
-					return item.bankName
-						.toLocaleLowerCase()
-						.includes(debouncedValue);
+					return item?.bankName?.toLowerCase()?.includes(debouncedValue);
 			  })
 			: list;
 	}, [debouncedValue, list]);
