@@ -31,7 +31,6 @@ const TextInputAmount = ({ onChange, error, onBlur, label = "ADDRESS" }) => {
 				onValueChange={(e) => {
 					amount[1](e.formattedValue);
 					onChange(e.value);
-					console.log(e);
 				}}
 			/>
 			{error && <p className="error">{error}</p>}

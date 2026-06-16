@@ -24,8 +24,6 @@ const PaymentPages = () => {
 		}
 	);
 
-	console.log(pageSettings[0]);
-
 	return (
 		<>
 			{isLoading && !pageSettings[0] && <LoadingPage />}
@@ -42,7 +40,7 @@ const PaymentPages = () => {
 						<meta name="theme-color" content="#000000" />
 						<meta name="description" content="Payment Pages, Yep" />
 
-						<title>Yep Payment Pages</title>
+						<title>Payfixy Payment Pages</title>
 					</Helmet>
 					<main className="paymentPages-bg">
 						<img
@@ -50,7 +48,8 @@ const PaymentPages = () => {
 							src={
 								pageSettings[0]?.business_details?.logo
 									? pageSettings[0].business_details.logo
-									: YEPLOGO
+									: 'public/favicon-32x32.png'
+									// : YEPLOGO
 							}
 							alt=""
 						/>
@@ -58,17 +57,19 @@ const PaymentPages = () => {
 							Business Name -{" "}
 							{pageSettings[0]?.business_details?.name ?? ""}
 						</h2>
-						{pageSettings[0]?.description && (
+						{/* {pageSettings[0]?.description && (
 							<h2 className="paymentPages-description">
 								{pageSettings[0].description}
 							</h2>
-						)}
+						)} */}
 						<section className="paymentPages-card">
 							<PaymentForm config={pageSettings[0]} />
 
 							<div className="poweredByYep">
 								<p>Powered by</p>
-								<img src={YEPLOGO} alt="" />
+								<img style={{width: '78px'}}
+								src="https://res.cloudinary.com/dxk2iuw1u/image/upload/v1738049174/Payfixy_Logo-01_palags.png"
+								alt="" />
 							</div>
 						</section>
 					</main>

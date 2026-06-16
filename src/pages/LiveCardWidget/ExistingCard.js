@@ -119,13 +119,16 @@ const ExistingCard = ({
 					Pay{" "}
 					{shouldResolveFees && paymentContext.additionalFee !== null && (
 						<span>
-							{paymentDetail.currency}{" "}
+							{/* {paymentDetail.currency}{" "} */}
+							{paymentDetail.currency ? (paymentDetail.currency === "NGN" ? "₦" : paymentDetail.currency === "USD" ? "$" : paymentDetail.currency) : "₦"}
 							{paymentDetail.amount + +paymentContext.additionalFee}
 						</span>
 					)}
 					{!shouldResolveFees && paymentContext.additionalFee === null && (
 						<span>
-							{paymentDetail.currency} {paymentDetail.amount}
+							{/* {paymentDetail.currency}  */}
+							{paymentDetail.currency ? (paymentDetail.currency === "NGN" ? "₦" : paymentDetail.currency === "USD" ? "$" : paymentDetail.currency) : "₦"}
+							{paymentDetail.amount}
 						</span>
 					)}
 				</span>

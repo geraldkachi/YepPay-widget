@@ -16,12 +16,9 @@ import { useHistory } from "react-router-dom";
 
 const PaymentForm = ({ config }) => {
 	const history = useHistory();
-
-
 	const showName = config.can_collect_name;
 	const showAmount = !config.amount;
 
-	// console.log("showAmount", showAmount);
 	const showPhoneNumber = config.can_collect_phone_number;
 	const showMetas =
 		config.metadata &&
@@ -33,9 +30,15 @@ const PaymentForm = ({ config }) => {
 
 		validationSchema: generateSchema(config),
 		onSubmit: async (values) => {
+			 const sortedChannels = [...(config?.channels ?? [])].sort((a, b) => {
+						if (a === "offline transfer") return -1;
+						if (b === "offline transfer") return 1;
+						return 0;
+					});
 			const apiData = {
 				email: values.email,
-				channels: config?.channels ?? [],
+				// channels: config?.channels ?? [],
+				channels: sortedChannels,
 				page_id: config.id,
 				business_id: config.business_id,
 				is_live: config.is_live,
@@ -95,7 +98,8 @@ const PaymentForm = ({ config }) => {
 	const cancelPayment = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		window.location.replace("https://app.yeppay.io/");
+		// window.location.replace("https://app.yeppay.io/");
+		window.location.replace("/");
 	};
 
 	const {

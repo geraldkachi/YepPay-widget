@@ -58,8 +58,9 @@ const AuthorizeTransaction = () => {
 		isCounting ? delay : null
 	);
 
-	const submitPin = async (payload) => {
-		const response = await payWithCard(payload);
+	const submitPin = async () => {
+		const response = await payWithCard(paymentContext.grabPin);		
+		// const response = await payWithCard(payload, ...paymentContext.cardInfo);
 		if (response.status) {
 			paymentContext.setReference(response.data.reference);
 			setIsCounting(true);
@@ -89,12 +90,17 @@ const AuthorizeTransaction = () => {
 
 			const payload = {
 				...values,
-				reference,
 				type,
+				otp: formik.values.otp,
+				amount: paymentContext?.cardInfo?.amount,
+				transaction_ref: paymentContext?.cardInfo?.transaction_ref,
+				payment_id: paymentContext?.cardInfo?.payment_id,
+				reference: paymentContext?.cardInfo?.reference,
+				customer_code: paymentContext?.customerCode,
 			};
 
 			const response = await validatePayment(payload);
-
+				
 			if (response.status) {
 				let payment = response.data;
 				if (Array.isArray(response.data)) {
@@ -104,11 +110,15 @@ const AuthorizeTransaction = () => {
 				paymentContext.setReference(null);
 				return history.push(urls.success(accessCode));
 			} else {
+				if (response.data.errors) {
+					toast.error(response.message);
+				}
 				paymentContext.setReference("");
 
 				paymentContext.setErrorCallback(
 					response?.data?.callback_url ?? ""
 				);
+
 				paymentContext.setErrorMessage(response.message);
 				return history.push(urls.failure(accessCode));
 			}
@@ -201,8 +211,17 @@ const AuthorizeTransaction = () => {
 							<span className="resend-button">
 								{!isCounting && (
 									<span
+										role="button"
+										tabIndex={0}
 										onClick={() => {
-											submitPin(paymentContext.payment);
+											// submitPin(paymentContext.payment);
+											submitPin()
+										}}
+										onKeyDown={(e) => {
+											if (e.key === "Enter" || e.key === " ") {
+												// submitPin(paymentContext.payment);
+												submitPin()
+											}
 										}}
 										className="resend-text-cursor"
 									>

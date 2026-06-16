@@ -18,11 +18,13 @@ const AuthorizeTransaction = React.lazy(() =>
 	import("./pages/AuthorizeTransaction")
 );
 const ConfirmPayment = React.lazy(() => import("./pages/ConfirmPayment"));
+const ConfirmOTP = React.lazy(() => import("./pages/ConfirmOtp"));
 // const PaymentSuccess = React.lazy(() => import("./pages/PaymentSuccess"));
 // const PaymentFailure = React.lazy(() => import("./pages/PaymentFailure"));
 const USSDWidget = React.lazy(() => import("./pages/USSDWidget"));
 const CardWidget = React.lazy(() => import("./pages/CardWidget"));
 const OfflineWidget = React.lazy(() => import("./pages/OfflineWidget"));
+const MultiPay = React.lazy(() => import("./pages/MultiPay"));
 const RedirectWidget = React.lazy(() => import("./pages/RedirectWidget"));
 const BankTransferWidget = React.lazy(() =>
 	import("./pages/BankTransferWidget")
@@ -36,7 +38,7 @@ const App = () => {
 			<QueryClientProvider client={queryClient}>
 				<PaymentProvider>
 					<BrowserRouter>
-						<Suspense fallback={<LoadingPage />}>
+						<Suspense fallback={<></>}>
 							<Switch>
 								<Route
 									exact
@@ -71,6 +73,11 @@ const App = () => {
 								/>
 								<Route
 									exact
+									path={urls.multipay(":accessCode")}
+									children={<MultiPay />}
+								/>
+								<Route
+									exact
 									path={urls.otp(":accessCode", ":reference")}
 									children={<AuthorizeTransaction />}
 								/>
@@ -95,6 +102,11 @@ const App = () => {
 									exact
 									path={urls["confirm-payment"]()}
 									children={<ConfirmPayment />}
+								/>
+								<Route
+									exact
+									path={urls.confirmOtp(':accessCode')}
+									children={<ConfirmOTP />}
 								/>
 								<Route component={PageNotFound} />
 							</Switch>

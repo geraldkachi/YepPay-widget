@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams, Redirect } from "react-router";
 import AnimatedFailureCheckmark from "../../components/AnimatedFailureCheckmark";
 import WidgetFooter from "../../components/WidgetFooter";
 import { usePaymentContext } from "../../context/PaymentContext";
 import useInterval from "../../hooks/useInterval";
+import { customerConfirmCode } from "../../services/offline_transfer";
+import toast from "react-hot-toast";
 
 function secondsToTime(secs) {
 	// let hours = Math.floor(secs / (60 * 60));
@@ -24,7 +26,7 @@ const timeToRedirect = 4;
 const PaymentFailure = () => {
 	const history = useHistory();
 	const paymentContext = usePaymentContext();
-	const { errorCallback, setErrorCallback } = paymentContext;
+	const { errorCallback, setErrorCallback, customerCode, paymentDetail } = paymentContext;
 	const [count, setCount] = useState(timeToRedirect);
 	const [delay, setDelay] = useState(1000);
 	const [isCounting, setIsCounting] = useState(() => {
@@ -32,6 +34,35 @@ const PaymentFailure = () => {
 	});
 
 	const { accessCode } = useParams();
+
+	// Fire endpoint when page loads and customerCode exists
+	useEffect(() => {
+		const updateCustomerCode = async () => {
+		if (customerCode) {
+			try {
+			const payload = {
+				customer_code: customerCode,
+				reference: paymentDetail?.reference || ""
+			};
+			console.log(payload, 'payload')
+
+			const updateResponse = await customerConfirmCode(payload);
+			console.log(updateResponse, 'customerConfirmCode')
+			if (updateResponse?.status) {
+				toast.success('Customer code updated successfully.');
+			} else {
+				toast.error('Failed to update customer code.');
+			}
+			} catch (error) {
+			console.error('❌ Error updating customer code:', error);
+			toast.error('Error updating customer code.');
+			}
+		}
+		};
+
+		updateCustomerCode();
+	}, []); // Empty dependency array means this runs once on mount
+
 
 	const handleClick = () => {
 		setErrorCallback("");

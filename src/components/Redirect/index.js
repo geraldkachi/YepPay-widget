@@ -3,10 +3,10 @@ import { useParams, Redirect } from "react-router-dom";
 import { availablePaymentChannels } from "../WidgetHeader/index";
 
 const urls = {
+	"offline transfer": "offline-transfer", 
 	card: "card",
 	ussd: "ussd-payment",
-	// bank: "bank-transfer",
-	"offline transfer": "offline-transfer",
+	bank: "bank-transfer",
 };
 
 const RedirectToFirstChannel = ({ paymentDetail }) => {

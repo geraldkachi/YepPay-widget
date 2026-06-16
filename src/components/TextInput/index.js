@@ -7,6 +7,7 @@ const TextInput = ({
 	type = "text",
 	placeholder = "Enter Address",
 	label = "ADDRESS",
+	maxLength,
 }) => {
 	return (
 		<div className="custom-text-wrapper">
@@ -17,6 +18,7 @@ const TextInput = ({
 				id={name}
 				onChange={onChange}
 				placeholder={placeholder}
+				maxLength={maxLength}
 			/>
 		</div>
 	);

@@ -21,10 +21,8 @@ const ShowUssdCode = ({ chooseADiffBank, code, traceId, reference }) => {
 		});
 
 		var channel = pusher.subscribe(channelName);
-		// console.log("listening to success Channel", channel);
 
 		channel.bind(eventName, function (data) {
-			// console.log("DATA FROM success Channel", data);
 			if (data?.response) {
 				if (data.response.status) {
 					paymentContext.setPayment({
@@ -62,10 +60,8 @@ const ShowUssdCode = ({ chooseADiffBank, code, traceId, reference }) => {
 		});
 
 		var channel = pusher.subscribe(channelName);
-		// console.log("listening to failure channel", channel);
 
 		channel.bind(eventName, function (data) {
-			// console.log("DATA FROM failure channel", data);
 			if (data?.response) {
 				if (!data.response.status) {
 					const errorMessage = data.response?.message ?? "";

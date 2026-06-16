@@ -40,8 +40,7 @@ const UssdPaymentWidget = ({ paymentDetail }) => {
 				paymentContext.setAdditionalFee(data?.fee_formatted ?? null);
 				setHasResolvedFees(true);
 			},
-			onError: (error) => {
-				console.log(error);
+			onError: () => {
 			},
 			enabled: paymentDetail.bearer !== "account",
 			keepPreviousData: false,
@@ -54,8 +53,7 @@ const UssdPaymentWidget = ({ paymentDetail }) => {
 		onSuccess: (response) => {
 			bankList[1](response?.data?.data ?? []);
 		},
-		onError: (error) => {
-			console.log(error);
+		onError: () => {
 		},
 		refetchOnWindowFocus: false,
 		refetchOnMount: true,

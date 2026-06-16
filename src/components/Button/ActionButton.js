@@ -18,7 +18,7 @@ const ActionButton = ({
 		className={`flex items-center ${className} ${
 			disabled ? "button-disabled" : ""
 		}`}
-		disabled={disabled}
+		disabled={disabled || loading}
 	>
 		{loading ? (
 			<span className="w-full centralize">
@@ -41,6 +41,7 @@ ActionButton.propTypes = {
 };
 
 ActionButton.defaultProps = {
+  className: '',
   disabled: false,
   loading: false,
   spinColour: '#F12F58',

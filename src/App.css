@@ -10,7 +10,8 @@
 
 .button-disabled {
   cursor: not-allowed;
-  background: #6fa9ff !important;
+  /* background: #6fa9ff !important; */
+  background:rgb(215, 147, 149) !important;
 }
 
 .cashenvoypaymentwidget {
@@ -20,23 +21,27 @@
   /* overflow-x: hidden; */
   margin: 0 10px;
 }
+
 @media screen and (min-width: 578px) {
   .cashenvoypaymentwidget {
     width: 391px;
     margin: 0 0;
   }
+
 }
 .widget-header {
   width: 100%;
   padding: 20px 20px 20px 20px;
-  background: #EDF4FF;
+  background:rgb(255, 239, 237);
+    /* background: #EDF4FF; */
   /* background: #FFFAFA; */
   border-radius: 10px 10px 0px 0px;
 }
 .widget-header-pill {
   margin-top: 30px;
   padding: 15px;
-  background: #100F3C;
+  background: #0066FF;
+  /* background: #100F3C; */
   border-radius: 10px;
   position: relative;
   z-index: 1;
@@ -120,7 +125,8 @@
   padding: 8px 28px;
   font-size: 12px;
   color: #162858;
-  border: 0.5px solid #9AC2FF;
+  border: 0.5px solid #0066FF;
+  /* border: 0.5px solid #9AC2FF; */
   border-radius: 5px;
 }
 .button:focus {
@@ -129,7 +135,9 @@
 .buttonGroup .active {
   background-color: #fff;
   background: #FFFFFF;
-  border: 0.5px solid #0066FF;
+  border: 1px solid #0066FF;
+  /* border: 0.5px solid #0066FF; */
+  /* border: 0.5px solid #0066FF; */
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.05);
 }
 .widget-body {
@@ -190,7 +198,8 @@
 }
 .form-control:focus {
   outline: none;
-  border-color: #1595eb;
+  border-color: #0066FF;
+  /* border-color: #1595eb; */
   transition: border-color ease-in .3s;
 }
 .form-control::-webkit-input-placeholder { /* Edge */
@@ -328,13 +337,18 @@
   color: #787879;
   margin-left: 4px;
 }
-
+.submitFixed {
+  width: 100%; /* Make the button full width */
+  max-width: 600px; /* Optional: Limit the button width */
+  margin: 0 auto; /* Center the button */
+}
 .submitbutton {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #0066FF;
+  /* background: #0066FF; */
  
   padding: 10px 15px;
   margin: 15px 0 25px 0;
@@ -342,7 +356,8 @@
   color: #fff;
 }
 .submitbutton:hover {
-  background: #0161f2;
+  background: #0066FF;
+  /* background: #0161f2; */
 }
 .widget-footer {
   padding: 14px 20px;
@@ -396,7 +411,7 @@
 }
 .otp-input:focus, .account-number:focus {
   outline: none;
-  border-color: #1595eb;
+  border-color: #0066FF;
   transition: border-color ease-in .3s;
 }
 
@@ -570,12 +585,18 @@
 .show-on-mobile {
   display: none;
 }
+.iframe2 {
+  margin-left: '-20px';;
+}
 @media (min-width: 640px) { 
   .hide-on-desktop {
     display: none;
   }
   .show-on-desktop {
     display: block;
+  }
+  .iframe2 {
+    margin-left: '-40px';;
   }
 }
 .btn {
@@ -730,6 +751,16 @@
   font-weight: 600;
   padding: 7px 20px;
   border-radius: 5px;
+}
+
+.metadata-value {
+  display: block;
+  background-color: #0066FF;
+  color: white;
+  font-weight: 600;
+  padding: 7px 20px;
+  border-radius: 5px;
+  text-transform: capitalize;
 }
 
 .testcard-content {
@@ -896,6 +927,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  
   flex-direction: column;
   width: 320px;
   height: 500px;
@@ -1168,7 +1200,7 @@ button.card-pill {
 
 
 .custom-select-wrapper:focus-within {
-  border: 1px solid #9AC2FF;
+  border: 1px solid #0066FF;
   /* box-shadow: 0px 0px 0px #0066FF; */
 }
 
@@ -1218,7 +1250,7 @@ button.card-pill {
 
 
 .textInputWithLabel-wrapper > input:focus{
-  border: 1px solid #9AC2FF;
+  border: 1px solid #0066FF;
   transition: border-color 0.5s ease;
   outline: none;
 }
@@ -1227,7 +1259,7 @@ button.card-pill {
 
 
 .custom-text-wrapper:focus-within {
-  border: 1px solid #9AC2FF;
+  border: 1px solid #0066FF;
   transition: border-color 0.5s ease;
   /* box-shadow: 0px 0px 0px #0066FF; */
 }
@@ -1314,6 +1346,13 @@ button.card-pill {
   font-weight: 500;
 }
 
+.offline > h4 > span {
+  font-size: 18px;
+  color: #382B3D;
+  text-align: center;
+  font-weight: 700;
+}
+
 .offline-account-details-wrapper {
   padding: 20px;
   margin-top: 20px;
@@ -1322,6 +1361,14 @@ button.card-pill {
 
 }
 
+.offline-account-name-wrapper {
+  border-bottom: 1px solid #EDF3F8;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
 .offline-account-number-wrapper {
   border-bottom: 1px solid #EDF3F8;
   padding-bottom: 15px;
@@ -1469,6 +1516,9 @@ button.card-pill {
   align-items: start;
   border-radius: 10px;
   gap: 12px;
+}
+.offline-disclaimer-bottom-space {
+  margin-bottom: 100px;
 }
 
 .offline-disclaimer > img {
@@ -1627,7 +1677,7 @@ button.card-pill {
 
 .paymentPages-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 20px;
 }
 
@@ -1732,7 +1782,8 @@ button.card-pill {
 }
 
 .ussd-dropdown-wrapper > .options-wrapper > input:focus {
-  border-color: #1595eb;
+  /* border-color: #1595eb; */
+  border-color: #0066FF;
 }
 .ussd-dropdown-wrapper > .options-wrapper > .bank-list {
   margin-top: 12px;
@@ -1782,3 +1833,164 @@ button.card-pill {
   border-bottom: none;
 } */
 
+.eye-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  margin-top: 5px
+}
+
+.eye-icon:hover {
+  opacity: 0.8;
+}
+
+
+/* Multipay Reference Section in OfflineWidget */
+.multipay-reference-section {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.show-multipay-btn {
+  background-color: #0066FF;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.multipay-reference-box {
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.multipay-reference-box h3 {
+  color: #0066FF;
+  margin-bottom: 1rem;
+}
+
+.reference-step {
+  margin-bottom: 1rem;
+}
+
+.reference-step p {
+  margin: 0.5rem 0;
+}
+
+.reference-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.reference-code {
+  font-family: monospace;
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  flex-grow: 1;
+}
+
+.copy-btn {
+  background-color: #0066FF;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.copy-btn:disabled {
+  background-color: #4CAF50;
+}
+
+/* Multipay Page Styles */
+.multipay-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.multipay-header h1 {
+  color: #0066FF;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.multipay-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.step {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.step h2 {
+  color: #0066FF;
+  margin-bottom: 1rem;
+}
+
+.reference-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.reference-input-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.reference-input-group input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.add-btn, .remove-btn, .submit-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-btn {
+  background-color: #4CAF50;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.remove-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.submit-btn {
+  background-color: #0066FF;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}

@@ -6,25 +6,24 @@ import CardIcon from '../../assets/card.svg';
 import USSDIcon from '../../assets/ussd.svg';
 import BankIcon from '../../assets/bank.svg';
 import OfflineIcon from "../../assets/offline_transfer_icon.svg";
+import MultiPayIcon from '../../assets/bank.svg';
 import { urls } from "../../utils/urls";
 import { usePaymentContext } from "../../context/PaymentContext";
 
-import YEPLOGO from "../../assets/Yep-Logo.svg";
-
-// navigation and availablePaymentChannels must always be in sync
-// export const availablePaymentChannels = ["card", "ussd"];
-export const availablePaymentChannels = ["card", "offline transfer", "ussd"];
+// Add "multipay" to the available channels
+export const availablePaymentChannels = ["multipay", "offline transfer", "card", "ussd"];
 
 const WidgetHeader = ({ showTabs, paymentDetail }) => {
 	const { accessCode } = useParams();
 	const { additionalFee, setAdditionalFee } = usePaymentContext();
 
-	const { customer, amount, currency, amount_formatted, channels, bearer } =
-		paymentDetail;
+	const { customer, amount, currency, amount_formatted, channels, bearer, metadata, is_live } = paymentDetail;
 
 	const showAdditionContent = bearer !== "account";
-	// console.log(additionalFee);
 	const showFee = additionalFee !== null;
+
+	// Check if currency is USD
+	const isUSD = currency === 'USD';
 
 	const navigation = {
 		card: (
@@ -53,19 +52,6 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 				USSD
 			</NavLink>
 		),
-		// bank: (
-		// 	<NavLink
-		// 		to={urls.bankTransfer(accessCode)}
-		// 		onClick={() => {
-		// 			setAdditionalFee(null);
-		// 		}}
-		// 		className="button flex justify-center items-center"
-		// 		activeClassName="active"
-		// 	>
-		// 		<img className="mr-4" src={BankIcon} alt="Bank Payment Icon" />
-		// 		Bank
-		// 	</NavLink>
-		// ),
 		"offline transfer": (
 			<NavLink
 				to={urls.offlineTransfer(accessCode)}
@@ -83,25 +69,41 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 				Transfer
 			</NavLink>
 		),
+		multipay: (
+			<NavLink
+				to={urls.multipay(accessCode)}
+				onClick={() => {
+					setAdditionalFee(null);
+				}}
+				className="button flex justify-center items-center"
+				activeClassName="active"
+			>
+				<img className="mr-4" src={MultiPayIcon} alt="Multipay Icon" />
+				PayMulti
+			</NavLink>
+		),
 	};
 
 	return (
 		<div className="widget-header">
 			<div className="w-full flex items-center justify-between">
 				<img
-					// src="https://res.cloudinary.com/cashenvoy/image/upload/v1638092035/Cashenvoy-nextgen/cashenvoylogo_pkci6s.svg"
-					src={YEPLOGO}
-					alt="Cashenvoy Logo"
+					className='w-[16px] h-[16px]' style={{width: '118px'}}
+					src="https://res.cloudinary.com/dxk2iuw1u/image/upload/v1738049174/Payfixy_Logo-01_palags.png"
+					alt="Payfixy Logo"
 				/>
-				{!Boolean(paymentDetail?.is_live) && (
+				{!Boolean(is_live) && (
 					<span className="test-mode">Test Mode</span>
+				)}
+				{(metadata && metadata !== "null") && (
+					<span className="metadata-value uppercase">{JSON.parse(metadata)[0]?.payment}</span>
 				)}
 			</div>
 			<div className="widget-header-pill">
 				<div className="widget-header-user">
 					<span>{customer.email}</span>
 					<span>
-						{currency} {amount_formatted}
+						{currency ? (currency === "NGN" ? "₦" : currency === "USD" ? "$" : currency) : "₦"} {amount_formatted}
 					</span>
 				</div>
 				{showAdditionContent && (
@@ -129,9 +131,6 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 									<div className="hidden-charges">
 										<div className="hidden-charges-child">
 											<span>Payment Processing Fee</span>
-											{/* <span>
-												{currency} {amount_formatted}
-											</span> */}
 										</div>
 									</div>
 								</div>
@@ -153,13 +152,23 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 			{showTabs && (
 				<div className="tab-headers">
 					<div className="buttonGroup">
+						{/* Always show Multipay first for non-USD */}
+						{!isUSD && navigation.multipay}
+						
+						{/* Show channels based on currency */}
 						{channels
-							.filter((chan) =>
-								availablePaymentChannels.includes(chan)
-							)
-							.map((channel) => (
+							.filter(chan => {
+								if (isUSD) {
+									// For USD: Only show card
+									return chan === "card" && availablePaymentChannels.includes(chan);
+								} else {
+									// For non-USD: Show all channels including card
+									return availablePaymentChannels.includes(chan) && chan !== "multipay";
+								}
+							})
+							.map(channel => (
 								<span key={channel}>
-									{navigation[channel]}{" "}
+									{navigation[channel]}
 								</span>
 							))}
 					</div>
@@ -167,17 +176,22 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 			)}
 		</div>
 	);
-};;;
+};
 
 export default WidgetHeader;
 
-// WidgetHeader.defaultProps = {
-//   showMeta: true,
-// };
 WidgetHeader.propTypes = {
-	setActive: PropTypes.bool,
-	toggleTab: PropTypes.func,
 	showTabs: PropTypes.bool,
-	// showMeta: PropTypes.bool,
-	element: PropTypes.element,
+	paymentDetail: PropTypes.shape({
+	  metadata: PropTypes.string,
+	  is_live: PropTypes.number,
+	  customer: PropTypes.shape({
+		email: PropTypes.string.isRequired,
+	  }).isRequired,
+	  amount: PropTypes.number,
+	  currency: PropTypes.string,
+	  amount_formatted: PropTypes.string,
+	  channels: PropTypes.arrayOf(PropTypes.string),
+	  bearer: PropTypes.string,
+	}),
 };

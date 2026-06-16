@@ -27,7 +27,7 @@ const ConfirmPayment = () => {
 	const paymentContext = usePaymentContext();
 	const url = new URLSearchParams(useLocation().search);
 	const params = useLocation().search;
-	const [confirmed, setConfirmed] = useState(
+	const [confirmed] = useState(
 		confirmSearchParams(useLocation().search ?? null)
 	);
 
@@ -35,6 +35,7 @@ const ConfirmPayment = () => {
 		if (confirmed) {
 			try {
 				const response = await triggerPaymentConfirmation(params);
+				console.log(response)
 			} catch (error) {
 				console.log(error);
 			}
@@ -48,10 +49,10 @@ const ConfirmPayment = () => {
 			const eventName = "transaction.attempted";
 			const channelName = `transaction${reference}`;
 
-			let pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+			const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
 				cluster: process.env.REACT_APP_CLUSTER,
 			});
-			var channel = pusher.subscribe(channelName);
+			const channel = pusher.subscribe(channelName);
 			channel.bind(eventName, function (data) {
 				if (data?.response) {
 					if (data.response.status) {
@@ -96,6 +97,7 @@ const ConfirmPayment = () => {
 							<h5>Do not close this tab</h5>
 						</div>
 					)}
+					
 					{!confirmed && (
 						<div className="confirm-payment-inner">
 							<div className="confirm-payment-spinner-wrapper">

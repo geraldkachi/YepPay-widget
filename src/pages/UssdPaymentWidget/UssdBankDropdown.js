@@ -59,12 +59,22 @@ const UssdBankDropdown = ({ selected, list }) => {
 							{_bankList.map((bank, index) => {
 								return (
 									<li
+										key={`bankList${index}`}
 										onClick={() => {
 											selected[1](bank);
 											searchValue[1]("");
 											toggleState();
 										}}
-										key={`bankList${index}`}
+										onKeyDown={(e) => {
+											if (e.key === "Enter" || e.key === " ") {
+											  selected[1](bank);
+											  searchValue[1]("");
+											  toggleState();
+											}
+										  }}
+										  role="option"
+										  tabIndex={0}
+										   className="bank-item"
 									>
 										{bank.bankName}
 									</li>

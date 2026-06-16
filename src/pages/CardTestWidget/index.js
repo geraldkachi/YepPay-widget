@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import ActionButton from "../../components/Button/ActionButton";
-import toast from "react-hot-toast";
 
 
 import { useMutation } from "react-query";
@@ -21,6 +20,7 @@ const CardTestWidget = ({ paymentDetail }) => {
 		setReference,
 		setSuccessMessage,
 		setErrorMessage,
+		setCardPayDetails
 	} = usePaymentContext();
 
 	const [checked, setChecked] = useState(null);
@@ -39,8 +39,7 @@ const CardTestWidget = ({ paymentDetail }) => {
 			onSuccess: (data) => {
 				setAdditionalFee(data?.fee_formatted ?? null);
 			},
-			onError: (error) => {
-				console.log(error);
+			onError: () => {
 			},
 			enabled: cardDetails?.card_number && shouldResolveFees ? true : false,
 			keepPreviousData: false,
@@ -55,6 +54,12 @@ const CardTestWidget = ({ paymentDetail }) => {
 		mutate,
 	} = useMutation(payWithCard, {
 		onSuccess: (data) => {
+			setCardPayDetails({
+				amount: data?.data?.amount,
+				transaction_ref: data?.data?.transactionRef,
+				payment_id: data?.data?.paymentId,
+				reference: data?.data?.reference
+			})
 			if (data.status) {
 				const expiryInfo = cardDetails.expiry.split("/");
 				const payload = {
@@ -78,7 +83,6 @@ const CardTestWidget = ({ paymentDetail }) => {
 			}
 		},
 		// onError: (error) => {
-		// 	console.log("payment failed", error);
 
 		// },
 	});
@@ -189,7 +193,8 @@ const CardTestWidget = ({ paymentDetail }) => {
 								{shouldResolveFees && additionalFee !== null && (
 									<span>
 										{" "}
-										{paymentDetail.currency}
+										{/* {paymentDetail.currency} */}
+										{paymentDetail.currency ? (paymentDetail.currency === "NGN" ? "₦" : paymentDetail.currency === "USD" ? "$" : paymentDetail.currency) : "₦"}
 										{paymentDetail.amount + +additionalFee}
 									</span>
 								)}

@@ -7,8 +7,14 @@ export const fetchPaymentPageSettings = async (accessCode) => {
 	const response = await queryRequestHandler(url, GET);
 	return response;
 };
+// use this to fetch multipay verify for this
+export const fetchMulitPayVerify = async (accessCode) => {
+	const url = `/multipay/verify/${accessCode}`;
+	const response = await queryRequestHandler(url, GET);
+	return response;
+};
 
-export const createPaymentLink = async (payload) => {
+export const createPaymentLink = 	async (payload) => {
 	const url = `${BASE_PAYMENT_URL}/page`;
 	const { data } = await requestHandler(url, POST, payload);
 	return data;

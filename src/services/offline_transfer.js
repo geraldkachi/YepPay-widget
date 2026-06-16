@@ -7,8 +7,18 @@ export const generateDynamicAccountNumber = async (payload) => {
 	const { data } = await requestHandler(url, POST, payload);
 	return data;
 };
+export const generateDynamicAccountNumberValidate = async (payload) => {
+	const url = `${BASE_PAYMENT_URL}/nuban/validate`;
+	const { data } = await requestHandler(url, POST, payload);
+	return data;
+};
 export const logAsDisputeToBackend = async (payload) => {
 	const url = `${BASE_PAYMENT_URL}/nuban/refund`;
+	const { data } = await requestHandler(url, POST, payload);
+	return data;
+};
+export const customerConfirmCode = async (payload) => {
+	const url = `${BASE_PAYMENT_URL}/nuban/update/customer-code`;
 	const { data } = await requestHandler(url, POST, payload);
 	return data;
 };

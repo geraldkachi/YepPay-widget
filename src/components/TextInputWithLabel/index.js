@@ -12,7 +12,7 @@ const TextInputWithLabel = ({
 	value,
 	type = "text",
 	placeholder = "Enter Address",
-	label = "ADDRESS",
+	label = "",
 }) => {
 	return (
 		<div className="textInputWithLabel-wrapper">

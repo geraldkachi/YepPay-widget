@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import Payment from "payment";
 import * as Yup from "yup";
 
@@ -44,6 +45,7 @@ export const formatCVC = (value, prevValue, allValues = {}) => {
 
 	if (allValues.number) {
 		const issuer = Payment.fns.cardType(allValues.number);
+		// maxLength = issuer === "amex" ? 4 : 2;
 		maxLength = issuer === "amex" ? 4 : 3;
 	}
 
@@ -79,7 +81,7 @@ export const BASE_PAYMENT_URL = process.env.REACT_APP_BACKEND_URL;
 export const delay = async (duration = 1000) =>
 	new Promise((resolve) => setTimeout(resolve, duration));
 
-export const capitalizeFirstCharacters = (name: string) => {
+export const capitalizeFirstCharacters = (name) => {
 	if (typeof name === "string") {
 		const nameArray = name.split("_");
 		let abbr = "";
@@ -188,10 +190,32 @@ export const shouldSubmit = (values) => {
 	return response;
 };
 
-export const evaluateFormikError = (formik: any, name: string) => {
+export const evaluateFormikError = (formik, name) => {
 	if (formik.touched?.[name] && formik.errors?.[name]) {
 		return formik.errors[name];
 	} else {
 		return "";
 	}
+};
+
+
+export const useInterval = (callback, delay) => {
+  const savedCallback = useRef();
+
+  // Remember the latest callback
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval
+  useEffect(() => {
+    const tick = () => {
+      savedCallback.current();
+    };
+
+    if (delay !== null) {
+      const id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
 };

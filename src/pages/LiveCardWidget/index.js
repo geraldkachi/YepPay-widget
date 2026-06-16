@@ -38,6 +38,8 @@ import LiveCardForm from "./LiveCardForm";
 import ExistingCard from "./ExistingCard";
 import CardPin from "./CardPin";
 import LocationDetails from "./LocationDetails";
+import CyberSourceCard from "./CyberSourceCard";
+import TextInputWithLabel from "../../components/TextInputWithLabel";
 // import { formatCreditCardNumber } from "../../utils";
 
 const LiveCardWidget = ({ paymentDetail }) => {
@@ -49,6 +51,8 @@ const LiveCardWidget = ({ paymentDetail }) => {
 	const history = useHistory();
 	const { accessCode } = useParams();
 	const paymentContext = usePaymentContext();
+	const [cardType, setCardType] = useState(null); // Track card type
+	const [showCyberSource, setShowCyberSource] = useState(false); // Track CyberSource step
 
 	const shouldResolveFees = paymentDetail.bearer !== "account";
 
@@ -84,8 +88,7 @@ const LiveCardWidget = ({ paymentDetail }) => {
 			onSuccess: (data) => {
 				paymentContext.setAdditionalFee(data?.fee_formatted ?? null);
 			},
-			onError: (error) => {
-				console.log(error);
+			onError: () => {
 			},
 			enabled: selectedCard?.first_6 && shouldResolveFees ? true : false,
 			keepPreviousData: false,
@@ -93,6 +96,11 @@ const LiveCardWidget = ({ paymentDetail }) => {
 			refetchOnMount: false,
 		}
 	);
+
+	// Handle card type change
+	const handleCardTypeChange = (type) => {
+		setCardType(type);
+	};
 
 	return (
 		<>
@@ -108,20 +116,28 @@ const LiveCardWidget = ({ paymentDetail }) => {
 			{showPin && !showLocationDetails && (
 				<CardPin accessCode={accessCode} />
 			)}
-
-			{!selectedCard && !showPin && !showLocationDetails && (
+			{/* step one if card is not verve */}
+			{!selectedCard && !showPin && !showLocationDetails && !showCyberSource  && (
 				<LiveCardForm
 					setShowLocationDetails={setShowLocationDetails}
 					setShowPin={setShowPin}
+					setShowCyberSource={setShowCyberSource}
 					paymentDetail={paymentDetail}
 					rememberedCards={rememberedCards}
 					isLoading={isLoading}
 					setSelectedCard={setSelectedCard}
+					onCardTypeChange={handleCardTypeChange} // Pass card type handler
 				/>
 			)}
+			{/* another component for set two */}
+			{showCyberSource && !showPin && (
+				<CyberSourceCard accessCode={accessCode} setShowCyberSource={setShowCyberSource} />
+			)}
+
 			{showLocationDetails && !showPin && (
 				<LocationDetails accessCode={accessCode} />
 			)}
+
 		</>
 	);
 };

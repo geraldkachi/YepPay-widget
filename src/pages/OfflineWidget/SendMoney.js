@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import CopyIcon from "../../assets/copy-icon.svg";
 import DisclaimerIcon from "../../assets/disclaimer.svg";
 import ActionButton from "../../components/Button/ActionButton";
+import { usePaymentContext } from "../../context/PaymentContext";
 
-const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
+const SendMoney = ({ proceed, accountNumber,accountName, expiresIn, amount, bank }) => {
 	const [copied, setCopied] = useState(false);
-
+const paymentContext = usePaymentContext();
+	const { payment, } = paymentContext;
 	const copyText = async (val) => {
 		const el = document.createElement("textarea");
 		el.value = val;
@@ -17,7 +19,7 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
 		el.select();
 		el.setSelectionRange(0, 99999);
 		document.execCommand("copy");
-		document.body.removeChild(el);
+		el.remove();
 		setCopied(true);
 	};
 
@@ -32,14 +34,31 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
 	return (
 		<div className="offline">
 			<h4>
-				Transfer NGN{" "}
+				Transfer {" "}
+				<span className=" text-2xl font-bold">
+					{payment.currency ? (payment.currency === "NGN" ? "₦" : payment.currency === "USD" ? "$" : payment.currency) : "₦"}
 				{Number(amount).toLocaleString("en-NG", {
 					minimumFractionDigits: 0,
 				})}{" "}
+				</span>
 				to the account details below
 			</h4>
+			{/* <div className="offline-disclaimer mb-40 pb-40 offline-disclaimer-bottom-space" style={{ marginBottom: "-20px" }}>
+				<img src={DisclaimerIcon} alt="disclaimer icon" />
+				<p className="disclaimer-content">
+					Please ensure you transfer the exact amount requested.
+					Transferring an amount higher or lower than the requested
+					amount will result in a failed transaction.
+				</p>
+			</div> */}
+		
 			<div className="offline-account-details-wrapper">
-				<div className="offline-account-number-wrapper">
+				<div className="offline-bank-name-wrapper">
+					<h6 className="">Account Name</h6>
+					<p className="">{accountName}</p>
+				</div>
+
+				<div className="offline-account-name-wrapper">
 					<div className="">
 						<h6 className="offline-account-number-title">
 							Account Number
@@ -55,11 +74,17 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
 							</span>
 						)}
 						<img
-							onClick={() => {
-								copyText(accountNumber);
+							onClick={() => copyText(accountNumber)}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									copyText(accountNumber);
+								}
 							}}
 							src={CopyIcon}
-							alt=""
+							alt="Copy account number"
+							tabIndex={0} 
+							role="button" 
+							aria-label="Copy account number"
 						/>
 					</div>
 				</div>
@@ -74,7 +99,7 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
 					<span>{Math.ceil(expiresIn / (60 * 60))} hours</span>
 				</p>
 			</div>
-			<div className="offline-disclaimer">
+			<div className="offline-disclaimer mb-40 pb-40 offline-disclaimer-bottom-space">
 				<img src={DisclaimerIcon} alt="disclaimer icon" />
 				<p className="disclaimer-content">
 					Please ensure you transfer the exact amount requested.
@@ -83,10 +108,10 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
 				</p>
 			</div>
 
-			<div>
+			<div className="fixed-button-container">
 				<ActionButton
 					type="button"
-					className="submitbutton"
+					className="submitbutton submitFixed"
 					onClick={proceed}
 					disabled={false}
 					loading={false}
@@ -120,7 +145,7 @@ const SendMoney = ({ proceed, accountNumber, expiresIn, amount, bank }) => {
 							/>
 						</svg>
 					</span>
-					<span>I’ve sent the money</span>
+					<span>I&apos;ve sent the money</span>
 					<span>
 						<svg
 							width="8"

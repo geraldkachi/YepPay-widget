@@ -1,37 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams, Link } from "react-router-dom";
-import RememberCard from "../../components/CardPaymentWidget/RememberCard";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import Payment from "payment";
-
-import { toast } from "react-hot-toast";
-import { useFormik } from "formik";
-
 import {
 	formatCreditCardNumber,
 	formatCVC,
 	formatExpirationDate,
 } from "../../utils";
-
-import {
-	getRememberedCards,
-	payWithCard,
-	payWithTokenizedCard,
-	resolveFeesCard,
-} from "../../services/card";
-
+import { resolveFeesCard } from "../../services/card";
 import FormError from "../../utils/form/FormError";
-
 import { usePaymentContext } from "../../context/PaymentContext";
-import { urls } from "../../utils/urls";
-
-import { GET_REMEMBERED_CARDS } from "../../utils/constants/queryTypes";
 import { getIssuerType } from "../../utils/getIssuerType";
-import CardTestWidget from "../../pages/CardTestWidget";
-// import RememberCard from "../../components/CardPaymentWidget/RememberCard";
 import ActionButton from "../../components/Button/ActionButton";
-import SelectCheckmark from "../../components/SelectCheckmark";
 import useFetchWithParams from "../../hooks/useFetchWithParams";
 import Spinner from "../../components/Spinner";
+import countryDB from "countrycitystatejson";
+import { useFormik } from "formik";
 
 const LiveCardForm = ({
 	paymentDetail,
@@ -39,11 +22,13 @@ const LiveCardForm = ({
 	isLoading,
 	setSelectedCard,
 	setShowPin,
-	setShowLocationDetails,
+	setShowLocationDetails, 
+	setShowCyberSource,
+	onCardTypeChange,
 }) => {
 	const [cachedBin, setCachedBin] = useState("");
 	const [showRedirecting, setShowRedirecting] = useState(false);
-	const history = useHistory();
+	const [showCvv, setShowCvv] = useState(false);
 	const { accessCode } = useParams();
 	const paymentContext = usePaymentContext();
 
@@ -59,85 +44,57 @@ const LiveCardForm = ({
 			onSuccess: (data) => {
 				paymentContext.setAdditionalFee(data?.fee_formatted ?? null);
 			},
-			onError: (error) => {
-				console.log(error);
+			onError: () => {
 			},
 			enabled: cachedBin ? true : false,
 			keepPreviousData: false,
 			refetchOnWindowFocus: false,
 			refetchOnMount: false,
 		}
+		
 	);
-
-	// true or false
-	// remember_card: Boolean(values.remember_card.length), // true or false
-	// remember_card: paymentDetail.remember_card === 1 ? ["on"] : [],
 
 	const formik = useFormik({
 		initialValues: {
 			card_number: "",
 			expiry: "",
 			cvv: "",
+			first_name: "",
+			last_name: "",
 		},
 		onSubmit: async (values) => {
 			const expiryInfo = values.expiry.split("/");
+			const fullName = `${values.first_name} ${values.last_name}`.trim();
+			
 			const payload = {
 				access_code: paymentDetail.access_code,
 				...values,
+				name: fullName,
+				first_name: values.first_name,
+				last_name: values.last_name,
 				remember_card: false,
 				card_number: values.card_number.split(" ").join(""),
 				expiry_month: expiryInfo[0],
 				expiry_year: expiryInfo[1].substring(0, 2),
 			};
+			paymentContext.setCardPayDetails(payload)
 
-			try {
-				const response = await payWithCard(payload);
-				if (response.status) {
-					if (response.data.authorization_mode === "pin") {
-						const cardData = {
-							...payload,
-							authorization_mode:
-								response.data.authorization_mode,
-						};
-						paymentContext.setPayment((prev) => cardData);
-						setShowPin(true);
-					} else if (
-						response.data.authorization_mode === "redirect"
-					) {
-						setShowRedirecting(true);
-						window.location.replace(
-							response.data.additional_information
-						);
-					} else if (
-						response.data.authorization_mode === "avs_noauth"
-					) {
-						const cardData = {
-							...payload,
-							authorization_mode:
-								response.data.authorization_mode,
-						};
-						paymentContext.setPayment((prev) => cardData);
-						setShowLocationDetails(true);
-					}
-				} else {
-					paymentContext.setErrorMessage(response.message);
-					return history.push(urls.failure(accessCode));
-					// if (response.data.errors) {
-					// 	toast.error(response.message);
-					// 	return formik.setErrors(response.data.errors);
-					// } else {
-					// 	paymentContext.setErrorMessage(response.message);
-					// 	return history.push(urls.failure(accessCode));
-					// }
-				}
-			} catch (error) {
-				paymentContext.setPayment((prev) => {
-					return {};
-				});
-				paymentContext.setErrorMessage(
-					"Operation failed due to poor network. Please try again"
-				);
-				return history.push(urls.failure(accessCode));
+			const issuer = Payment.fns.cardType(values.card_number);
+			if (issuer === "verve" || issuer === "maestro") {
+				setShowPin(true);
+			} else {
+				setShowCyberSource(true);
+				paymentContext.setCardPayDetails({
+					access_code: paymentDetail.access_code,
+					...values,
+					name: fullName,
+					first_name: values.first_name,
+					last_name: values.last_name,
+					remember_card: false,
+					card_number: values.card_number.split(" ").join(""),
+					expiry_month: expiryInfo[0],
+					expiry_year: expiryInfo[1].substring(0, 2),
+				  });
 			}
 		},
 	});
@@ -155,18 +112,24 @@ const LiveCardForm = ({
 		return formik.handleSubmit();
 	};
 
-	const { card_number, expiry, cvv } = formik.values;
+	const { card_number, expiry, cvv, first_name, last_name } = formik.values;
 	const issuer = Payment.fns.cardType(card_number);
-
 	const canMakePayment =
 		formik.values.card_number.trim() &&
 		formik.values.card_number.split(" ").join("").length > 8 &&
 		formik.values.expiry.trim().length === 5 &&
-		formik.values.cvv.trim().length === 3;
+		formik.values.cvv.trim().length === 3 &&
+		formik.values.first_name.trim() &&
+		formik.values.last_name.trim();
+
+	React.useEffect(() => {
+		if (issuer) {
+			onCardTypeChange(issuer);
+		}
+	}, [issuer, onCardTypeChange]);
 
 	return (
 		<>
-			{" "}
 			<div className="cardpaymentwidget">
 				{showRedirecting && (
 					<div className="card-redirect-loader">
@@ -183,29 +146,27 @@ const LiveCardForm = ({
 					</div>
 				)}
 				<h1 className="text-center">
-					Enter your card details to make payment
+					Enter your card details correctly to make payment
 				</h1>
-
-				{/* <RememberCard
-					cards={rememberedCards}
-					handleSelectCard={handleSelectCard}
-					loading={isLoading}
-				/> */}
+				
+				{paymentDetail.currency === "USD" && (issuer === "verve" || issuer === "maestro") && (
+					<h1 className="text-center" style={{color: '#0066FF', marginTop: '10px'}}>
+						You can't use a Verve or Maestro type card to make this payment for USD transactions
+					</h1>
+				)}
 
 				<form>
 					<div className="input-wrapper">
 						<input
 							type="tel"
 							name="card_number"
-							autocomplete="off"
+							autoComplete="off"
 							className="form-control input-cardnumber"
 							placeholder="0000 0000 0000 0000 0000"
 							pattern="[\d| ]{16,22}"
 							value={formatCreditCardNumber(card_number)}
 							onChange={formik.handleChange}
 							onBlur={() => {
-								// console.log("handled");
-
 								if (shouldResolveFees) {
 									if (
 										!cachedBin &&
@@ -249,8 +210,6 @@ const LiveCardForm = ({
 										paymentContext.setAdditionalFee(null);
 									}
 								}
-
-								// formik.handleBlur();
 							}}
 							autocompletetype="cc-number"
 						/>
@@ -265,6 +224,48 @@ const LiveCardForm = ({
 						</div>
 					</div>
 					<FormError formik={formik} inputName="card_number" />
+
+					{/* First and Last Name Row */}
+					<div className="flex-input name-row">
+						<div style={{ flex: 1, marginRight: '10px' }}>
+							<div className="input-wrapper">
+								<input
+									type="text"
+									name="first_name"
+									autoComplete="off"
+									className="form-control input-cardnumber"
+									placeholder="First Name"
+									value={first_name}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								/>
+								<label htmlFor="firstName" className="label label--floating">
+									First Name
+								</label>
+							</div>
+							<FormError formik={formik} inputName="first_name" />
+						</div>
+						
+						<div style={{ flex: 1 }}>
+							<div className="input-wrapper">
+								<input
+									type="text"
+									name="last_name"
+									autoComplete="off"
+									className="form-control input-cardnumber"
+									placeholder="Last Name"
+									value={last_name}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								/>
+								<label htmlFor="lastName" className="label label--floating">
+									Last Name
+								</label>
+							</div>
+							<FormError formik={formik} inputName="last_name" />
+						</div>
+					</div>
+
 					<div className="flex-input">
 						<div>
 							<div className="input-wrapper">
@@ -276,7 +277,7 @@ const LiveCardForm = ({
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									placeholder="MM/YY"
-									autocomplete="off"
+									autoComplete="off"
 									pattern="\d\d/\d\d"
 									autocompletetype="cc-exp"
 									required
@@ -293,7 +294,7 @@ const LiveCardForm = ({
 						<div>
 							<div className="input-wrapper">
 								<input
-									type="text"
+									type={showCvv ? "text" : "password"}
 									name="cvv"
 									className="form-control input-cvv"
 									value={formatCVC(cvv)}
@@ -301,7 +302,7 @@ const LiveCardForm = ({
 									onBlur={formik.handleBlur}
 									placeholder="123"
 									pattern="\d{3,4}"
-									autocomplete="off"
+									autoComplete="off"
 									autocompletetype="cc-csc"
 									required
 								/>
@@ -311,6 +312,20 @@ const LiveCardForm = ({
 								>
 									CVV
 								</label>
+								<span
+									tabIndex={0}
+									role="button"
+									className="eye-icon"
+									onClick={() => setShowCvv(!showCvv)}
+									onKeyDown={(e) => e.key === "Enter" && setShowCvv(!showCvv)}
+									aria-label="Toggle CVV visibility"
+								>
+									{showCvv ? 
+										<img src="/eye.svg" alt="eye" />
+										: 
+										<img src="/close-eye.svg" alt="close eye" />
+									}
+								</span>
 								<button className="infobtn" type="button">
 									Info?
 								</button>
@@ -323,25 +338,13 @@ const LiveCardForm = ({
 							<FormError formik={formik} inputName="cvv" />
 						</div>
 					</div>
-
-					{/* <p className="remembercard-check">
-						<input
-							type="checkbox"
-							id="remembercard"
-							name="remember_card"
-							checked={formik.values.remember_card.length > 0 ? true : false}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-						/>
-						<label htmlFor="remembercard">Remember card</label>
-					</p> */}
 				</form>
 			</div>
 			<ActionButton
 				type="button"
 				className="submitbutton"
 				onClick={handleSubmit}
-				disabled={!canMakePayment || formik.isSubmitting}
+				disabled={!canMakePayment || formik.isSubmitting || (paymentDetail.currency === "USD" && (issuer === "verve" || issuer === "maestro"))}
 				loading={formik.isSubmitting}
 				spinColour="#FFFFFF"
 				testId="card-payment"
@@ -378,7 +381,8 @@ const LiveCardForm = ({
 					{shouldResolveFees &&
 						paymentContext.additionalFee !== null && (
 							<span>
-								{paymentDetail.currency}{" "}
+								{paymentDetail.currency ? (paymentDetail.currency === "NGN" ? "₦" : paymentDetail.currency === "USD" ? "$" : paymentDetail.currency) : "₦"}{" "}
+
 								{paymentDetail.amount +
 									+paymentContext.additionalFee}
 							</span>
@@ -386,7 +390,9 @@ const LiveCardForm = ({
 					{!shouldResolveFees &&
 						paymentContext.additionalFee === null && (
 							<span>
-								{paymentDetail.currency} {paymentDetail.amount}
+								{paymentDetail.currency ? (paymentDetail.currency === "NGN" ? "₦" : paymentDetail.currency === "USD" ? "$" : paymentDetail.currency) : "₦"}
+
+								{paymentDetail.amount}
 							</span>
 						)}
 				</span>

@@ -2,10 +2,27 @@ import { GET, POST } from '../utils/constants/requestTypes';
 import { queryRequestHandler, requestHandler } from '.';
 import { BASE_PAYMENT_URL } from '../utils';
 
-export const getPaymentDetails = async (accessCode) => {
-  const url = `${BASE_PAYMENT_URL}/${accessCode}`;
-  const response = await queryRequestHandler(url, GET);
-  return response;
+// export const getPaymentDetails = async (accessCode) => {
+//   const url = `${BASE_PAYMENT_URL}/${accessCode}`;
+//   const response = await queryRequestHandler(url, GET);
+//   return response;
+// };
+
+export const  getPaymentDetails = async (accessCode) => {
+  try {
+    const url = `${BASE_PAYMENT_URL}/${accessCode}`;
+    const response = await queryRequestHandler(url, GET);
+    
+    // If the response contains a status field that's false, it's an error
+    if (response?.status === false) {
+      return Promise.reject(response); // Reject with the error response
+    }
+    
+    return response;
+  } catch (error) {
+    // If there's any other error, reject with it
+    return Promise.reject(error.response?.data || error);
+  }
 };
 
 export const payWithCard = async (payload) => {
@@ -48,3 +65,20 @@ export const resolveFeesCard = async (bin, accessCode, payment_channel) => {
 	const { data } = await requestHandler(url, GET);
 	return data;
 };
+
+export const cyberSourceAuth = async (payload) => {
+  const url = `${BASE_PAYMENT_URL}/card/cyber/authentication-setups`;
+  const { data } = await requestHandler(url, POST, payload);
+  return data;
+}
+
+export const cyberSourceAuthPay = async (payload) => {
+  const url = `${BASE_PAYMENT_URL}/card/cyber/auth-pay`;
+  const { data } = await requestHandler(url, POST, payload);
+  return data;
+}
+export const cyberSourceValidate = async (payload) => {
+  const url = `${BASE_PAYMENT_URL}/card/cyber/validate-pay`;
+  const { data } = await requestHandler(url, POST, payload);
+  return data;
+}
