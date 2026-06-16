@@ -16,6 +16,7 @@ import TextInputWithLabel from '../TextInputWithLabel';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { debounce } from 'lodash';
+import YEPLOGO from "../../assets/Yep-Logo.svg";
 
 const withInitiatePayment =
 	(Component, showTabs = true) =>
@@ -160,9 +161,9 @@ const withInitiatePayment =
 							</div>
 							<div className="security-footer">
 								<img className='w-[36px] h-[36px]' style={{ width: '68px' }}
-									src="https://res.cloudinary.com/dxk2iuw1u/image/upload/v1738049174/Payfixy_Logo-01_palags.png" alt="Payfixy Logo" />
+									src={YEPLOGO} alt="YEP Logo" />
 								<span>
-									Secured by Payfixy
+									Secured by YEP
 								</span>
 							</div>
 						</div>

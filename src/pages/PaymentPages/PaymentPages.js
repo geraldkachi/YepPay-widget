@@ -68,8 +68,8 @@ const PaymentPages = () => {
 							<div className="poweredByYep">
 								<p>Powered by</p>
 								<img style={{width: '78px'}}
-								src="https://res.cloudinary.com/dxk2iuw1u/image/upload/v1738049174/Payfixy_Logo-01_palags.png"
-								alt="" />
+								src={YEPLOGO}
+								alt="YEP Logo" />
 							</div>
 						</section>
 					</main>

@@ -90,7 +90,6 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 			<div className="w-full flex items-center justify-between">
 				<img
 					className='w-[16px] h-[16px]' style={{width: '118px'}}
-					// src="https://res.cloudinary.com/dxk2iuw1u/image/upload/v1738049174/Payfixy_Logo-01_palags.png"
 					src={YEPLOGO}
 					alt="Payfixy Logo"
 				/>

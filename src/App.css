@@ -10,8 +10,8 @@
 
 .button-disabled {
   cursor: not-allowed;
-  /* background: #6fa9ff !important; */
-  background:rgb(215, 147, 149) !important;
+  background: #6fa9ff !important;
+  /* background:rgb(215, 147, 149) !important; */
 }
 
 .cashenvoypaymentwidget {
@@ -32,16 +32,15 @@
 .widget-header {
   width: 100%;
   padding: 20px 20px 20px 20px;
-  background:rgb(255, 239, 237);
-    /* background: #EDF4FF; */
+  /* background:rgb(255, 239, 237); */
+    background: #EDF4FF;
   /* background: #FFFAFA; */
   border-radius: 10px 10px 0px 0px;
 }
 .widget-header-pill {
   margin-top: 30px;
   padding: 15px;
-  background: #0066FF;
-  /* background: #100F3C; */
+  background: #100F3C;
   border-radius: 10px;
   position: relative;
   z-index: 1;
