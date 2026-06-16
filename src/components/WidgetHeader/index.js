@@ -9,6 +9,7 @@ import OfflineIcon from "../../assets/offline_transfer_icon.svg";
 import MultiPayIcon from '../../assets/bank.svg';
 import { urls } from "../../utils/urls";
 import { usePaymentContext } from "../../context/PaymentContext";
+import YEPLOGO from "../../assets/Yep-Logo.svg";
 
 // Add "multipay" to the available channels
 export const availablePaymentChannels = ["multipay", "offline transfer", "card", "ussd"];
@@ -89,7 +90,8 @@ const WidgetHeader = ({ showTabs, paymentDetail }) => {
 			<div className="w-full flex items-center justify-between">
 				<img
 					className='w-[16px] h-[16px]' style={{width: '118px'}}
-					src="https://res.cloudinary.com/dxk2iuw1u/image/upload/v1738049174/Payfixy_Logo-01_palags.png"
+					// src="https://res.cloudinary.com/dxk2iuw1u/image/upload/v1738049174/Payfixy_Logo-01_palags.png"
+					src={YEPLOGO}
 					alt="Payfixy Logo"
 				/>
 				{!Boolean(is_live) && (

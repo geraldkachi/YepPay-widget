@@ -183,7 +183,7 @@ const withInitiatePayment =
 					<div className="mt-50 cashenvoypaymentwidget">
 						<WidgetHeader showTabs={showTabs} paymentDetail={paymentDetail} />
 						<div className="widget-body">
-							<div className="paymentPages-grid mb-4">
+							<div className="paymentPages-grid mb-4" style={{ display: 'none'}}>
 								<div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
 									<form onSubmit={referralForm.handleSubmit} className='flex items-start gap-3 w-full'>
 										<div className='flex-1 relative'>
