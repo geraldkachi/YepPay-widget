@@ -17,7 +17,7 @@
 		"react-helmet": "^6.1.0",
 		"react-hot-toast": "^2.1.1",
 		"react-number-format": "^4.9.3",
-		"react-otp-input": "^2.4.0",
+		"react-otp-input": "^3.1.1",
 		"react-pusher": "^0.2.0",
 		"react-query": "^3.34.0",
 		"react-router-dom": "^5.1.2",
@@ -28,6 +28,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
+		"prebuild": "npm install --legacy-peer-deps",
 		"build": "NODE_OPTIONS=--openssl-legacy-provider GENERATE_SOURCEMAP=false react-scripts build",
 		"vercel-build": "NODE_OPTIONS=--openssl-legacy-provider GENERATE_SOURCEMAP=false react-scripts build",
 		"test": "react-scripts test",
