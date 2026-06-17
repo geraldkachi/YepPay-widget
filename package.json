@@ -29,6 +29,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "NODE_OPTIONS=--openssl-legacy-provider GENERATE_SOURCEMAP=false react-scripts build",
+		"vercel-build": "NODE_OPTIONS=--openssl-legacy-provider yarn build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},

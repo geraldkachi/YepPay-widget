@@ -1,11 +1,6 @@
 {
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
- "buildCommand": "NODE_OPTIONS=--openssl-legacy-provider GENERATE_SOURCEMAP=false npm run build",
+  "installCommand": "yarn install --ignore-engines",
+  "buildCommand": "NODE_OPTIONS=--openssl-legacy-provider yarn build",
   "outputDirectory": "build",
   "framework": "create-react-app"
 }
