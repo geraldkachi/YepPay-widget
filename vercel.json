@@ -5,5 +5,5 @@
       "use": "@vercel/next"
     }
   ],
-  "buildCommand": "NODE_OPTIONS=--openssl-legacy-provider yarn install --legacy-peer-deps && NODE_OPTIONS=--openssl-legacy-provider yarn build"
+  "buildCommand": "NODE_OPTIONS=--openssl-legacy-provider npm run build"
 }
