@@ -5,5 +5,7 @@
       "use": "@vercel/next"
     }
   ],
-  "buildCommand": "NODE_OPTIONS=--openssl-legacy-provider npm run build"
+ "buildCommand": "NODE_OPTIONS=--openssl-legacy-provider GENERATE_SOURCEMAP=false npm run build",
+  "outputDirectory": "build",
+  "framework": "create-react-app"
 }
